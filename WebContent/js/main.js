@@ -4,15 +4,15 @@
 require.config({
 	paths: {
 		jquery: 'lib/jquery',
-		fastclick: 'lib/fastclick' 
+		logout: 'custom/logout'
 	},
 	shim: {
 		
 	}
 });
 
-require(['jquery', 'fastclick'], function ($, FastClick) {
-	var startY;
+require(['jquery', 'logout'], function ($) {
+	var startY, rate = 5000, state = '';
 	$(function() {
 		/**
 		 * 改变窗口时，页面自适应
@@ -61,11 +61,32 @@ require(['jquery', 'fastclick'], function ($, FastClick) {
 			e.preventDefault();
 			var url = $(this).data('changePage');
 			$('.outerPage').load(url);
+			$('.left').find('li').each(function() {
+				$(this).removeClass('active');
+			});
+			$(this).parent('li').addClass('active');
+			$('#location').text($(this).text());
 		})
 		/**
 		 * 加载默认显示页面
 		 */
-		$('.outerPage').load('html/t1.html');
+		$('[data-change-page="html/learn.html"]').click();
+		/**
+		 * 轮询查看是否上课
+		 */
+		setInterval(function() {
+			$.ajax({
+				url: 'teach/state',
+				type: 'get',
+				dataType: 'json',
+				success: function(data) {
+					if (data.learning) {
+						rate = 1000;
+						state = data.state;
+					}
+				} 
+			})
+		}, rate);
 	});
 	function resize(windResize) {
 		var height = getWinHeight();
@@ -93,7 +114,4 @@ require(['jquery', 'fastclick'], function ($, FastClick) {
 	    }
 	    return winHeight;
 	};
-	window.addEventListener('load', function () {
-		FastClick.attach(document.body);
-	}, false);
 });

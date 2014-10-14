@@ -1,18 +1,22 @@
 body {
 	width: 100%;
 	height: 100%;
-	min-height: 400px;
+	min-height: 310px;
 	overflow-x: hidden; 
 	margin: 0;
 	background: #FFF url(../img/login/bgx.png) repeat-x;
+}
+.hide {
+	display: none;
 }
 .main {
 	width: 424px;
 	height: 240px;
 	background-image: url(../img/login/formBg.png);
-	margin: 160px auto;
 	border-radius: 10px;
-	position: relative;
+	position: absolute;
+	left: 300px;
+	top: 140px;
 }
 .clear {
 	padding-top: 124px;
@@ -24,6 +28,11 @@ body {
 .name, .pwd {
 	height: 45px;
 	width: 276px;
+}
+.nameText, .pwdText {
+	padding: 5px;
+	font-size: 30px;
+	letter-spacing: 4px
 }
 .right {
 	float: right;
@@ -45,12 +54,6 @@ body {
 .pwdList {
 	top: 160px;
 }
-.nameList.show {
-	display: block;
-}
-.pwdList.show {
-	display: block;
-}
 .n_1, .n_2, .n_3, .n_4, .n_5, .n_6, .n_7, .n_8, .n_9, .n_0, 
 .n_01, .n_02, .n_03, .n_04, .n_05, .n_06, .n_07, .n_08, .n_09, .n_00, 
 .n_close, .n_back {
@@ -59,72 +62,73 @@ body {
 	cursor: pointer;
 	float: left;
 	margin: 3px;
+	background-image: url(../img/login/icon.png);
 }
 .n_1 {
-	background-image: url(../img/login/1.png);
+	background-position: -80px -150px;
 }
 .n_2 {
-	background-image: url(../img/login/2.png);
+	background-position: -150px -150px;
 }
 .n_3 {
-	background-image: url(../img/login/3.png);
+	background-position: -220px -150px;
 }
 .n_4 {
-	background-image: url(../img/login/4.png);
+	background-position: -290px -150px;
 }
 .n_5 {
-	background-image: url(../img/login/5.png);
+	background-position: -10px -220px;
 }
 .n_6 {
-	background-image: url(../img/login/6.png);
+	background-position: -80px -220px;
 }
 .n_7 {
-	background-image: url(../img/login/7.png);
+	background-position: -150px -220px;
 }
 .n_8 {
-	background-image: url(../img/login/8.png);
+	background-position: -220px -220px;
 }
 .n_9 {
-	background-image: url(../img/login/9.png);
+	background-position: -290px -220px;
 }
 .n_0 {
-	background-image: url(../img/login/0.png);
+	background-position: -10px -150px;
 }
 .n_01 {
-	background-image: url(../img/login/01.png);
+	background-position: -80px -10px;
 }
 .n_02 {
-	background-image: url(../img/login/02.png);
+	background-position: -150px -10px;
 }
 .n_03 {
-	background-image: url(../img/login/03.png);
+	background-position: -220px -10px;
 }
 .n_04 {
-	background-image: url(../img/login/04.png);
+	background-position: -290px -10px;
 }
 .n_05 {
-	background-image: url(../img/login/05.png);
+	background-position: -10px -80px;
 }
 .n_06 {
-	background-image: url(../img/login/06.png);
+	background-position: -80px -80px;
 }
 .n_07 {
-	background-image: url(../img/login/07.png);
+	background-position: -150px -80px;
 }
 .n_08 {
-	background-image: url(../img/login/08.png);
+	background-position: -220px -80px;
 }
 .n_09 {
-	background-image: url(../img/login/09.png);
+	background-position: -290px -80px;
 }
 .n_00 {
-	background-image: url(../img/login/00.png);
+	background-position: -10px -10px;
 }
 .n_close {
-	background-image: url(../img/login/close.png);
+	background-position: -10px -290px;
 }
 .n_back {
-	background-image: url(../img/login/back.png);
+	background-position: -80px -290px;
 }
 .footer {
 	position: fixed;
@@ -135,4 +139,28 @@ body {
 	height: 70px;
 	bottom: 0;
 	position: fixed;
+}
+#msg {
+	z-index: 101;
+	position: absolute;
+	background-color: white;
+	height: 100px;
+	width: 300px;
+	text-align: center;
+	line-height: 100px;
+	border: 3px solid #ebebeb;
+	top: 70px;
+	left: 60px;
+}
+#msg .close {
+	cursor: pointer;
+}
+#cover {
+	z-index: 100;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #FFF;
+	opacity: 0;
+	top: 0;
 }

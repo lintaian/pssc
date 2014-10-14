@@ -85,3 +85,19 @@ ul li {
 .full .icon-full {
 	background-position: -92px -98px;
 }
+.left ul {
+	padding: 0;
+}
+.left ul li {
+	list-style: none;
+	color: #FFF;
+	line-height: 40px;
+}
+.left ul li a {
+	color: #FFF;
+	text-decoration: none;
+	font-size: 20px;
+}
+.left ul li.active {
+	background-color: rgb(19, 62, 96);
+}
