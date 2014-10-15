@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <!DOCTYPE html>
 <html>
@@ -13,17 +15,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <title>乐培生师生平台</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/logout.css">
+  <link rel="stylesheet" type="text/css" href="css/classRoom.css">
 </head>
 <body>
 	<div class="main">
 		<div class="left">
 			<img src="img/pagelogo.jpg" class="logo">
 			<ul>
-				<li><a href="#" data-change-page="html/classRoom.html">我的教室</a></li>
-				<li><a href="#" data-change-page="html/learn.html">我的学习</a></li>
-				<li><a href="#" data-change-page="html/record.html">我的记录</a></li>
-				<li><a href="#" data-change-page="html/information.html">用户资料</a></li>
-				<li><a href="#" data-change-page="html/logout.html">退出系统</a></li>
+				<li><a href="#" data-change-page="tpl/classRoom.html">我的教室</a></li>
+				<li><a href="#" data-change-page="tpl/learn.html">我的学习</a></li>
+				<li><a href="#" data-change-page="record">我的记录</a></li>
+				<li><a href="#" data-change-page="tpl/information.html">用户资料</a></li>
+				<li><a href="#" data-change-page="tpl/logout.html">退出系统</a></li>
 			</ul>
 		</div>
 		<div class="right">
@@ -33,6 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<i id="fullIcon" class="icon icon-full"></i>
 				</div>
 				<div class="outerPage scroll"></div>
+				<div id="contentModal"></div>
 			</div>
 		</div>
 	</div>

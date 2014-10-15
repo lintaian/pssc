@@ -12,8 +12,8 @@ body {
 .main {
 	width: 424px;
 	height: 240px;
-	background-image: url(../img/login/formBg.png);
-	border-radius: 10px;
+	background-image: url(../img/login/sdss.png);
+	border-radius: 13px;
 	position: absolute;
 	left: 300px;
 	top: 140px;
@@ -26,7 +26,7 @@ body {
 	margin-left: 24px;
 }
 .name, .pwd {
-	height: 45px;
+	height: 48px;
 	width: 276px;
 }
 .nameText, .pwdText {

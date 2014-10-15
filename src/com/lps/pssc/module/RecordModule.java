@@ -1,5 +1,8 @@
 package com.lps.pssc.module;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.nutz.ioc.annotation.InjectName;
@@ -12,24 +15,30 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 
-import com.lps.pssc.dao.interfaces.StateDaoIF;
+import com.lps.pssc.dao.interfaces.RecordDaoIF;
 import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.util.Page;
 import com.lps.pssc.util.SessionHelper;
+import com.mongodb.DBCursor;
 
 @IocBean
 @InjectName
 @At("/")
 @Fail("json")
 @Filters({@By(type=LoginFilter.class)})
-public class TeachModule {
+public class RecordModule {
 	@Inject
-	StateDaoIF stateDao;
+	RecordDaoIF recordDao;
 	
-	@At("teach/state")
+	@At("record")
 	@GET
-	@Ok("json")
-	public Object getState(HttpServletRequest req) throws Exception {
+	@Ok("jsp:/tpl/record.jsp")
+	public Object getRecords(HttpServletRequest req) throws Exception {
 		String userId = SessionHelper.getUserId(req);
-		return stateDao.get(userId);
+		DBCursor cursor = recordDao.get(userId, new Page(1, 10));
+		Map<String, Object> rs = new HashMap<String, Object>();
+		rs.put("data", cursor.toArray());
+		rs.put("page", new Page(1, 10, cursor.count()));
+		return rs;
 	}
 }
