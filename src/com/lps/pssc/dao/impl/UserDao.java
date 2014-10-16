@@ -15,5 +15,9 @@ public class UserDao extends BaseDao implements UserDaoIF {
 		DBCursor cursor = getCollection("user").find(query);
 		return cursor.count() > 0 ? cursor.next() : null;
 	}
+	@Override
+	public void update(DBObject query, DBObject user) throws Exception {
+		getCollection("user").update(query, user);
+	}
 	
 }

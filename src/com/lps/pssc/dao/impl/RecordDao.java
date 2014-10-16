@@ -17,7 +17,8 @@ public class RecordDao extends BaseDao implements RecordDaoIF {
 		DBObject keys = new BasicDBObject();
 		keys.put("time", "");
 		keys.put("operate", "");
-		return getCollection("record").find(query, keys).skip(page.skip()).limit(page.getPerPage());
+		return getCollection("record").find(query, keys).skip(page.skip()).
+				limit(page.getPerPage()).sort(new BasicDBObject("time", -1));
 	}
 	
 }

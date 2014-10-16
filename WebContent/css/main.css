@@ -113,3 +113,59 @@ ul li {
 	top: 0;
 	opacity: 0.1;
 }
+.page {
+	text-align: center;
+	margin-top: 20px;
+}
+.page a {
+	margin-right: 10px;
+	color: gray;
+}
+.page a.clickable{
+	color: rgb(8, 115, 252);
+	cursor: pointer;
+}
+
+#msg {
+	position: fixed;
+	z-index: 99999;
+	width: 250px;
+	height: 125px;
+	right: 5px;
+	bottom: -250px;
+	background-color: rgb(222, 222, 222);
+	opacity: 0.8;
+	border: 1px solid gray;
+	border-radius: 4px;
+}
+#msg .msgTitle {
+	padding: 5px;
+	background-color: rgb(85, 170, 45);
+	height: 20px;
+}
+#msg .titleText {
+	float: left;
+}
+#msg .msgContent {
+	padding: 5px;
+	text-align: center;
+}
+#msg .close {
+	background-image: url(../img/close.png);
+	width: 12px;
+	height: 12px;
+	float: right;
+	margin: 3px;
+	background-repeat: no-repeat;
+	padding: 5px;
+	margin-right: -2px;
+}
+#msg.info .titleText {
+	color: green;
+}
+#msg.warning .titleText {
+	color: yellow;
+}
+#msg.error .titleText {
+	color: rgb(255, 63, 63);
+}

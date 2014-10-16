@@ -1,0 +1,40 @@
+#info {
+	margin: 50px 10px;
+}
+#info .photo {
+	float: left;
+	margin-left: 30px;
+	margin-right: 30px;
+}
+#info .photo img {
+	width: 300px;
+	height: 300px;
+}
+#info .basic-info {
+	float: left;
+}
+.basic-info ul li {
+	line-height: 40px;
+	margin: 5px;
+	font-size: 22px;
+}
+.basic-info .label {
+	width: 100px;
+}
+.basic-info .letter {
+	letter-spacing: 22px;
+}
+.basic-info .password {
+	position: relative;
+	top: -4px;
+}
+.basic-info .fun-btn {
+	margin: 44px;
+}
+.basic-info .fun-btn span {
+	background-color: rgb(242,204,129);
+	padding: 10px;
+	margin-right: 20px;
+	border-radius: 6px;
+	cursor: pointer;
+}

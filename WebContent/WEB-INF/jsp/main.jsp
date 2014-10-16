@@ -16,6 +16,8 @@
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/logout.css">
   <link rel="stylesheet" type="text/css" href="css/classRoom.css">
+  <link rel="stylesheet" type="text/css" href="css/record.css">
+  <link rel="stylesheet" type="text/css" href="css/info.css">
 </head>
 <body>
 	<div class="main">
@@ -25,7 +27,7 @@
 				<li><a href="#" data-change-page="tpl/classRoom.html">我的教室</a></li>
 				<li><a href="#" data-change-page="tpl/learn.html">我的学习</a></li>
 				<li><a href="#" data-change-page="record">我的记录</a></li>
-				<li><a href="#" data-change-page="tpl/information.html">用户资料</a></li>
+				<li><a href="#" data-change-page="user/info">用户资料</a></li>
 				<li><a href="#" data-change-page="tpl/logout.html">退出系统</a></li>
 			</ul>
 		</div>
@@ -42,6 +44,13 @@
 	</div>
 	<div class="footer">
 		<img src="img/footerbg.png" class="footer-img"/>
+	</div>
+	<div id="msg" class="hide">
+		<div class="msgTitle">
+			<div class="titleText">提示信息</div>
+			<div class="close"></div>
+		</div>
+		<div class="msgContent">密码更新成功!</div>
 	</div>
 	<script src="js/lib/fastclick.js"></script>
 	<script>

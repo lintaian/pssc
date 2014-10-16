@@ -4,15 +4,18 @@
 require.config({
 	paths: {
 		jquery: 'lib/jquery',
+		util: 'custom/util',
 		logout: 'custom/logout',
-		teach: 'custom/teach'
+		teach: 'custom/teach',
+		record: 'custom/record',
+		info: 'custom/info'
 	},
 	shim: {
 		
 	}
 });
 
-require(['jquery', 'logout', 'teach'], function ($) {
+require(['jquery', 'util', 'logout', 'teach', 'record', 'info'], function ($) {
 	var startY;
 	/**
 	 * 改变窗口时，页面自适应
@@ -71,6 +74,22 @@ require(['jquery', 'logout', 'teach'], function ($) {
 	 * 加载默认显示页面
 	 */
 	$('[data-change-page="tpl/learn.html"]').click();
+	
+	$('#msg').on('click', '.close', function() {
+		console.log(111);
+		Util.msg.close();
+	});
+	
+	$('#msg').on('mouseenter', function() {
+		Util.msg.recover();
+	});
+	
+	$('#msg').on('mouseleave', function() {
+		Util.msg.mySetTimeout();
+	});
+	
+	Util.msg.show('请注意', '日本鬼子来了', 'info');
+	
 	
 	/**
 	 * 改变窗口大小

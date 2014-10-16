@@ -1,0 +1,11 @@
+#record {
+	margin: 10px;
+}
+#record .time {
+	margin-right: 10px;
+	color: gray;
+}
+#record hr {
+	border: none;
+	border-bottom: 1px solid rgb(226,226,226);
+}

@@ -33,12 +33,14 @@ public class RecordModule {
 	@At("record")
 	@GET
 	@Ok("jsp:/tpl/record.jsp")
-	public Object getRecords(HttpServletRequest req) throws Exception {
+	public Object getRecords(HttpServletRequest req, int page) throws Exception {
+		page = page > 0 ? page : 1;
+		int perPage = 10;
 		String userId = SessionHelper.getUserId(req);
-		DBCursor cursor = recordDao.get(userId, new Page(1, 10));
+		DBCursor cursor = recordDao.get(userId, new Page(page, perPage));
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("data", cursor.toArray());
-		rs.put("page", new Page(1, 10, cursor.count()));
+		rs.put("page", new Page(page, perPage, cursor.count()));
 		return rs;
 	}
 }
