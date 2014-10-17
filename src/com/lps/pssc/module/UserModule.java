@@ -1,5 +1,6 @@
 package com.lps.pssc.module;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
+import org.nutz.mvc.upload.UploadAdaptor;
 
 import com.lps.pssc.dao.interfaces.UserDaoIF;
 import com.lps.pssc.filter.LoginFilter;
@@ -49,6 +51,27 @@ public class UserModule {
 		rs.put("status", true);
 		try {
 			userDao.update(new BasicDBObject("_id", object.get("_id")), object);
+			SessionHelper.setUser(req, object);
+		} catch (Exception e) {
+			rs.put("status", false);
+		}
+		return rs;
+	}
+	@At("/uploader")
+	@Ok("json")
+	@AdaptBy(type=UploadAdaptor.class, args = { "${app.root}/photo" })
+	public Object uploader(@Param("file") File file, HttpServletRequest req) {
+		DBObject user = SessionHelper.getUser(req);
+		String photo = file.toString();
+		photo = photo.replace('\\', '/');
+		photo = photo.substring(photo.lastIndexOf("photo"), photo.length());
+		user.put("photo", photo);
+		Map<String, Object> rs = new HashMap<String, Object>();
+		rs.put("status", true);
+		try {
+			userDao.update(new BasicDBObject("_id", user.get("_id")), user);
+			SessionHelper.setUser(req, user);
+			rs.put("photo", photo);
 		} catch (Exception e) {
 			rs.put("status", false);
 		}

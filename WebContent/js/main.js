@@ -11,7 +11,6 @@ require.config({
 		info: 'custom/info'
 	},
 	shim: {
-		
 	}
 });
 
@@ -76,19 +75,22 @@ require(['jquery', 'util', 'logout', 'teach', 'record', 'info'], function ($) {
 	$('[data-change-page="tpl/learn.html"]').click();
 	
 	$('#msg').on('click', '.close', function() {
-		console.log(111);
 		Util.msg.close();
 	});
-	
 	$('#msg').on('mouseenter', function() {
 		Util.msg.recover();
 	});
-	
 	$('#msg').on('mouseleave', function() {
 		Util.msg.mySetTimeout();
 	});
+	$('#msg').on('touchstart', function() {
+		Util.msg.recover();
+	});
+	$('#msg').on('touchend', function() {
+		Util.msg.mySetTimeout();
+	});
 	
-	Util.msg.show('请注意', '日本鬼子来了', 'info');
+	Util.msg.show('通知信息', '小朋友,欢迎回来!', 'info');
 	
 	
 	/**

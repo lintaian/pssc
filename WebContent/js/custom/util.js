@@ -7,6 +7,7 @@ define([ 'jquery'], function(jquery) {
 		Util.msg = {
 			timeout: null,
 			show: function(title, content, type, time) {
+				this.close(10);
 				$('#msg').find('.msgContent').html(content);
 				$('#msg').find('.titleText').html(title);
 				$('#msg').removeClass();
@@ -28,10 +29,11 @@ define([ 'jquery'], function(jquery) {
 				}, 1000);
 				this.mySetTimeout(time);
 			},
-			close: function() {
+			close: function(time) {
+				clearTimeout(this.timeout);
 				$('#msg').animate({
 					bottom: -250
-				}, 1000);
+				}, time || 1000);
 			},
 			mySetTimeout: function(time) {
 				this.timeout = setTimeout(function() {
