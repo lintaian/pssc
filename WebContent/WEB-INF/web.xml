@@ -9,6 +9,9 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <listener> 
+    <listener-class>com.lps.pssc.filter.MySessionListener</listener-class> 
+  </listener> 
   <filter>
   	<filter-name>nutz</filter-name>
   	<filter-class>org.nutz.mvc.NutFilter</filter-class>
@@ -28,7 +31,7 @@
     <dispatcher>FORWARD</dispatcher>
   </filter-mapping>
   <session-config>
-    <session-timeout>0</session-timeout>
+    <session-timeout>1</session-timeout>
   </session-config>
   <error-page>
     <error-code>404</error-code>

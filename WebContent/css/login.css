@@ -24,6 +24,7 @@ body {
 .left {
 	float: left;
 	margin-left: 24px;
+	height: 0;
 }
 .name, .pwd {
 	height: 48px;
@@ -43,10 +44,9 @@ body {
 }
 .nameList, .pwdList {
 	width: 230px;
-	height: 150px;
+	height: 0;
 	position: absolute;
 	left: -210px;
-	display: none;
 }
 .nameList {
 	top: 120px;

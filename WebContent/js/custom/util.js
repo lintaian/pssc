@@ -27,7 +27,7 @@ define([ 'jquery'], function(jquery) {
 				$('#msg').show().animate({
 					bottom: 5
 				}, 1000);
-				this.mySetTimeout(time);
+				time == 0 ? null : this.mySetTimeout(time);
 			},
 			close: function(time) {
 				clearTimeout(this.timeout);

@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div id="record">
+	<jsp:useBean id="dateValue" class="java.util.Date" />
 	<c:forEach items="${obj.data}" var="r">
-		<span class="time">${r.time}</span>
+		<span class="time">
+			<jsp:setProperty name="dateValue" property="time" value="${r.time}" />
+			<fmt:formatDate value="${dateValue}" pattern="yyyy年MM月dd日  HH:mm:ss" />
+		</span>
 		<span class="operate">${r.operate}</span>
 		<hr/>
 	</c:forEach>

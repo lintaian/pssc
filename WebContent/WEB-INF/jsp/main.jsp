@@ -12,7 +12,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">  
   <meta name="apple-mobile-web-app-capable" content="yes">  
   <meta name="apple-mobile-web-app-status-bar-style" content="black">  
-  <title>乐培生师生平台</title>
+  <meta http-equiv="pragma" content="no-cache"> 
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+  <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+  <title>泡桐小学-翻转课堂</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/logout.css">
   <link rel="stylesheet" type="text/css" href="css/classRoom.css">

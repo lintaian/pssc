@@ -35,7 +35,7 @@ import com.lps.pssc.util.MySetup;
 	args={"*org.nutz.ioc.loader.json.JsonLoader", 
 		"/ioc.js", 
 		"*org.nutz.ioc.loader.annotation.AnnotationIocLoader",
-		"com.lps.pssc."})
+		"com.lps.pssc"})
 @SetupBy(MySetup.class)
 @At("/")
 @Fail("json")

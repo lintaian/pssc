@@ -1,0 +1,101 @@
+<!doctype html>
+<html>  
+<head>  
+ <title>write demo</title>  
+ <style type="text/css">
+ .buttons div {
+ 	width: 30px;
+ 	height: 30px;
+ 	margin: 10px;
+ 	float: left;
+ 	background-color: gray;
+ }
+ .buttons {
+ 	width: 150px;
+ }
+ .canvas {
+ 	position: absolute;
+ 	top: 18px;
+ 	left: 18px;
+ }
+ </style>
+</head>  
+<body>  
+<div class="buttons">
+	<div>1</div>
+	<div>2</div>
+	<div>3</div>
+	<div>4</div>
+	<div>5</div>
+	<div>6</div>
+	<div>7</div>
+	<div>8</div>
+	<div>9</div>
+</div>
+<div class="canvas">
+	<canvas width="130" height="130"></canvas> 
+</div>
+ 
+<script>  
+var canvas = document.getElementsByTagName('canvas')[0];  
+canvas.addEventListener('mousemove', onMouseMove, false);  
+canvas.addEventListener('mousedown', onMouseDown, false);  
+canvas.addEventListener('mouseup', onMouseUp, false);  
+canvas.addEventListener('touchmove', onMouseMove, false);  
+canvas.addEventListener('touchstart', onMouseDown, false);  
+canvas.addEventListener('touchend', onMouseUp, false);  
+ 
+var context = canvas.getContext('2d');  
+var linex = new Array();  
+var liney = new Array();  
+var linen = new Array();  
+ 
+var lastX = -1;  
+var lastY = -1;  
+var hue = 0;  
+var flag = 0;  
+ 
+function onMouseMove(evt) {  
+   if (flag == 1) {  
+      linex.push(evt.layerX);  
+      liney.push(evt.layerY);  
+      linen.push(1);  
+      context.save();  
+      context.translate(context.canvas.width/2, context.canvas.height/2);  
+      context.translate(-context.canvas.width/2, -context.canvas.height/2);  
+      context.beginPath();  
+      context.lineWidth = 5 + Math.random() * 10;  
+ 
+      for (var i=1;i<linex.length;i++) {  
+            lastX = linex[i];  
+            lastY = liney[i];  
+            if (linen[i] == 0) {  
+               context.moveTo(lastX,lastY);  
+            } else {  
+               context.lineTo(lastX,lastY);  
+            }  
+      }  
+ 
+      huehue = hue + 10 * Math.random();  
+      context.strokeStyle = 'hsl(' + hue + ', 50%, 50%)';  
+      context.shadowColor = 'white';  
+      context.shadowBlur = 10;  
+      context.stroke();  
+      context.restore();  
+   }  
+}  
+function onMouseDown(evt) {  
+   flag = 1;  
+   linex.push(evt.layerX);  
+   liney.push(evt.layerY);  
+   linen.push(0);  
+}  
+function onMouseUp(evt) {  
+   flag = 0;  
+    linex.push(evt.layerX);  
+    liney.push(evt.layerY);  
+   linen.push(0);  
+}  
+</script>  
+</body>  
+</html> 

@@ -1,10 +1,12 @@
 package com.lps.pssc.module;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
@@ -18,9 +20,11 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 
+import com.lps.pssc.dao.interfaces.RecordDaoIF;
 import com.lps.pssc.dao.interfaces.UserDaoIF;
 import com.lps.pssc.filter.LoginFilter;
 import com.lps.pssc.util.SessionHelper;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 @IocBean
@@ -30,6 +34,8 @@ import com.mongodb.DBObject;
 public class MyMainModule {
 	@Inject
 	UserDaoIF userDao;
+	@Inject
+	RecordDaoIF recordDao;
 
 	@At("login")
 	@AdaptBy(type = JsonAdaptor.class)
@@ -45,6 +51,11 @@ public class MyMainModule {
 			if (user != null && password.equals(user.get("password").toString())) {
 				re.put("status", true);
 				SessionHelper.setUser(req, user);
+				DBObject record = new BasicDBObject();
+				record.put("operate", "登陆系统");
+				record.put("userId", user.get("_id").toString());
+				record.put("time", (new Date()).getTime());
+				recordDao.add(record);
 			} else {
 				re.put("msg", "用户名或密码错误!");
 			}
@@ -65,7 +76,9 @@ public class MyMainModule {
 	@At("main")
 	@Filters({@By(type=LoginFilter.class)})
 	@Ok("jsp:jsp.main")
-	public void main(HttpServletRequest req) throws Exception {
+	public void main(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		resp.addHeader("Cache-Control", "no-store, must-revalidate"); 
+		resp.addHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT"); 
 	}
 	@At("")
 	@Ok("redirect:/main")
@@ -78,8 +91,10 @@ public class MyMainModule {
 	}
 	@At("session")
 	@Ok("json")
-	public Object getSession(String name, HttpServletRequest req) {
-		return SessionHelper.get(req, name);
+	@AdaptBy(type=JsonAdaptor.class)
+	public Object getSession(Map<String, String> body, HttpServletRequest req) {
+		System.out.println(body.get("name"));
+		return SessionHelper.get(req, body.get("name"));
 	}
 	@At("application")
 	@Ok("json")

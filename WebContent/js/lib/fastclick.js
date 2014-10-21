@@ -727,7 +727,7 @@
 		// Chrome version - zero for other browsers
 		chromeVersion = +(/Chrome\/([0-9]+)/.exec(navigator.userAgent) || [,0])[1];
 	
-		if (chromeVersion) {
+		/*if (chromeVersion) {
 	
 			if (deviceIsAndroid) {
 				metaViewport = document.querySelector('meta[name=viewport]');
@@ -747,7 +747,7 @@
 			} else {
 				return true;
 			}
-		}
+		}*/
 	
 		if (deviceIsBlackBerry10) {
 			blackberryVersion = navigator.userAgent.match(/Version\/([0-9]*)\.([0-9]*)/);

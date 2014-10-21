@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">  
 	<meta name="apple-mobile-web-app-capable" content="yes">  
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">  
-	<title>乐培生师生平台</title>
+	<title>泡桐小学-翻转课堂</title>
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<link rel="shortcut icon" href="img/favicon.ico">
 </head>
@@ -28,13 +28,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		<div class="right"></div>
-		<div class="nameList">
-			<a class="n_01" data-value="1"></a>
-			<a class="n_02" data-value="2"></a>
-			<a class="n_03" data-value="3"></a>
-			<a class="n_04" data-value="4"></a>
-			<a class="n_05" data-value="5"></a>
-			<a class="n_06" data-value="6"></a>
+		<div class="nameList hide">
+			<a class="n_01" data-value="1" data-nodelay></a>
+			<a class="n_02" data-value="2" data-nodelay></a>
+			<a class="n_03" data-value="3" data-nodelay></a>
+			<a class="n_04" data-value="4" data-nodelay></a>
+			<a class="n_05" data-value="5" data-nodelay></a>
+			<a class="n_06" data-value="6" data-nodelay></a>
 			<a class="n_07" data-value="7"></a>
 			<a class="n_08" data-value="8"></a>
 			<a class="n_09" data-value="9"></a>
@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<a class="n_00" data-value="0"></a>
 			<a class="n_back" data-back></a>
 		</div>
-		<div class="pwdList">
+		<div class="pwdList hide">
 			<a class="n_1" data-value="1"></a>
 			<a class="n_2" data-value="2"></a>
 			<a class="n_3" data-value="3"></a>

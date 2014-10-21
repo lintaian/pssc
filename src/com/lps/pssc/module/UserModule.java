@@ -1,9 +1,12 @@
 package com.lps.pssc.module;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.nutz.ioc.annotation.InjectName;
@@ -22,6 +25,7 @@ import org.nutz.mvc.upload.UploadAdaptor;
 
 import com.lps.pssc.dao.interfaces.UserDaoIF;
 import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.util.ImageHelper;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -61,15 +65,23 @@ public class UserModule {
 	@Ok("json")
 	@AdaptBy(type=UploadAdaptor.class, args = { "${app.root}/photo" })
 	public Object uploader(@Param("file") File file, HttpServletRequest req) {
-		DBObject user = SessionHelper.getUser(req);
-		String photo = file.toString();
-		photo = photo.replace('\\', '/');
-		photo = photo.substring(photo.lastIndexOf("photo"), photo.length());
-		user.put("photo", photo);
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
+			DBObject user = SessionHelper.getUser(req);
+			String photo = file.toString();
+			//改变图片尺寸
+			BufferedImage image = ImageIO.read(new File(photo));
+			image = ImageHelper.zoom(image, 400, 300);
+			String name = file.getName();
+			name = name.substring(name.lastIndexOf(".") + 1, name.length());
+			ImageIO.write(image, name, new FileOutputStream(photo));
+			//存入数据库
+			photo = photo.replace('\\', '/');
+			photo = photo.substring(photo.lastIndexOf("photo"), photo.length());
+			user.put("photo", photo);
 			userDao.update(new BasicDBObject("_id", user.get("_id")), user);
+			//写入session
 			SessionHelper.setUser(req, user);
 			rs.put("photo", photo);
 		} catch (Exception e) {

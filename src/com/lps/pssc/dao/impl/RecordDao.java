@@ -20,5 +20,8 @@ public class RecordDao extends BaseDao implements RecordDaoIF {
 		return getCollection("record").find(query, keys).skip(page.skip()).
 				limit(page.getPerPage()).sort(new BasicDBObject("time", -1));
 	}
-	
+	@Override
+	public void add(DBObject record) throws Exception {
+		getCollection("record").insert(record);
+	}
 }

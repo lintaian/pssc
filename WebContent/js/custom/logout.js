@@ -3,6 +3,6 @@ define(['jquery'], function($) {
 		window.location.href = 'logout';
 	});
 	$('body').on('click', '.logout .no', function() {
-		$('[data-change-page="html/learn.html"]').click();
+		$('[data-change-page="tpl/learn.html"]').click();
 	});
 });

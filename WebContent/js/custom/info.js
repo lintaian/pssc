@@ -12,6 +12,8 @@ define(['jquery'], function($) {
 				}),
 				dataType: 'json',
 				success: function(data) {
+					$('#info').find('.passwordText').val('');
+					$('#info').find('.password').text('');
 					if (data.status) {
 						Util.msg.show('提示信息', '密码更新成功!');
 					} else {
