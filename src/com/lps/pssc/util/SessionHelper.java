@@ -24,6 +24,10 @@ public class SessionHelper {
 		DBObject obj = getUser(req);
 		return obj == null ? "" : obj.get("_id").toString();
 	}
+	public static String getClassId(HttpServletRequest req) {
+		DBObject obj = getUser(req);
+		return obj == null ? "" : obj.get("Class_ID").toString();
+	}
 	public static void invalidate(HttpServletRequest req) {
 		req.getSession().invalidate();
 	}

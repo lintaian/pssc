@@ -60,53 +60,9 @@
 	opacity: 0;
 }
 .pwdList {
-	width: 240px;
+	width: 258px;
 	position: absolute;
 	background-color: #FFF;
 	z-index: 1;
-}
-.n_1, .n_2, .n_3, .n_4, .n_5, .n_6, .n_7, .n_8, .n_9, .n_0, 
-.n_close, .n_back {
-	width: 62px;
-	height: 62px;
-	cursor: pointer;
-	float: left;
-	margin: 3px;
-	background-image: url(../img/login/icon.png);
-}
-.n_1 {
-	background-position: -80px -150px;
-}
-.n_2 {
-	background-position: -150px -150px;
-}
-.n_3 {
-	background-position: -220px -150px;
-}
-.n_4 {
-	background-position: -290px -150px;
-}
-.n_5 {
-	background-position: -10px -220px;
-}
-.n_6 {
-	background-position: -80px -220px;
-}
-.n_7 {
-	background-position: -150px -220px;
-}
-.n_8 {
-	background-position: -220px -220px;
-}
-.n_9 {
-	background-position: -290px -220px;
-}
-.n_0 {
-	background-position: -10px -150px;
-}
-.n_close {
-	background-position: -10px -290px;
-}
-.n_back {
-	background-position: -80px -290px;
+	background-color: rgb(70,186,225);
 }

@@ -4,6 +4,7 @@
 require.config({
 	paths: {
 		jquery: 'lib/jquery',
+		patternLock: 'lib/patternLock',
 		util: 'custom/util',
 		logout: 'custom/logout',
 		teach: 'custom/teach',
@@ -11,10 +12,12 @@ require.config({
 		info: 'custom/info'
 	},
 	shim: {
+		patternLock: {deps: ['jquery']},
+		info: {deps: ['patternLock']}
 	}
 });
 
-require(['jquery', 'util', 'logout', 'teach', 'record', 'info'], function ($) {
+require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info'], function ($) {
 	var startY;
 	/**
 	 * 改变窗口时，页面自适应
@@ -72,7 +75,7 @@ require(['jquery', 'util', 'logout', 'teach', 'record', 'info'], function ($) {
 	/**
 	 * 加载默认显示页面
 	 */
-	$('[data-change-page="tpl/learn.html"]').click();
+	$('[data-change-page="learn"]').click();
 	
 	$('#msg').on('click', '.close', function() {
 		Util.msg.close();

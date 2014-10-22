@@ -17,10 +17,12 @@
   <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
   <title>泡桐小学-翻转课堂</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="css/patternLock.css">
   <link rel="stylesheet" type="text/css" href="css/logout.css">
   <link rel="stylesheet" type="text/css" href="css/classRoom.css">
   <link rel="stylesheet" type="text/css" href="css/record.css">
   <link rel="stylesheet" type="text/css" href="css/info.css">
+  <link rel="stylesheet" type="text/css" href="css/learn.css">
 </head>
 <body>
 	<div class="main">
@@ -28,7 +30,7 @@
 			<img src="img/pagelogo.jpg" class="logo">
 			<ul>
 				<li><a href="#" data-change-page="tpl/classRoom.html">我的教室</a></li>
-				<li><a href="#" data-change-page="tpl/learn.html">我的学习</a></li>
+				<li><a href="#" data-change-page="learn">我的学习</a></li>
 				<li><a href="#" data-change-page="record">我的记录</a></li>
 				<li><a href="#" data-change-page="user/info">用户资料</a></li>
 				<li><a href="#" data-change-page="tpl/logout.html">退出系统</a></li>

@@ -23,6 +23,7 @@ import org.nutz.mvc.annotation.POST;
 import com.lps.pssc.dao.interfaces.RecordDaoIF;
 import com.lps.pssc.dao.interfaces.UserDaoIF;
 import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.util.MD5Util;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -48,7 +49,8 @@ public class MyMainModule {
 		String password = body.containsKey("password") ? body.get("password") : "";
 		if (name != null && !"".equals(name) && password != null && !"".equals(password)) {
 			DBObject user = userDao.get(name);
-			if (user != null && password.equals(user.get("password").toString())) {
+			if (user != null && ("".equals(user.get("Password")) || 
+				user.get("Password").toString().equals(MD5Util.string2MD5(password + user.get("_id").toString())))) {
 				re.put("status", true);
 				SessionHelper.setUser(req, user);
 				DBObject record = new BasicDBObject();

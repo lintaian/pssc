@@ -1,0 +1,7 @@
+.student {
+	width: 200px;
+	height: 150px;
+	float: left;
+	background-color: gray;
+	margin: 5px;
+}

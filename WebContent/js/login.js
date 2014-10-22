@@ -3,15 +3,15 @@
 
 require.config({
 	paths: {
-		jquery: 'lib/jquery'
+		jquery: 'lib/jquery',
+		patternLock: 'lib/patternLock'
 	},
 	shim: {
-		
+		patternLock: {deps: ['jquery']}
 	}
 });
 
-require(['jquery'], function ($) {
-	var pwd = '';
+require(['jquery', 'patternLock'], function ($) {
 	$(function() {
 		/**
 		 * 改变窗口时，页面自适应
@@ -29,11 +29,11 @@ require(['jquery'], function ($) {
 		});
 		$('.left').on('click', '.name', function() {
 			$('.pwdList').hide();
-			$('.nameList').show();
+			$('.nameList').toggle();
 		});
 		$('.left').on('click', '.pwd', function() {
 			$('.nameList').hide();
-			$('.pwdList').show();
+			$('.pwdList').toggle();
 		});
 		$('.nameList').on('click', 'a[data-value]', function() {
 			var name = $('.nameText').text(),
@@ -50,25 +50,9 @@ require(['jquery'], function ($) {
 			name = name.substr(0, name.length - 1);
 			$('.nameText').text(name);
 		});
-		$('.pwdList').on('click', 'a[data-value]', function() {
-			var pwd2 = $('.pwdText').text(),
-			value = $(this).data('value');
-			if (pwd.length < 14) {
-				pwd += value;
-				$('.pwdText').text(pwd2 + "*");
-			}
-		});
-		$('.pwdList').on('click', 'a[data-close]', function() {
-			$('.pwdList').hide();
-		});
-		$('.pwdList').on('click', 'a[data-back]', function() {
-			var name = $('.pwdText').text();
-			name = name.substr(0, name.length - 1);
-			pwd = pwd.substr(0, name.length - 1);
-			$('.pwdText').text(name);
-		});
 		$('body').on('click', '.right', function() {
 			var name = $('.nameText').text();
+			var pwd = lock.getPattern() || '';
 			if (name == '' || pwd == '') {
 				showMsg('用户名或密码不能为空!')
 			} else {
@@ -92,6 +76,20 @@ require(['jquery'], function ($) {
 		});
 		$('#msg').on('click', '.close', function() {
 			closeMsg();
+		});
+		
+		var lock = new PatternLock('#patternLock', {
+			margin: 18,
+			onDraw: function(pattern){
+				var temp = '';
+				for (var i = 0; i < pattern.length; i++) {
+					temp += '*';
+				}
+				$('.pwdText').text(temp);
+			},
+			onReset: function() {
+				$('.pwdText').text('');
+			}
 		});
 	});
 	

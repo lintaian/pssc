@@ -26,6 +26,7 @@ import org.nutz.mvc.upload.UploadAdaptor;
 import com.lps.pssc.dao.interfaces.UserDaoIF;
 import com.lps.pssc.filter.LoginFilter;
 import com.lps.pssc.util.ImageHelper;
+import com.lps.pssc.util.MD5Util;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -48,9 +49,9 @@ public class UserModule {
 	@At("/updatePwd")
 	@Ok("json")
 	@AdaptBy(type=JsonAdaptor.class)
-	public Object updatePwd(Map<String, Object> obj, HttpServletRequest req) {
+	public Object updatePwd(Map<String, String> obj, HttpServletRequest req) {
 		DBObject object = SessionHelper.getUser(req);
-		object.put("password", obj.get("pwd"));
+		object.put("Password", MD5Util.string2MD5(obj.get("pwd") + SessionHelper.getUserId(req)));
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
@@ -79,7 +80,7 @@ public class UserModule {
 			//存入数据库
 			photo = photo.replace('\\', '/');
 			photo = photo.substring(photo.lastIndexOf("photo"), photo.length());
-			user.put("photo", photo);
+			user.put("Photo", photo);
 			userDao.update(new BasicDBObject("_id", user.get("_id")), user);
 			//写入session
 			SessionHelper.setUser(req, user);

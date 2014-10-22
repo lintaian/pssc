@@ -1,5 +1,7 @@
 package com.lps.pssc.dao.impl;
 
+import java.util.UUID;
+
 import org.nutz.ioc.loader.annotation.IocBean;
 
 import com.lps.pssc.dao.interfaces.UserDaoIF;
@@ -11,13 +13,17 @@ public class UserDao extends BaseDao implements UserDaoIF {
 
 	@Override
 	public DBObject get(String name) throws Exception {
-		DBObject query = new BasicDBObject("name", name);
-		DBCursor cursor = getCollection("user").find(query);
+		DBObject query = new BasicDBObject("UserName", name);
+		DBCursor cursor = getCollection("TB_Student").find(query);
 		return cursor.count() > 0 ? cursor.next() : null;
 	}
 	@Override
 	public void update(DBObject query, DBObject user) throws Exception {
-		getCollection("user").update(query, user);
+		getCollection("TB_Student").update(query, user);
+	}
+	@Override
+	public DBCursor getList(UUID classId) throws Exception {
+		return getCollection("TB_Student").find(new BasicDBObject("Class_ID", classId));
 	}
 	
 }

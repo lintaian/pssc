@@ -12,8 +12,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="apple-mobile-web-app-capable" content="yes">  
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">  
 	<title>泡桐小学-翻转课堂</title>
-	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<link rel="stylesheet" type="text/css" href="css/patternLock.css">
 </head>
 
 <body>
@@ -43,18 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<a class="n_back" data-back></a>
 		</div>
 		<div class="pwdList hide">
-			<a class="n_1" data-value="1"></a>
-			<a class="n_2" data-value="2"></a>
-			<a class="n_3" data-value="3"></a>
-			<a class="n_4" data-value="4"></a>
-			<a class="n_5" data-value="5"></a>
-			<a class="n_6" data-value="6"></a>
-			<a class="n_7" data-value="7"></a>
-			<a class="n_8" data-value="8"></a>
-			<a class="n_9" data-value="9"></a>
-			<a class="n_close" data-close></a>
-			<a class="n_0" data-value="0"></a>
-			<a class="n_back" data-back></a>
+			<div id="patternLock"></div>
 		</div>
 		<div id="msg" class="hide">
 			<span class="text"></span>
