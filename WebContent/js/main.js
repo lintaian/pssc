@@ -9,7 +9,8 @@ require.config({
 		logout: 'custom/logout',
 		teach: 'custom/teach',
 		record: 'custom/record',
-		info: 'custom/info'
+		info: 'custom/info',
+		learn: 'custom/learn'
 	},
 	shim: {
 		patternLock: {deps: ['jquery']},
@@ -17,7 +18,7 @@ require.config({
 	}
 });
 
-require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info'], function ($) {
+require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', 'learn'], function ($) {
 	var startY;
 	/**
 	 * 改变窗口时，页面自适应
@@ -70,8 +71,15 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info'], 
 			$(this).removeClass('active');
 		});
 		$(this).parent('li').addClass('active');
-		$('#location').text($(this).text());
+		Util.setLocation([{
+			url: url,
+			name: $(this).text()
+		}]);
 	})
+	$('body').on('click', '#location a', function() {
+		var url = $(this).data('url');
+		$('.outerPage').load(url);
+	});
 	/**
 	 * 加载默认显示页面
 	 */

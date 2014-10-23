@@ -39,7 +39,8 @@
 		<div class="right">
 			<div class="content">
 				<div class="title">
-					<span class="title-text">所在位置: <span id="location"></span></span>
+					<div>所在位置: </div>
+					<div id="location"></div>
 					<i id="fullIcon" class="icon icon-full"></i>
 				</div>
 				<div class="outerPage scroll"></div>

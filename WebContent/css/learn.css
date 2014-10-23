@@ -1,7 +1,43 @@
 .student {
-	width: 200px;
-	height: 150px;
+	width: 160px;
+	height: 140px;
 	float: left;
-	background-color: gray;
-	margin: 5px;
+	background-color: rgb(230, 230, 230);
+	margin: 2px;
+	position: relative;
+}
+.student.me {
+	cursor: pointer;
+}
+.student img {
+	width: 160px;
+	height: 120px;
+}
+.student img.cover {
+	opacity: 0.3;
+}
+.student .s_name {
+	position: absolute;
+	width: 100%;
+	height: 20px;
+	left: 0;
+	bottom: 0;
+	background-color: #000;
+	text-align: center;
+	opacity: 0.75;
+	color: #FFF;
+	font-size: 18px;
+}
+.s_name.me {
+	color: yellow!important;
+}
+.s_name.girl {
+	color: green;
+}
+.student .face {
+	width: 34px;
+	height: 34px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }

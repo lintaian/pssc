@@ -57,10 +57,15 @@ ul li {
 	height: 40px;
 	background-color: rgb(238,238,238);
 }
-.title-text {
+.title div {
 	margin-left: 10px;
 	position: relative;
 	top: 10px;
+	float: left;
+}
+#location a{
+	color: rgb(97, 97, 252);
+	cursor: pointer;
 }
 #fullIcon {
 	position: absolute;

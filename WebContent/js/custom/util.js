@@ -48,6 +48,21 @@ define([ 'jquery'], function(jquery) {
 			}
 		}
 		
+		Util.setLocation = function(option) {
+			var html = '';
+			for (var i = 0; i < option.length; i++) {
+				html += '<a data-url="';
+				html += option[i].url;
+				html += '">';
+				html += option[i].name;
+				html += '</a>';
+				if (i != (option.length - 1)) {
+					html += ' &gt; ';
+				}
+			}
+			$('#location').html(html);
+		}
+		
 		if (!window.Util) {
 			window['Util'] = Util;
 		}

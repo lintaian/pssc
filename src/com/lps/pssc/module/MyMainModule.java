@@ -58,6 +58,8 @@ public class MyMainModule {
 				record.put("userId", user.get("_id").toString());
 				record.put("time", (new Date()).getTime());
 				recordDao.add(record);
+				user.put("LoginStatus", 1);
+				userDao.update(new BasicDBObject("_id", user.get("_id")), user);
 			} else {
 				re.put("msg", "用户名或密码错误!");
 			}

@@ -29,8 +29,15 @@ public class LearnModule {
 	
 	@At("/")
 	@GET
-	@Ok("jsp:/tpl/learn.jsp")
-	public Object getState(HttpServletRequest req) throws Exception {
+	@Ok("jsp:/tpl/studentList.jsp")
+	public Object getStudentList(HttpServletRequest req) throws Exception {
+		String classId = SessionHelper.getClassId(req);
+		return userDao.getList(UUID.fromString(classId)).toArray();
+	}
+	@At("/courseware")
+	@GET
+	@Ok("jsp:/tpl/coursewareList.jsp")
+	public Object getCourseware(HttpServletRequest req) throws Exception {
 		String classId = SessionHelper.getClassId(req);
 		return userDao.getList(UUID.fromString(classId)).toArray();
 	}
