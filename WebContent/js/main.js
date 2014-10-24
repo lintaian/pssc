@@ -71,7 +71,7 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 			$(this).removeClass('active');
 		});
 		$(this).parent('li').addClass('active');
-		Util.setLocation([{
+		Util.location.set([{
 			url: url,
 			name: $(this).text()
 		}]);
@@ -79,6 +79,7 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	$('body').on('click', '#location a', function() {
 		var url = $(this).data('url');
 		$('.outerPage').load(url);
+		Util.location.jump($(this).text());
 	});
 	/**
 	 * 加载默认显示页面

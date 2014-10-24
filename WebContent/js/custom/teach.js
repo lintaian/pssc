@@ -65,5 +65,5 @@ define(['jquery'], function($) {
 			});
 		}, 1000);
 	}
-	commonInterval();
+//	commonInterval();
 });

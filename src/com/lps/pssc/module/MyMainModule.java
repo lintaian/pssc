@@ -20,9 +20,9 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 
-import com.lps.pssc.dao.interfaces.RecordDaoIF;
-import com.lps.pssc.dao.interfaces.UserDaoIF;
+import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.MD5Util;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
@@ -34,9 +34,7 @@ import com.mongodb.DBObject;
 @Fail("json")
 public class MyMainModule {
 	@Inject
-	UserDaoIF userDao;
-	@Inject
-	RecordDaoIF recordDao;
+	BaseDao baseDao;
 
 	@At("login")
 	@AdaptBy(type = JsonAdaptor.class)
@@ -48,18 +46,19 @@ public class MyMainModule {
 		String name = body.containsKey("username") ? body.get("username") : "";
 		String password = body.containsKey("password") ? body.get("password") : "";
 		if (name != null && !"".equals(name) && password != null && !"".equals(password)) {
-			DBObject user = userDao.get(name);
-			if (user != null && ("".equals(user.get("Password")) || 
-				user.get("Password").toString().equals(MD5Util.string2MD5(password + user.get("_id").toString())))) {
+			DBObject user = baseDao.get(DbMap.Student, new BasicDBObject("login_name", name));
+			if (user != null &&  "1".equals(user.get("status").toString())
+					&& (user.get("auth_code") == null || "".equals(user.get("auth_code")) || 
+				user.get("auth_code").toString().equals(MD5Util.string2MD5(password + user.get("_id").toString())))) {
 				re.put("status", true);
-				SessionHelper.setUser(req, user);
 				DBObject record = new BasicDBObject();
-				record.put("operate", "登陆系统");
-				record.put("userId", user.get("_id").toString());
-				record.put("time", (new Date()).getTime());
-				recordDao.add(record);
-				user.put("LoginStatus", 1);
-				userDao.update(new BasicDBObject("_id", user.get("_id")), user);
+				record.put("operate", "登陆系统!");
+				record.put("user_id", user.get("_id").toString());
+				record.put("time", new Date());
+				baseDao.insert(DbMap.Record, record);
+				user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", user.get("_id")), 
+						new BasicDBObject("login_status", 1));
+				SessionHelper.setUser(req, user);
 			} else {
 				re.put("msg", "用户名或密码错误!");
 			}
@@ -97,7 +96,6 @@ public class MyMainModule {
 	@Ok("json")
 	@AdaptBy(type=JsonAdaptor.class)
 	public Object getSession(Map<String, String> body, HttpServletRequest req) {
-		System.out.println(body.get("name"));
 		return SessionHelper.get(req, body.get("name"));
 	}
 	@At("application")

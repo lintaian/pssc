@@ -10,8 +10,8 @@ import com.mongodb.DBObject;
 public class StateDao extends BaseDao implements StateDaoIF {
 	@Override
 	public DBObject get(String userId) throws Exception {
-		DBObject query = new BasicDBObject("userId", userId);
-		DBCursor cursor = getCollection("state").find(query);
+		DBObject query = new BasicDBObject("user_id", userId);
+		DBCursor cursor = getCollection("rt_state").find(query);
 		return cursor.count() > 0 ? cursor.next() : null;
 	}
 }

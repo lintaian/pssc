@@ -2,17 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="info">
 	<div class="photo">
-		<img id="myPhoto" src="${obj.Photo}">
+		<img id="myPhoto" src="${obj.user.photo}">
 	</div>
 	<div class="basic-info">
 		<ul>
 			<li>
 				<span class="label letter">姓</span>名:
-				<span class="text">${obj.Name}</span>
+				<span class="text">${obj.user.name}</span>
 			</li>
 			<li>
 				<span class="label">用户名:</span>
-				<span class="text">${obj.UserName}</span>
+				<span class="text">${obj.user.login_name}</span>
 			</li>
 			<li style="position: relative;">
 				<span class="label letter">密</span>码:
@@ -23,7 +23,7 @@
 			</li>
 			<li>
 				<span class="label letter">班</span>级:
-				<span class="text">${obj.klass}</span>
+				<span class="text">${obj.classes.year }${obj.classes.name }</span>
 			</li>
 		</ul>
 		<div class="fun-btn">

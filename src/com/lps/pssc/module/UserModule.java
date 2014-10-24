@@ -23,8 +23,9 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.upload.UploadAdaptor;
 
-import com.lps.pssc.dao.interfaces.UserDaoIF;
+import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.ImageHelper;
 import com.lps.pssc.util.MD5Util;
 import com.lps.pssc.util.SessionHelper;
@@ -38,25 +39,27 @@ import com.mongodb.DBObject;
 @Filters({@By(type=LoginFilter.class)})
 public class UserModule {
 	@Inject
-	UserDaoIF userDao;
+	BaseDao baseDao;
 	
 	@At("/info")
 	@GET
 	@Ok("jsp:/tpl/info.jsp")
-	public Object getRecords(HttpServletRequest req) throws Exception {
-		return SessionHelper.getUser(req);
+	public Object getInfo(HttpServletRequest req) throws Exception {
+		Map<String, Object> rs = new HashMap<String, Object>();
+		rs.put("user", SessionHelper.getUser(req));
+		rs.put("classes", baseDao.get(DbMap.Class, new BasicDBObject("_id", SessionHelper.getUser(req).get("class_id"))));
+		return rs;
 	}
 	@At("/updatePwd")
 	@Ok("json")
 	@AdaptBy(type=JsonAdaptor.class)
 	public Object updatePwd(Map<String, String> obj, HttpServletRequest req) {
-		DBObject object = SessionHelper.getUser(req);
-		object.put("Password", MD5Util.string2MD5(obj.get("pwd") + SessionHelper.getUserId(req)));
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			userDao.update(new BasicDBObject("_id", object.get("_id")), object);
-			SessionHelper.setUser(req, object);
+			DBObject user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", SessionHelper.getUser(req).get("_id")), 
+					new BasicDBObject("auth_code", MD5Util.string2MD5(obj.get("pwd") + SessionHelper.getUserId(req))));
+			SessionHelper.setUser(req, user);
 		} catch (Exception e) {
 			rs.put("status", false);
 		}
@@ -69,7 +72,6 @@ public class UserModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			DBObject user = SessionHelper.getUser(req);
 			String photo = file.toString();
 			//改变图片尺寸
 			BufferedImage image = ImageIO.read(new File(photo));
@@ -80,8 +82,8 @@ public class UserModule {
 			//存入数据库
 			photo = photo.replace('\\', '/');
 			photo = photo.substring(photo.lastIndexOf("photo"), photo.length());
-			user.put("Photo", photo);
-			userDao.update(new BasicDBObject("_id", user.get("_id")), user);
+			DBObject user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", SessionHelper.getUser(req).get("_id")), 
+					new BasicDBObject("photo", photo));
 			//写入session
 			SessionHelper.setUser(req, user);
 			rs.put("photo", photo);

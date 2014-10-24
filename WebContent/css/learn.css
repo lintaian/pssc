@@ -14,7 +14,7 @@
 	height: 120px;
 }
 .student img.cover {
-	opacity: 0.3;
+	opacity: 0.2;
 }
 .student .s_name {
 	position: absolute;
@@ -32,7 +32,10 @@
 	color: yellow!important;
 }
 .s_name.girl {
-	color: green;
+	color: pink;
+}
+.s_name.boy {
+	color: rgb(166, 166, 255);
 }
 .student .face {
 	width: 34px;

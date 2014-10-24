@@ -13,15 +13,15 @@ public class RecordDao extends BaseDao implements RecordDaoIF {
 	@Override
 	public DBCursor get(String userId, Page page) throws Exception {
 		DBObject query = new BasicDBObject();
-		query.put("userId", userId);
+		query.put("user_id", userId);
 		DBObject keys = new BasicDBObject();
 		keys.put("time", "");
 		keys.put("operate", "");
-		return getCollection("record").find(query, keys).skip(page.skip()).
+		return getCollection("rt_record").find(query, keys).skip(page.skip()).
 				limit(page.getPerPage()).sort(new BasicDBObject("time", -1));
 	}
 	@Override
 	public void add(DBObject record) throws Exception {
-		getCollection("record").insert(record);
+		getCollection("rt_record").insert(record);
 	}
 }

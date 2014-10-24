@@ -48,19 +48,31 @@ define([ 'jquery'], function(jquery) {
 			}
 		}
 		
-		Util.setLocation = function(option) {
-			var html = '';
-			for (var i = 0; i < option.length; i++) {
-				html += '<a data-url="';
-				html += option[i].url;
-				html += '">';
-				html += option[i].name;
-				html += '</a>';
-				if (i != (option.length - 1)) {
-					html += ' &gt; ';
+		Util.location = {
+			list: [],
+			set: function(list) {
+				this.list = list;
+				var html = '';
+				for (var i = 0; i < list.length; i++) {
+					html += '<a data-url="';
+					html += list[i].url;
+					html += '">';
+					html += list[i].name;
+					html += '</a>';
+					if (i != (list.length - 1)) {
+						html += ' &gt; ';
+					}
 				}
+				$('#location').html(html);
+			},
+			jump: function(name) {
+				var temp = [];
+				for (var i = 0; i < this.list.length; i++) {
+					temp.push(this.list[i]);
+					if (this.list[i].name == name) break;
+				}
+				this.set(temp);
 			}
-			$('#location').html(html);
 		}
 		
 		if (!window.Util) {

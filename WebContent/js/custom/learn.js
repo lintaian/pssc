@@ -1,11 +1,11 @@
 define(['jquery'], function($) {
 	$('body').on('click', '.student.me', function() {
 		$('.outerPage').load('learn/courseware');
-		Util.setLocation([{
+		Util.location.set([{
 			url: 'learn',
 			name: '我的学习'
 		},{
-			url: 'learn/coursewareList',
+			url: 'learn/courseware',
 			name: '课件列表'
 		}]);
 	});

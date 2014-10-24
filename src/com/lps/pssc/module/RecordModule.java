@@ -15,10 +15,12 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 
-import com.lps.pssc.dao.interfaces.RecordDaoIF;
+import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.Page;
 import com.lps.pssc.util.SessionHelper;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
 
 @IocBean
@@ -28,7 +30,7 @@ import com.mongodb.DBCursor;
 @Filters({@By(type=LoginFilter.class)})
 public class RecordModule {
 	@Inject
-	RecordDaoIF recordDao;
+	BaseDao baseDao;
 	
 	@At("record")
 	@GET
@@ -37,7 +39,7 @@ public class RecordModule {
 		page = page > 0 ? page : 1;
 		int perPage = 10;
 		String userId = SessionHelper.getUserId(req);
-		DBCursor cursor = recordDao.get(userId, new Page(page, perPage));
+		DBCursor cursor = baseDao.queryPage(DbMap.Record, new BasicDBObject("user_id", userId), new Page(page, perPage));
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("data", cursor.toArray());
 		rs.put("page", new Page(page, perPage, cursor.count()));
