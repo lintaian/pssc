@@ -66,7 +66,7 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	$('body').on('click', '[data-change-page]', function(e) {
 		e.preventDefault();
 		var url = $(this).data('changePage');
-		$('.outerPage').load(url);
+		Util.load('.outerPage', url);
 		$('.left').find('li').each(function() {
 			$(this).removeClass('active');
 		});
@@ -78,7 +78,7 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	})
 	$('body').on('click', '#location a', function() {
 		var url = $(this).data('url');
-		$('.outerPage').load(url);
+		Util.load('.outerPage', url);
 		Util.location.jump($(this).text());
 	});
 	/**

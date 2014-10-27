@@ -80,8 +80,8 @@ public class MyMainModule {
 	@Filters({@By(type=LoginFilter.class)})
 	@Ok("jsp:jsp.main")
 	public void main(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-		resp.addHeader("Cache-Control", "no-store, must-revalidate"); 
-		resp.addHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT"); 
+	/*	resp.addHeader("Cache-Control", "no-store, must-revalidate"); 
+		resp.addHeader("Expires", "Thu, 01 Jan 1970 00:00:01 GMT");*/ 
 	}
 	@At("")
 	@Ok("redirect:/main")

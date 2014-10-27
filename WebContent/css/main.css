@@ -174,3 +174,20 @@ ul li {
 #msg.error .titleText {
 	color: rgb(255, 63, 63);
 }
+.icon_face {
+	width: 30px;
+	height: 30px;
+	background-image: url("../img/icon_face.png");
+}
+.icon_face.laugh {
+	background-position: -5px -5px;
+}
+.icon_face.smile {
+	background-position: -45px -5px;
+}
+.icon_face.sad {
+	background-position: -45px -5px;
+}
+.icon_face.cry {
+	background-position: -45px -45px;
+}

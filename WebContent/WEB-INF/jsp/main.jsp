@@ -12,9 +12,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">  
   <meta name="apple-mobile-web-app-capable" content="yes">  
   <meta name="apple-mobile-web-app-status-bar-style" content="black">  
-  <meta http-equiv="pragma" content="no-cache"> 
+  <!-- <meta http-equiv="pragma" content="no-cache"> 
   <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-  <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+  <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT"> -->
   <title>泡桐小学-翻转课堂</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/patternLock.css">
@@ -29,11 +29,11 @@
 		<div class="left">
 			<img src="img/pagelogo.jpg" class="logo">
 			<ul>
-				<li><a href="#" data-change-page="tpl/classRoom.html">我的教室</a></li>
+				<li><a href="#" data-change-page="teach">我的教室</a></li>
 				<li><a href="#" data-change-page="learn">我的学习</a></li>
 				<li><a href="#" data-change-page="record">我的记录</a></li>
 				<li><a href="#" data-change-page="user/info">用户资料</a></li>
-				<li><a href="#" data-change-page="tpl/logout.html">退出系统</a></li>
+				<li><a href="#" data-change-page="user/logout">退出系统</a></li>
 			</ul>
 		</div>
 		<div class="right">

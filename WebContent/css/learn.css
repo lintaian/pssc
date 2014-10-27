@@ -3,7 +3,8 @@
 	height: 140px;
 	float: left;
 	background-color: rgb(230, 230, 230);
-	margin: 2px;
+	margin-left: 4px;
+	margin-top: 4px;
 	position: relative;
 }
 .student.me {
@@ -38,8 +39,59 @@
 	color: rgb(166, 166, 255);
 }
 .student .face {
-	width: 34px;
-	height: 34px;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+#courseware .choose {
+	margin: 10px;
+}
+#courseware .choose {
+	font-size: 18px;
+	font-family: 微软雅黑;
+}
+#courseware .choose span {
+	margin-left: 10px;
+	color: #79b70e;
+}
+#courseware .choose span:first-child {
+	margin-left: 0px;
+}
+#courseware .choose a {
+	color: #666;
+	margin-left: 5px;
+	cursor: pointer;
+}
+#courseware .choose a.active {
+	color: orange;
+}
+.courseware {
+	width: 160px;
+	height: 140px;
+	float: left;
+	background-color: rgb(230, 230, 230);
+	margin-left: 4px;
+	margin-top: 4px;
+	position: relative;
+}
+.courseware img {
+	width: 160px;
+	height: 120px;
+}
+.courseware .c_name {
+	position: absolute;
+	width: 100%;
+	height: 20px;
+	left: 0;
+	bottom: 0;
+	background-color: #000;
+	text-align: center;
+	opacity: 0.75;
+	color: #FFF;
+	font-size: 18px;
+}
+.courseware .face {
 	position: absolute;
 	top: 5px;
 	right: 5px;

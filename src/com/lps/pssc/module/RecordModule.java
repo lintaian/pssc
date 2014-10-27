@@ -16,7 +16,7 @@ import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 
 import com.lps.pssc.dao.impl.BaseDao;
-import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.Page;
 import com.lps.pssc.util.SessionHelper;
@@ -27,7 +27,7 @@ import com.mongodb.DBCursor;
 @InjectName
 @At("/")
 @Fail("json")
-@Filters({@By(type=LoginFilter.class)})
+@Filters({@By(type=LoginJsonFilter.class)})
 public class RecordModule {
 	@Inject
 	BaseDao baseDao;

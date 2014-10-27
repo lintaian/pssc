@@ -20,6 +20,9 @@ define(['jquery'], function($) {
 						} else {
 							Util.msg.show('<span style="color: red">提示信息</span>', '密码更新失败!');
 						}
+					},
+					error: function(data) {
+						Util.error(data);
 					}
 				});
 			}
@@ -43,6 +46,9 @@ define(['jquery'], function($) {
 					if (data) {
 						$('#myPhoto').attr('src', data.photo);
 					}
+				},
+				error: function(data) {
+					Util.error(data);
 				}
 			});
 		});

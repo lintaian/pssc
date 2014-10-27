@@ -24,7 +24,7 @@ import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.upload.UploadAdaptor;
 
 import com.lps.pssc.dao.impl.BaseDao;
-import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.ImageHelper;
 import com.lps.pssc.util.MD5Util;
@@ -36,7 +36,7 @@ import com.mongodb.DBObject;
 @InjectName
 @At("/user")
 @Fail("json")
-@Filters({@By(type=LoginFilter.class)})
+@Filters({@By(type=LoginJsonFilter.class)})
 public class UserModule {
 	@Inject
 	BaseDao baseDao;
@@ -47,7 +47,7 @@ public class UserModule {
 	public Object getInfo(HttpServletRequest req) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("user", SessionHelper.getUser(req));
-		rs.put("classes", baseDao.get(DbMap.Class, new BasicDBObject("_id", SessionHelper.getUser(req).get("class_id"))));
+		rs.put("classes", baseDao.get(DbMap.ClassDict, new BasicDBObject("_id", SessionHelper.getUser(req).get("class_id"))));
 		return rs;
 	}
 	@At("/updatePwd")
@@ -91,5 +91,12 @@ public class UserModule {
 			rs.put("status", false);
 		}
 		return rs;
+	}
+	
+	@At("/logout")
+	@GET
+	@Ok("jsp:/tpl/logout.jsp")
+	public Object logout(HttpServletRequest req) throws Exception {
+		return null;
 	}
 }

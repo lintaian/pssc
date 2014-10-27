@@ -2,12 +2,19 @@ package com.lps.pssc.util;
 
 public enum DbMap {
 	Record("rt_record"),
-	Class("inf_class_dict"),
-	Grade("inf_grade_dict"),
+	ClassDict("inf_class_dict"),
+	GradeDict("inf_grade_dict"),
 	Student("inf_student"),
-	Subject("inf_subject_dict"),
+	SubjectDict("inf_subject_dict"),
 	Teacher("inf_teacher"),
-	TeacherClass("inf_teacher_class_dict");
+	TeacherClassDict("inf_teacher_class_dict"),
+	Courseware("res_courseware"),
+	CoursewareDict("res_courseware_dict"),
+	Exercise("res_exercise"),
+	ExerciseBatch("res_exercise_batch"),
+	ExerciseDict("res_exercise_dict"),
+	VideoBatch("res_video_batch"),
+	VideoDict("res_video_dict");
 	private String context;
 	private DbMap(String context) {
 		this.context = context;

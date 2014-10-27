@@ -75,6 +75,30 @@ define([ 'jquery'], function(jquery) {
 			}
 		}
 		
+		Util.load = function(ele, url, data, suc) {
+			$.ajax({
+				url: url,
+				type: 'get',
+				data: data,
+				dataType: 'html',
+				success: function(html) {
+					$(ele).html(html);
+					suc && suc(html);
+				},
+				error: function(data) {
+					if (data.status == 403) {
+						window.location.reload(true);
+					}
+				}
+			});
+		}
+		
+		Util.error = function(data) {
+			if (data.status == 403) {
+				window.location.reload(true);
+			}
+		}
+		
 		if (!window.Util) {
 			window['Util'] = Util;
 		}

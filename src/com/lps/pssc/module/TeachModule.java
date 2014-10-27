@@ -13,19 +13,26 @@ import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 
 import com.lps.pssc.dao.interfaces.StateDaoIF;
-import com.lps.pssc.filter.LoginFilter;
+import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.SessionHelper;
 
 @IocBean
 @InjectName
-@At("/")
+@At("/teach")
 @Fail("json")
-@Filters({@By(type=LoginFilter.class)})
+@Filters({@By(type=LoginJsonFilter.class)})
 public class TeachModule {
 	@Inject
 	StateDaoIF stateDao;
 	
-	@At("teach/state")
+	@At("")
+	@GET
+	@Ok("jsp:/tpl/classRoom.jsp")
+	public Object getIndex(HttpServletRequest req) throws Exception {
+		return null;
+	}
+
+	@At("/state")
 	@GET
 	@Ok("json")
 	public Object getState(HttpServletRequest req) throws Exception {

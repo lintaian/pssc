@@ -23,7 +23,10 @@ define(['jquery'], function($) {
 						clearInterval(interval1);
 						teachingInerval();
 					}
-				} 
+				},
+				error: function(data) {
+					Util.error(data);
+				}
 			})
 		}, 5000);
 	}
@@ -61,6 +64,9 @@ define(['jquery'], function($) {
 						clearInterval(interval2);
 						commonInterval();
 					}
+				},
+				error: function(data) {
+					Util.error(data);
 				}
 			});
 		}, 1000);
