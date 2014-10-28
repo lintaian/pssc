@@ -1,4 +1,4 @@
-.student {
+.item {
 	width: 160px;
 	height: 140px;
 	float: left;
@@ -7,17 +7,17 @@
 	margin-top: 4px;
 	position: relative;
 }
-.student.me {
+.item.clickable {
 	cursor: pointer;
 }
-.student img {
+.item img {
 	width: 160px;
 	height: 120px;
 }
-.student img.cover {
+.item img.cover {
 	opacity: 0.2;
 }
-.student .s_name {
+.item .name {
 	position: absolute;
 	width: 100%;
 	height: 20px;
@@ -29,19 +29,25 @@
 	color: #FFF;
 	font-size: 18px;
 }
-.s_name.me {
+.name.me {
 	color: yellow!important;
 }
-.s_name.girl {
+.name.girl {
 	color: pink;
 }
-.s_name.boy {
+.name.boy {
 	color: rgb(166, 166, 255);
 }
-.student .face {
+.item .face {
 	position: absolute;
 	top: 5px;
 	right: 5px;
+}
+.item .operate {
+	position: absolute;
+	top: 30px;
+	left: 50px;
+	cursor: pointer;
 }
 
 #courseware .choose {
@@ -66,33 +72,26 @@
 #courseware .choose a.active {
 	color: orange;
 }
-.courseware {
-	width: 160px;
-	height: 140px;
+
+#coursewareDetail .item_title {
 	float: left;
-	background-color: rgb(230, 230, 230);
-	margin-left: 4px;
-	margin-top: 4px;
-	position: relative;
+	width: 99%;
+	margin: 5px;
+	font-size: 20px;
+	background-color: rgb(220,220,220);
 }
-.courseware img {
-	width: 160px;
-	height: 120px;
+
+.c_icon {
+	background-image: url("../img/courseware_icon.png");
+	width: 60px;
+	height: 60px;
 }
-.courseware .c_name {
-	position: absolute;
-	width: 100%;
-	height: 20px;
-	left: 0;
-	bottom: 0;
-	background-color: #000;
-	text-align: center;
-	opacity: 0.75;
-	color: #FFF;
-	font-size: 18px;
+.c_icon_video {
+	background-position: -9px -10px;
 }
-.courseware .face {
-	position: absolute;
-	top: 5px;
-	right: 5px;
+.c_icon_exercise {
+	background-position: -79px -10px;
+}
+.c_icon_discuss {
+	background-position: -149px -10px;
 }

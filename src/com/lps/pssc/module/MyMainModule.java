@@ -23,10 +23,10 @@ import org.nutz.mvc.annotation.POST;
 import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginFilter;
 import com.lps.pssc.util.DbMap;
-import com.lps.pssc.util.MD5Util;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.util.Util;
 
 @IocBean
 @InjectName
@@ -49,7 +49,7 @@ public class MyMainModule {
 			DBObject user = baseDao.get(DbMap.Student, new BasicDBObject("login_name", name));
 			if (user != null &&  "1".equals(user.get("status").toString())
 					&& (user.get("auth_code") == null || "".equals(user.get("auth_code")) || 
-				user.get("auth_code").toString().equals(MD5Util.string2MD5(password + user.get("_id").toString())))) {
+				user.get("auth_code").toString().equals(Util.hexMD5((password + user.get("_id").toString()).getBytes())))) {
 				re.put("status", true);
 				DBObject record = new BasicDBObject();
 				record.put("operate", "登陆系统!");

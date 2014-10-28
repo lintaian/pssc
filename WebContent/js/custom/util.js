@@ -72,6 +72,10 @@ define([ 'jquery'], function(jquery) {
 					if (this.list[i].name == name) break;
 				}
 				this.set(temp);
+			},
+			add: function(obj) {
+				this.list.push(obj);
+				this.set(this.list);
 			}
 		}
 		

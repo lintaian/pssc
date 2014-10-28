@@ -27,10 +27,10 @@ import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.ImageHelper;
-import com.lps.pssc.util.MD5Util;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.util.Util;
 
 @IocBean
 @InjectName
@@ -58,7 +58,7 @@ public class UserModule {
 		rs.put("status", true);
 		try {
 			DBObject user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", SessionHelper.getUser(req).get("_id")), 
-					new BasicDBObject("auth_code", MD5Util.string2MD5(obj.get("pwd") + SessionHelper.getUserId(req))));
+					new BasicDBObject("auth_code", Util.hexMD5((obj.get("pwd") + SessionHelper.getUserId(req)).getBytes())));
 			SessionHelper.setUser(req, user);
 		} catch (Exception e) {
 			rs.put("status", false);

@@ -27,6 +27,7 @@ import com.lps.pssc.util.MonthHelper;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 
 @IocBean
 @InjectName
@@ -39,7 +40,7 @@ public class LearnModule {
 	
 	@At("/")
 	@GET
-	@Ok("jsp:/tpl/student.jsp")
+	@Ok("jsp:/tpl/learn/student.jsp")
 	public Object getStudentList(HttpServletRequest req) throws Exception {
 		String classId = SessionHelper.getClassId(req);
 		List<DBObject> list = baseDao.query(DbMap.Student, new BasicDBObject("class_id", new ObjectId(classId))).toArray();
@@ -56,14 +57,14 @@ public class LearnModule {
 	@SuppressWarnings("deprecation")
 	@At("/courseware")
 	@GET
-	@Ok("jsp:/tpl/courseware.jsp")
+	@Ok("jsp:/tpl/learn/courseware.jsp")
 	public Object getCourseware(HttpServletRequest req, String subjectId, String date) throws Exception {
 		DBObject query = new BasicDBObject();
 		query.put("class_id", new ObjectId(SessionHelper.getClassId(req)));
 		query.put("valid_time", new BasicDBObject("$lt", new Date()));
 		query.put("status", 1);
 		if (subjectId != null && !"".equals(subjectId)) {
-			query.put("subject_id", subjectId);
+			query.put("subject_id", new ObjectId(subjectId));
 		}
 		if (date != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -78,5 +79,27 @@ public class LearnModule {
 		rs.put("subjectId", subjectId);
 		rs.put("months", MonthHelper.getMonths(date));
 		return rs;
+	}
+	@SuppressWarnings("unchecked")
+	@At("/coursewareDetail")
+	@GET
+	@Ok("jsp:/tpl/learn/coursewareDetail.jsp")
+	public Object getCoursewareDetail(HttpServletRequest req, String id) throws Exception {
+		List<DBObject> videoIds = baseDao.distinct(DbMap.CoursewareDict, "item_id", 
+				new BasicDBObject("courseware_id", new ObjectId(id)).append("item_type", 0));
+		List<DBObject> exerciseIds = baseDao.distinct(DbMap.CoursewareDict, "item_id", 
+				new BasicDBObject("courseware_id", new ObjectId(id)).append("item_type", 1));
+		Map<String, Object> rs = new HashMap<String, Object>();
+		rs.put("videos", baseDao.query(DbMap.VideoBatch, 
+				QueryBuilder.start("_id").in(videoIds).and("status").is(1).get()));
+		rs.put("exercises", baseDao.query(DbMap.ExerciseBatch, 
+				QueryBuilder.start("_id").in(exerciseIds).and("status").is(1).get()).toArray());
+		return rs;
+	}
+	@At("/video")
+	@GET
+	@Ok("jsp:/tpl/learn/video.jsp")
+	public Object getVideo(HttpServletRequest req, String id) throws Exception {
+		return baseDao.get(DbMap.VideoBatch, QueryBuilder.start("_id").is(new ObjectId(id)).get());
 	}
 }

@@ -12,9 +12,8 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 
-import com.lps.pssc.dao.interfaces.StateDaoIF;
+import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
-import com.lps.pssc.util.SessionHelper;
 
 @IocBean
 @InjectName
@@ -23,7 +22,7 @@ import com.lps.pssc.util.SessionHelper;
 @Filters({@By(type=LoginJsonFilter.class)})
 public class TeachModule {
 	@Inject
-	StateDaoIF stateDao;
+	BaseDao baseDao;
 	
 	@At("")
 	@GET
@@ -36,7 +35,6 @@ public class TeachModule {
 	@GET
 	@Ok("json")
 	public Object getState(HttpServletRequest req) throws Exception {
-		String userId = SessionHelper.getUserId(req);
-		return stateDao.get(userId);
+		return null;
 	}
 }

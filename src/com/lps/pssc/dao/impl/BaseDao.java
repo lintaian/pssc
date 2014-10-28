@@ -144,4 +144,12 @@ public class BaseDao {
 		return get(dbMap, query2);
 	}
 	
+	@SuppressWarnings("rawtypes")
+	public List distinct(DbMap dbMap, String key) {
+		return getCollection(dbMap.getContext()).distinct(key);
+	}
+	@SuppressWarnings("rawtypes")
+	public List distinct(DbMap dbMap, String key, DBObject query) {
+		return getCollection(dbMap.getContext()).distinct(key, query);
+	}
 }
