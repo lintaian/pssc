@@ -14,7 +14,9 @@ public enum DbMap {
 	ExerciseBatch("res_exercise_batch"),
 	ExerciseDict("res_exercise_dict"),
 	VideoBatch("res_video_batch"),
-	VideoDict("res_video_dict");
+	VideoDict("res_video_dict"),
+	Answer("rec_answer"),
+	AnswerLog("rec_answer_log");
 	private String context;
 	private DbMap(String context) {
 		this.context = context;

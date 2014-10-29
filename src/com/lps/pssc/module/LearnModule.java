@@ -13,6 +13,8 @@ import org.bson.types.ObjectId;
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.json.Json;
+import org.nutz.lang.Lang;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.By;
 import org.nutz.mvc.annotation.Fail;
@@ -23,7 +25,9 @@ import org.nutz.mvc.annotation.Ok;
 import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
+import com.lps.pssc.util.Helper;
 import com.lps.pssc.util.MonthHelper;
+import com.lps.pssc.util.Page;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -102,4 +106,29 @@ public class LearnModule {
 	public Object getVideo(HttpServletRequest req, String id) throws Exception {
 		return baseDao.get(DbMap.VideoBatch, QueryBuilder.start("_id").is(new ObjectId(id)).get());
 	}
+	@At("/video/dict")
+	@GET
+	@Ok("json:nice")
+	public Object getVideoDict(HttpServletRequest req, String id) throws Exception {
+		List<DBObject> rs = baseDao.query(DbMap.VideoDict, QueryBuilder.start("video_id").is(new ObjectId(id)).get()).toArray(); 
+		return Json.fromJson(Lang.inr(rs.toString()));
+	}
+	@SuppressWarnings("unchecked")
+	@At("/exercise")
+	@GET
+	@Ok("jsp:/tpl/learn/exercise.jsp")
+	public Object getExercise(HttpServletRequest req, String id, int page) throws Exception {
+		Map<String, Object> rs = new HashMap<String, Object>();
+		page = page == 0 ? 1 : page;
+		List<ObjectId> ids = baseDao.distinct(DbMap.ExerciseDict, "exercise_id", 
+				QueryBuilder.start("exercise_batch_id").is(new ObjectId(id)).get());
+		if (ids.size() > 0) {
+			DBObject obj = baseDao.get(DbMap.Exercise, QueryBuilder.start("_id").is(ids.get(page-1)).get());
+			rs.put("exercise", obj);
+			rs.put("page", new Page(page, 1, ids.size()));
+			rs.put("answer", Helper.getAnswer(8));
+		}
+		return rs;
+	}
+	
 }

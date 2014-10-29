@@ -33,24 +33,32 @@ define(['jquery'], function($) {
 		
 		
 		$('body').on('change', '#uploadPhoto input[type="file"]', function() {
-			var fd = new FormData(document.getElementById("uploadForm"));
-			fd.append("name", "This is some extra data");
-			$.ajax({
-				url: "user/uploader",
-				type: "POST",
-				data: fd,
-				dataType: 'json',
-				processData: false,  // tell jQuery not to process the data
-				contentType: false,   // tell jQuery not to set contentType
-				success: function(data) {
-					if (data) {
-						$('#myPhoto').attr('src', data.photo);
+			var val = $(this).val();
+			var suffix = val.substr(val.lastIndexOf('.') + 1, val.length);
+			suffix = suffix.toLowerCase();
+			if (suffix == 'png' || suffix == 'gif' || suffix == 'jpg' || suffix == 'jpeg') {
+				var fd = new FormData(document.getElementById("uploadForm"));
+				fd.append("name", "This is some extra data");
+				$.ajax({
+					url: "user/uploader",
+					type: "POST",
+					data: fd,
+					dataType: 'json',
+					processData: false,  // tell jQuery not to process the data
+					contentType: false,   // tell jQuery not to set contentType
+					success: function(data) {
+						if (data) {
+							Util.msg.show('错误提示', '头像更新成功!');
+							$('#myPhoto').attr('src', data.photo);
+						}
+					},
+					error: function(data) {
+						Util.error(data);
 					}
-				},
-				error: function(data) {
-					Util.error(data);
-				}
-			});
+				});
+			} else {
+				Util.msg.show('提示信息', '请选择正确格式的图片!', 'error');
+			}
 		});
 	});
 });
