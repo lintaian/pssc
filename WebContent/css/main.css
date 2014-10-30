@@ -49,6 +49,7 @@ ul li {
 }
 .outerPage {
 	overflow: auto;
+	overflow-x: hidden;
 }
 .scroll {
 	-webkit-overflow-scrolling:touch;

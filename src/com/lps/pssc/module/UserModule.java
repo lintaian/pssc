@@ -58,7 +58,7 @@ public class UserModule {
 		rs.put("status", true);
 		try {
 			DBObject user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", SessionHelper.getUser(req).get("_id")), 
-					new BasicDBObject("auth_code", Util.hexMD5((obj.get("pwd") + SessionHelper.getUserId(req)).getBytes())));
+					new BasicDBObject("auth_code", Util.hexMD5((obj.get("pwd") + SessionHelper.getUserIdStr(req)).getBytes())));
 			SessionHelper.setUser(req, user);
 		} catch (Exception e) {
 			rs.put("status", false);

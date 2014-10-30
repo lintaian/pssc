@@ -3,12 +3,32 @@ package com.lps.pssc.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MonthHelper {
+public class MyHelper {
+	/**
+	 * 比较两个UUID是否相等
+	 * @param u1
+	 * @param u2
+	 * @return
+	 */
+	public static boolean equalUUID(String u1, String u2) {
+		u1 = u1.replaceAll("-", "").toLowerCase();
+		u2 = u2.replaceAll("-", "").toLowerCase();
+		return u1.equals(u2);
+	}
+	public static List<String> getAnswer(int num) {
+		List<String> rs = new ArrayList<String>();
+		int a = 65;
+		for (int i = 0; i < num; i++) {
+			rs.add(Character.toString((char) (a + i)));
+		}
+		return rs;
+	}
 	@SuppressWarnings("deprecation")
 	public static List<Map<String, Object>> getMonths(String date) {
 		List<Map<String, Object>> rs = new ArrayList<Map<String,Object>>();
@@ -46,5 +66,19 @@ public class MonthHelper {
 			e.printStackTrace();
 		}
 		return rs;
+	}
+	public static String addOrRemoveString(String os, String target) {
+		if (os.indexOf(target) != -1) {
+			os = os.replaceAll(target, "");
+		} else {
+			os = os + target;
+			String[] temp = os.split("");
+			Arrays.sort(temp);
+			os = "";
+			for (int i = 0; i < temp.length; i++) {
+				os += temp[i];
+			}
+		}
+		return os;
 	}
 }

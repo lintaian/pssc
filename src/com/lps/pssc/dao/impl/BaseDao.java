@@ -152,4 +152,20 @@ public class BaseDao {
 	public List distinct(DbMap dbMap, String key, DBObject query) {
 		return getCollection(dbMap.getContext()).distinct(key, query);
 	}
+	
+	public void updateOrInsert(DbMap dbMap, DBObject query, DBObject update) {
+		if (get(dbMap, query) != null) {
+			update(dbMap, query, update);
+		} else {
+			query.putAll(update);
+			insert(dbMap, query);
+		}
+	}
+	public void updateOrInsert(DbMap dbMap, DBObject query, DBObject update, DBObject insert) {
+		if (get(dbMap, query) != null) {
+			update(dbMap, query, update);
+		} else {
+			insert(dbMap, insert);
+		}
+	}
 }

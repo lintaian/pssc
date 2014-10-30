@@ -28,9 +28,9 @@ define(['jquery'], function($) {
 	});
 	$('body').on('click', '#coursewareDetail .videoList .operate', function() {
 		var id = $(this).parent('.item').data('id');
-		Util.load('.outerPage', 'learn/video', 'id=' + id);
+		Util.load('.outerPage', 'video', 'id=' + id);
 		Util.location.add({
-			url: 'learn/video?id=' + id,
+			url: 'video?id=' + id,
 			name: $(this).parent('.item').data('name')
 		});
 	});

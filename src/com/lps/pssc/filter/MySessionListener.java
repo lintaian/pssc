@@ -26,7 +26,7 @@ public class MySessionListener implements HttpSessionListener {
 				DBObject user = (DBObject) obj;
 				DBObject record = new BasicDBObject();
 				record.put("operate", "退出系统!");
-				record.put("user_id", user.get("_id").toString());
+				record.put("user_id", user.get("_id"));
 				record.put("time", new Date());
 				baseDao.insert(DbMap.Record, record);
 				

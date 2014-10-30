@@ -27,7 +27,7 @@
 			</li>
 		</ul>
 		<div class="fun-btn">
-			<div id="uploadPhoto">
+			<div class="uploadImg">
 				<span>上传图片</span>
 				<form action="user/uploader" method="post" id="uploadForm"
 					enctype="multipart/form-data">

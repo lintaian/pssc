@@ -53,7 +53,7 @@ public class MyMainModule {
 				re.put("status", true);
 				DBObject record = new BasicDBObject();
 				record.put("operate", "登陆系统!");
-				record.put("user_id", user.get("_id").toString());
+				record.put("user_id", user.get("_id"));
 				record.put("time", new Date());
 				baseDao.insert(DbMap.Record, record);
 				user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", user.get("_id")), 

@@ -2,6 +2,8 @@ package com.lps.pssc.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.types.ObjectId;
+
 import com.mongodb.DBObject;
 
 public class SessionHelper {
@@ -20,11 +22,19 @@ public class SessionHelper {
 		Object obj = req.getSession().getAttribute("loginUser");
 		return obj == null ? null : (DBObject)obj;
 	}
-	public static String getUserId(HttpServletRequest req) {
+	public static ObjectId getUserId(HttpServletRequest req) {
+		DBObject obj = getUser(req);
+		return obj == null ? null : (ObjectId) obj.get("_id");
+	}
+	public static ObjectId getClassId(HttpServletRequest req) {
+		DBObject obj = getUser(req);
+		return obj == null ? null : (ObjectId) obj.get("class_id");
+	}
+	public static String getUserIdStr(HttpServletRequest req) {
 		DBObject obj = getUser(req);
 		return obj == null ? "" : obj.get("_id").toString();
 	}
-	public static String getClassId(HttpServletRequest req) {
+	public static String getClassIdStr(HttpServletRequest req) {
 		DBObject obj = getUser(req);
 		return obj == null ? "" : obj.get("class_id").toString();
 	}

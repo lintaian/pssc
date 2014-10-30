@@ -26,7 +26,7 @@ public class TeachModule {
 	
 	@At("")
 	@GET
-	@Ok("jsp:/tpl/classRoom.jsp")
+	@Ok("jsp:/tpl/teach/classRoom.jsp")
 	public Object getIndex(HttpServletRequest req) throws Exception {
 		return null;
 	}

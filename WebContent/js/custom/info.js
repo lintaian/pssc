@@ -48,7 +48,7 @@ define(['jquery'], function($) {
 					contentType: false,   // tell jQuery not to set contentType
 					success: function(data) {
 						if (data) {
-							Util.msg.show('错误提示', '头像更新成功!');
+							Util.msg.show('提示信息', '头像更新成功!');
 							$('#myPhoto').attr('src', data.photo);
 						}
 					},
@@ -57,7 +57,7 @@ define(['jquery'], function($) {
 					}
 				});
 			} else {
-				Util.msg.show('提示信息', '请选择正确格式的图片!', 'error');
+				Util.msg.show('错误提示', '请选择正确格式的图片!', 'error');
 			}
 		});
 	});

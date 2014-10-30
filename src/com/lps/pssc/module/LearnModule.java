@@ -13,8 +13,6 @@ import org.bson.types.ObjectId;
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.nutz.json.Json;
-import org.nutz.lang.Lang;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.By;
 import org.nutz.mvc.annotation.Fail;
@@ -25,9 +23,7 @@ import org.nutz.mvc.annotation.Ok;
 import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
-import com.lps.pssc.util.Helper;
-import com.lps.pssc.util.MonthHelper;
-import com.lps.pssc.util.Page;
+import com.lps.pssc.util.MyHelper;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -46,11 +42,10 @@ public class LearnModule {
 	@GET
 	@Ok("jsp:/tpl/learn/student.jsp")
 	public Object getStudentList(HttpServletRequest req) throws Exception {
-		String classId = SessionHelper.getClassId(req);
-		List<DBObject> list = baseDao.query(DbMap.Student, new BasicDBObject("class_id", new ObjectId(classId))).toArray();
+		List<DBObject> list = baseDao.query(DbMap.Student, new BasicDBObject("class_id", SessionHelper.getClassId(req))).toArray();
 		List<DBObject> rs = new ArrayList<DBObject>();
 		for (DBObject dbObject : list) {
-			if (SessionHelper.getUserId(req).equals(dbObject.get("_id").toString())) {
+			if (SessionHelper.getUserIdStr(req).equals(dbObject.get("_id").toString())) {
 				rs.add(0, dbObject);
 			} else {
 				rs.add(dbObject);
@@ -64,7 +59,7 @@ public class LearnModule {
 	@Ok("jsp:/tpl/learn/courseware.jsp")
 	public Object getCourseware(HttpServletRequest req, String subjectId, String date) throws Exception {
 		DBObject query = new BasicDBObject();
-		query.put("class_id", new ObjectId(SessionHelper.getClassId(req)));
+		query.put("class_id", SessionHelper.getClassId(req));
 		query.put("valid_time", new BasicDBObject("$lt", new Date()));
 		query.put("status", 1);
 		if (subjectId != null && !"".equals(subjectId)) {
@@ -81,7 +76,7 @@ public class LearnModule {
 		rs.put("cws", baseDao.query(DbMap.Courseware, query).toArray());
 		rs.put("subjects", baseDao.query(DbMap.SubjectDict, new BasicDBObject("status", 1)).toArray());
 		rs.put("subjectId", subjectId);
-		rs.put("months", MonthHelper.getMonths(date));
+		rs.put("months", MyHelper.getMonths(date));
 		return rs;
 	}
 	@SuppressWarnings("unchecked")
@@ -98,37 +93,7 @@ public class LearnModule {
 				QueryBuilder.start("_id").in(videoIds).and("status").is(1).get()));
 		rs.put("exercises", baseDao.query(DbMap.ExerciseBatch, 
 				QueryBuilder.start("_id").in(exerciseIds).and("status").is(1).get()).toArray());
+		SessionHelper.set(req, "coursewareId", new ObjectId(id));
 		return rs;
 	}
-	@At("/video")
-	@GET
-	@Ok("jsp:/tpl/learn/video.jsp")
-	public Object getVideo(HttpServletRequest req, String id) throws Exception {
-		return baseDao.get(DbMap.VideoBatch, QueryBuilder.start("_id").is(new ObjectId(id)).get());
-	}
-	@At("/video/dict")
-	@GET
-	@Ok("json:nice")
-	public Object getVideoDict(HttpServletRequest req, String id) throws Exception {
-		List<DBObject> rs = baseDao.query(DbMap.VideoDict, QueryBuilder.start("video_id").is(new ObjectId(id)).get()).toArray(); 
-		return Json.fromJson(Lang.inr(rs.toString()));
-	}
-	@SuppressWarnings("unchecked")
-	@At("/exercise")
-	@GET
-	@Ok("jsp:/tpl/learn/exercise.jsp")
-	public Object getExercise(HttpServletRequest req, String id, int page) throws Exception {
-		Map<String, Object> rs = new HashMap<String, Object>();
-		page = page == 0 ? 1 : page;
-		List<ObjectId> ids = baseDao.distinct(DbMap.ExerciseDict, "exercise_id", 
-				QueryBuilder.start("exercise_batch_id").is(new ObjectId(id)).get());
-		if (ids.size() > 0) {
-			DBObject obj = baseDao.get(DbMap.Exercise, QueryBuilder.start("_id").is(ids.get(page-1)).get());
-			rs.put("exercise", obj);
-			rs.put("page", new Page(page, 1, ids.size()));
-			rs.put("answer", Helper.getAnswer(8));
-		}
-		return rs;
-	}
-	
 }
