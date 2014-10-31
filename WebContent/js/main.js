@@ -111,7 +111,11 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	function resize(windResize) {
 		var height = getWinHeight();
 		if ($('.content').hasClass('full')) {
-			$('.outerPage').height(height - 40);
+			var h = height - 40;
+			if(navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") < 0) {
+				h -= 20;
+			} 
+			$('.outerPage').height(h);
 		} else {
 			$('.outerPage').height(height - 40 - 70 - 40);
 		}

@@ -23,6 +23,8 @@
   <link rel="stylesheet" type="text/css" href="css/record.css">
   <link rel="stylesheet" type="text/css" href="css/info.css">
   <link rel="stylesheet" type="text/css" href="css/learn.css">
+  <link rel="stylesheet" type="text/css" href="css/video.css">
+  <link rel="stylesheet" type="text/css" href="css/exercise.css">
 </head>
 <body>
 	<div class="main">

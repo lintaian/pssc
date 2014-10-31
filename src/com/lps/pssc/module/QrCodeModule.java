@@ -1,22 +1,21 @@
 package com.lps.pssc.module;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
-import org.bson.types.ObjectId;
+
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.nutz.json.Json;
-import org.nutz.lang.Lang;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
+
 import com.lps.pssc.dao.impl.BaseDao;
-import com.lps.pssc.util.DbMap;
+import com.lps.pssc.util.SessionHelper;
 import com.lps.pssc.util.TwoDimensionCode;
-import com.mongodb.DBObject;
-import com.mongodb.QueryBuilder;
 
 @IocBean
 @InjectName
@@ -25,17 +24,32 @@ import com.mongodb.QueryBuilder;
 public class QrCodeModule {
 	@Inject
 	BaseDao baseDao;
+	@Inject("refer:qrcodeHost")
+	String qrcodeHost;
 	
-	@At("")
+	@At("/*")
 	@Ok("raw")
-	public Object getVideo(HttpServletRequest req, String id) throws Exception {
-		return TwoDimensionCode.qRCodeCommon("http://www.baidu.com", "png", 4, null, 0);
+	public Object getVideo(String exerciseId, int exerciseType, HttpServletRequest req) throws Exception {
+		StringBuffer content = new StringBuffer(qrcodeHost);
+		content.append("/qrcode/validate/");
+		content.append(SessionHelper.getUserIdStr(req));
+		content.append("/");
+		content.append(SessionHelper.get(req, "coursewareId").toString());
+		content.append("/");
+		content.append(exerciseId);
+		content.append("/");
+		content.append(exerciseType);
+		return TwoDimensionCode.qRCodeCommon(content.toString(), "png", 8, null, 0);
 	}
-	@At("/validate")
+	@At("/validate/*")
 	@GET
-	@Ok("jsp:/tpl/")
-	public Object getVideoDict(HttpServletRequest req, String id) throws Exception {
-		List<DBObject> rs = baseDao.query(DbMap.VideoDict, QueryBuilder.start("video_id").is(new ObjectId(id)).get()).toArray(); 
-		return Json.fromJson(Lang.inr(rs.toString()));
+	@Ok("jsp:jsp.qrcode")
+	public Object getVideoDict(String sId, String cId, String eId, int eType, HttpServletRequest req) throws Exception {
+		Map<String, Object> rs = new HashMap<String, Object>();
+		rs.put("sId", sId);
+		rs.put("cId", cId);
+		rs.put("eId", eId);
+		rs.put("eType", eType);
+		return rs;
 	}
 }

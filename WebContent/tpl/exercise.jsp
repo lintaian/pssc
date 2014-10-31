@@ -22,37 +22,59 @@
 				</c:forEach>
 			</div>
 		</c:when>
-		<c:when test="${obj.exercise.exercise_type == 20 }">
+		<c:when test="${obj.exercise.exercise_type == 20 || obj.exercise.exercise_type == 21 || obj.exercise.exercise_type == 22 }">
 			<div class="e_my_answer">
 				我的答案 :
 			</div>
 			<div class="e_my_answer">
-				<img class="e_subjective_my_answer ${obj.myAnswer.answer == '' ? 'hide' : '' }" 
-					src="${obj.myAnswer.answer }">
+				<c:choose>
+					<c:when test="${obj.exercise.exercise_type == 20 }">
+						<img class="e_subjective_my_answer e_my_img ${obj.myAnswer.answer == '' ? 'hide' : '' }" 
+							src="${obj.myAnswer.answer }">
+					</c:when>
+					<c:when test="${obj.exercise.exercise_type == 21 }">
+						<audio class="e_subjective_my_answer e_my_audio ${obj.myAnswer.answer == '' ? 'hide' : '' }" 
+							controls="controls">
+						  	<source src="${obj.myAnswer.answer }" type="audio/ogg">
+						  	<source src="${obj.myAnswer.answer }" type="audio/mpeg">
+						  	<source src="${obj.myAnswer.answer }" type="audio/wav">
+							Your browser does not support the audio element.
+						</audio>
+					</c:when>
+					<c:when test="${obj.exercise.exercise_type == 22 }">
+						<video class="e_subjective_my_answer e_my_video ${obj.myAnswer.answer == '' ? 'hide' : '' }" 
+							controls="controls" preload="metadata">
+							<source src="${obj.myAnswer.answer }" type="video/ogg" />
+							<source src="${obj.myAnswer.answer }" type="video/mp4" />
+							<source src="${obj.myAnswer.answer }" type="video/webm" />
+							Your browser does not support the video tag.
+						</video>
+					</c:when>
+				</c:choose>
 			</div>
 			<div class="e_subjective">
-				<div class="uploadImg e_upload">
-					<span>上传图片</span>
-					<form action="user/uploader" method="post" id="answerUpload"
+				<div class="upload e_upload">
+					<span class="btn">上传${obj.exercise.exercise_type == 20 ? '图片' : (obj.exercise.exercise_type == 21 ? '录音' : (obj.exercise.exercise_type == 22 ? '视频' : '')) }</span>
+					<form method="post" id="answerUpload"
 						enctype="multipart/form-data">
 						<input type="file" name="file">				
 					</form>
 				</div>
 				<div class="qrcode">
-					<img alt="" src="photo/q1.png">
+					<img alt="" src="qrcode/${obj.exercise._id }/${obj.exercise.exercise_type }">
 				</div>
 			</div>
 		</c:when>
 	</c:choose>
 	<div class="e_page">
 		<c:if test="${obj.page.curPage > 1 }">
-			<span class="e_change" data-page="${obj.page.curPage - 1 }">上一题</span>
+			<span class="e_change btn" data-page="${obj.page.curPage - 1 }">上一题</span>
 		</c:if>
 		<c:if test="${obj.page.curPage < obj.page.countPage }">
-			<span class="e_change" data-page="${obj.page.curPage + 1 }">下一题</span>
+			<span class="e_change btn" data-page="${obj.page.curPage + 1 }">下一题</span>
 		</c:if>
 		<c:if test="${obj.page.curPage == obj.page.countPage }">
-			<span class="e_finish">完成</span>
+			<span class="e_finish btn">完成</span>
 		</c:if>
 		<c:if test="${obj.page.countPage != 1 }">
 			${obj.page.curPage } / ${obj.page.countPage }

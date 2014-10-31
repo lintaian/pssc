@@ -28,13 +28,13 @@
 		</ul>
 		<div class="fun-btn">
 			<div class="uploadImg">
-				<span>上传图片</span>
+				<span class="btn">上传图片</span>
 				<form action="user/uploader" method="post" id="uploadForm"
 					enctype="multipart/form-data">
 					<input type="file" name="file">				
 				</form>
 			</div>
-			<span id="updatePwd">更新密码</span>
+			<span id="updatePwd" class="btn">更新密码</span>
 		</div>
 	</div>
 </div>

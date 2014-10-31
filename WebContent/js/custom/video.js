@@ -65,13 +65,33 @@ $(function() {
 			});
 		}
 	});
-	$('body').on('change', '#exercise .uploadImg input[type="file"]', function() {
-		var val = $(this).val();
-		var suffix = val.substr(val.lastIndexOf('.') + 1, val.length);
+	$('body').on('change', '#exercise .upload input[type="file"]', function() {
+		var val = $(this).val(),
+			suffix = val.substr(val.lastIndexOf('.') + 1, val.length),
+			eid = $('#exercise').data('id'),
+			etype = $('#exercise').data('type');
 		suffix = suffix.toLowerCase();
-		if (suffix == 'png' || suffix == 'gif' || suffix == 'jpg' || suffix == 'jpeg') {
+		var fixRight = false;
+		switch (etype) {
+		case 20:
+			if (suffix == 'png' || suffix == 'gif' || suffix == 'jpg' || suffix == 'jpeg')
+				fixRight = true;
+			break;
+		case 21:
+			if (suffix == 'acc' || suffix == 'mp3')
+				fixRight = true;
+			break;
+		case 22:
+			if (suffix == 'mp4' || suffix == '3gp')
+				fixRight = true;
+			break;
+		default:
+			break;
+		}
+		if (fixRight) {
 			var fd = new FormData(document.getElementById("answerUpload"));
-			fd.append("exerciseId", $('#exercise').data('id'));
+			fd.append("eId", eid);
+			fd.append("eType", etype);
 			$.ajax({
 				url: "exercise/uploader",
 				type: "POST",
@@ -81,8 +101,8 @@ $(function() {
 				contentType: false,   // tell jQuery not to set contentType
 				success: function(data) {
 					if (data) {
-						Util.msg.show('提示信息', '图片上传成功!');
-						$('.e_subjective_my_answer').attr('src', data.image).show();
+						Util.msg.show('提示信息', '文件上传成功!');
+						$('.e_subjective_my_answer').attr('src', data.file).show();
 					}
 				},
 				error: function(data) {
@@ -90,7 +110,7 @@ $(function() {
 				}
 			});
 		} else {
-			Util.msg.show('错误提示', '请选择正确格式的图片!', 'error');
+			Util.msg.show('错误提示', '请选择正确格式的文件!', 'error');
 		}
 	});
 });

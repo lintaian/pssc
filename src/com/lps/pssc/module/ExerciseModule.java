@@ -89,26 +89,27 @@ public class ExerciseModule {
 	
 	@At("/uploader")
 	@Ok("json")
-	@AdaptBy(type=UploadAdaptor.class, args = { "${app.root}/images" })
-	public Object uploader(@Param("file") File file, String exerciseId, HttpServletRequest req) {
+	@Filters
+	@AdaptBy(type=UploadAdaptor.class, args = { "${app.root}/files" })
+	public Object uploader(@Param("file") File file, String eId, String sId, String cId, int eType, HttpServletRequest req) {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			String image = file.toString();
-			
-			//存入数据库
-			image = image.replace('\\', '/');
-			image = image.substring(image.lastIndexOf("images"), image.length());
+			String f = file.toString();
+			f = f.replace('\\', '/');
+			f = f.substring(f.lastIndexOf("files"), f.length());
+			ObjectId studentId = sId == null ? SessionHelper.getUserId(req) : new ObjectId(sId);
+			ObjectId coursewareId = cId == null ? (ObjectId)SessionHelper.get(req, "coursewareId") : new ObjectId(cId);
 			baseDao.updateOrInsert(DbMap.Answer, 
-					QueryBuilder.start("courseware_id").is(SessionHelper.get(req, "coursewareId"))
-					.and("exercise_id").is(new ObjectId(exerciseId)).and("student_id").
-					is(SessionHelper.getUserId(req)).get(), 
-					new BasicDBObject("answer", image).append("answer_date", new Date()));
-			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", SessionHelper.get(req, "coursewareId"))
-					.append("exercise_id", new ObjectId(exerciseId))
-					.append("student_id", SessionHelper.getUserId(req))
-					.append("answer", image).append("answer_date", new Date()));
-			rs.put("image", image);
+					QueryBuilder.start("courseware_id").is(coursewareId)
+					.and("exercise_id").is(new ObjectId(eId)).and("student_id").
+					is(studentId).get(), 
+					new BasicDBObject("answer", f).append("answer_date", new Date()));
+			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", coursewareId)
+					.append("exercise_id", new ObjectId(eId))
+					.append("student_id", studentId)
+					.append("answer", f).append("answer_date", new Date()));
+			rs.put("file", f);
 		} catch (Exception e) {
 			rs.put("status", false);
 		}

@@ -2,7 +2,7 @@ var ioc = {
   	config : {
         type : 'org.nutz.ioc.impl.PropertiesProxy',
         fields : {
-            paths : ['thrift.properties', 'mongo.properties']
+            paths : ['thrift.properties', 'mongo.properties', 'config.properties']
         }
     },
 	thriftConfig: {
@@ -19,8 +19,12 @@ var ioc = {
 	},
 	mongoConfig: {
 		type: 'com.lps.pssc.config.MongoConfig',
-		args: [{java: "$config.get('host')"}, 
-		       {java: "$config.get('port')"},
-			   {java: "$config.get('db')"}]
+		args: [{java: "$config.get('mongo.host')"}, 
+		       {java: "$config.get('mongo.port')"},
+			   {java: "$config.get('mongo.db')"}]
+	},
+	qrcodeHost: {
+		type: 'java.lang.String',
+		args: [{java: "$config.get('qrcode.host')"}]
 	}
 }

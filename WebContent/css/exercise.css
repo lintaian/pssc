@@ -1,0 +1,87 @@
+.e_question {
+	width: 96%;
+	height: 300px;
+	margin-left: 20px;
+	margin-top: 5px;
+	float: left;
+}
+.e_question img {
+	width: 100%;
+	height: 300px;
+}
+.e_answers {
+	position: relative;
+}
+.e_my_answer {
+	float: left;
+	width: 100%;
+	margin: 10px 0 -10px 10px;;
+}
+.e_answers .e_answer {
+	float: left;
+	width: 120px;
+	height: 120px;
+	margin: 10px;
+}
+.e_answers .e_answer .e_answer_img {
+	width: 120px;
+	height: 100px;
+}
+.e_answers .e_answer .e_answer_text {
+	text-align: center;
+}
+.e_page {
+	width: 100%;
+	float: left;
+	text-align: center;
+	font-size: 18px;
+	line-height: 50px;
+}
+.e_page span {
+	margin-right: 20px;
+}
+
+.e_subjective {
+	margin: 20px 0 10px 10px;
+	float: left;
+	position: relative;
+	margin-left: 35%;
+}
+.upload {
+	margin-top: 40px;
+	width: 104px;
+	float: left;
+	margin-right: 40px;
+}
+.upload span {
+	margin: 10px;
+}
+.upload input {
+	width: 104px;
+	height: 36px;
+	position: absolute;
+	top: 31px;
+	opacity: 0;
+}
+.qrcode {
+	width: 100px;
+	float: left;
+}
+.qrcode img {
+	width: 100px;
+	height: 100px;
+}
+.e_subjective_my_answer {
+	margin-left: 10px;
+	margin-top: 10px;
+	width: 96%;
+}
+.e_my_img {
+	height: 300px;
+}
+.e_my_audio {
+}
+.e_my_video {
+	height: 300px;
+	background-color: black;
+}

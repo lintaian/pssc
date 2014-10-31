@@ -41,11 +41,7 @@
 	margin: 44px;
 }
 .basic-info .fun-btn span {
-	background-color: rgb(242,204,129);
-	padding: 10px;
 	margin-right: 20px;
-	border-radius: 6px;
-	cursor: pointer;
 }
 .uploadImg {
 	float: left;

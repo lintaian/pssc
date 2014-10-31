@@ -192,3 +192,10 @@ ul li {
 .icon_face.cry {
 	background-position: -45px -45px;
 }
+
+.btn {
+	padding: 10px;
+	background-color: rgb(242,204,129);
+	border-radius: 6px;
+	cursor: pointer;
+}
