@@ -73,6 +73,10 @@ define([ 'jquery'], function(jquery) {
 				}
 				this.set(temp);
 			},
+			virtualClick: function(index) {
+				index = (this.list.length + index - 1) % this.list.length;
+				$('#location a:eq(' + index + ')').click();
+			},
 			add: function(obj) {
 				this.list.push(obj);
 				this.set(this.list);

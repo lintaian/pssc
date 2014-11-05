@@ -1,13 +1,19 @@
 .e_question {
 	width: 96%;
-	height: 300px;
 	margin-left: 20px;
 	margin-top: 5px;
 	float: left;
 }
 .e_question img {
-	width: 100%;
-	height: 300px;
+	max-width: 100%;
+	margin-top: 10px;
+}
+.e_question div {
+	text-align: center;
+	font-size: 30px;
+}
+.e_question .no_img {
+	font-size: 40px;
 }
 .e_answers {
 	position: relative;
@@ -15,7 +21,7 @@
 .e_my_answer {
 	float: left;
 	width: 100%;
-	margin: 10px 0 -10px 10px;;
+	margin: 10px 0 -10px 20px;;
 }
 .e_answers .e_answer {
 	float: left;
@@ -74,14 +80,14 @@
 .e_subjective_my_answer {
 	margin-left: 10px;
 	margin-top: 10px;
-	width: 96%;
-}
-.e_my_img {
-	height: 300px;
-}
-.e_my_audio {
+	max-width: 96%;
 }
 .e_my_video {
-	height: 300px;
 	background-color: black;
+}
+.e_write {
+	float: left;
+	text-align: center;
+	width: 98%;
+	margin: 20px;
 }

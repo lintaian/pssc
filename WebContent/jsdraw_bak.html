@@ -172,10 +172,10 @@
 	<div id="drawController">
 		<img src="img/jsdraw/pencil.png" width="20px;" height="20px;"
 			class="img border_nochoose"
-			onclick="draw_graph('pencil',this)" title="铅笔"><br>
+			onclick="draw_graph(&#39;pencil&#39;,this)" title="铅笔"><br>
 		<img src="img/jsdraw/line.png" width="20px;" height="20px;"
 			class="img border_nochoose"
-			onclick="draw_graph('line',this);" title="画直线"><br>
+			onclick="draw_graph(&#39;line&#39;,this);" title="画直线"><br>
 		<img src="img/jsdraw/cancel.png" width="20px;" height="20px;"
 			class="img border_nochoose" onclick="cancel(this)" title="撤销上一个操作"><br>
 		<img src="img/jsdraw/next.png" width="20px;" height="20px;"
@@ -184,20 +184,20 @@
 			onclick="showColor(this)" title="选择颜色"><br> <img
 			src="img/jsdraw/square.png" width="20px;" height="20px;"
 			class="img border_nochoose"
-			onclick="draw_graph('square',this)" title="方形"><br>
+			onclick="draw_graph(&#39;square&#39;,this)" title="方形"><br>
 		<img src="img/jsdraw/circle.png" width="20px;" height="20px;"
-			class="img border_choose" onclick="draw_graph('circle',this)"
+			class="img border_choose" onclick="draw_graph(&#39;circle&#39;,this)"
 			title="圆"><br> <img src="img/jsdraw/handwriting.png"
 			width="20px;" height="20px;" class="img border_nochoose"
-			onclick="draw_graph('handwriting',this)" title="涂鸦"><br>
+			onclick="draw_graph(&#39;handwriting&#39;,this)" title="涂鸦"><br>
 		<img src="img/jsdraw/rubber.png" width="20px;" height="20px;"
 			class="img border_nochoose"
-			onclick="draw_graph('rubber',this)" title="橡皮擦"><br>
+			onclick="draw_graph(&#39;rubber&#39;,this)" title="橡皮擦"><br>
 		<img id="chooseSize" src="img/jsdraw/line_size_1.png" width="20px;"
 			height="20px;" class="img border_nochoose"
 			onclick="showLineSize(this)" title="线条大小"><br> <img
 			src="img/jsdraw/xx.png" width="20px;" height="20px;"
-			class="img border_nochoose" onclick="clearContext('1')"
+			class="img border_nochoose" onclick="clearContext(&#39;1&#39;)"
 			title="清屏"><br> <img src="img/jsdraw/save.png"
 			width="20px;" height="20px;" class="img border_nochoose"
 			onclick="save()" title="保存"><br> <a
@@ -212,6 +212,52 @@
 				浏览器不支持哦，亲
 			</canvas>
 		<canvas id="canvas_bak" width="500" height="400" style="z-index: 1;"></canvas>
+	</div>
+
+	<div id="showHistory">
+		<h2>记录您绘画成果</h2>
+		<table style="font-size: 12px;">
+			<tbody>
+				<tr>
+					<td><img src="" width="150px;" height="150px;" id="history_1"></td>
+					<td><img src="" width="150px;" height="150px;" id="history_2"></td>
+					<td><img src="" width="150px;" height="150px;" id="history_3"></td>
+					<td><img src="img/jsdraw/noimg.png" width="150px;"
+						height="150px;" id="history_4"></td>
+				</tr>
+				<tr align="center">
+					<td><a href="javascript:void(0)" id="history_del_1">删除</a>&nbsp;
+						<a href="" id="history_download_1" download="picture.png">下载</a></td>
+					<td><a href="javascript:void(0)" id="history_del_2">删除</a>&nbsp;
+						<a href="" id="history_download_2" download="picture.png">下载</a></td>
+					<td><a href="javascript:void(0)" id="history_del_3">删除</a>&nbsp;
+						<a href="" id="history_download_3" download="picture.png">下载</a></td>
+					<td><a id="history_del_4">删除</a>&nbsp; <a
+						id="history_download_4" download="picture.png">下载</a></td>
+				</tr>
+
+				<tr>
+					<td><img src="img/jsdraw/noimg.png" width="150px;"
+						height="150px;" id="history_5"></td>
+					<td><img src="img/jsdraw/noimg.png" width="150px;"
+						height="150px;" id="history_6"></td>
+					<td><img src="img/jsdraw/noimg.png" width="150px;"
+						height="150px;" id="history_7"></td>
+					<td><img src="img/jsdraw/noimg.png" width="150px;"
+						height="150px;" id="history_8"></td>
+				</tr>
+				<tr align="center">
+					<td><a id="history_del_5">删除</a>&nbsp; <a
+						id="history_download_5" download="picture.png">下载</a></td>
+					<td><a id="history_del_6">删除</a>&nbsp; <a
+						id="history_download_6" download="picture.png">下载</a></td>
+					<td><a id="history_del_7">删除</a>&nbsp; <a
+						id="history_download_7" download="picture.png">下载</a></td>
+					<td><a id="history_del_8">删除</a>&nbsp; <a
+						id="history_download_8" download="picture.png">下载</a></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<div id="color" class="color"
 		style="left: 42px; top: 141px; display: none;">

@@ -54,33 +54,36 @@
 					eid = $('.upload').data('eid'),
 					etype = $('.upload').data('etype'),
 					sid = $('.upload').data('sid'),
-					cid = $('.upload').data('cid');
+					cid = $('.upload').data('cid'),
+					url = 'upload/';
 				suffix = suffix.toLowerCase();
 				var fixRight = false;
 				switch (etype) {
 				case 20:
-					if (suffix == 'png' || suffix == 'gif' || suffix == 'jpg' || suffix == 'jpeg')
+					if (suffix == 'png' || suffix == 'gif' || suffix == 'jpg' || suffix == 'jpeg') {
 						fixRight = true;
+						url += 'img';
+					}
 					break;
 				case 21:
-					if (suffix == 'acc' || suffix == 'mp3')
+					if (suffix == 'acc' || suffix == 'mp3') {
 						fixRight = true;
+						url += 'audio';
+					}
 					break;
 				case 22:
-					if (suffix == 'mp4' || suffix == '3gp')
+					if (suffix == 'mp4' || suffix == '3gp') {
 						fixRight = true;
+						url += 'video';
+					}
 					break;
 				default:
 					break;
 				}
 				if (fixRight) {
 					var fd = new FormData(document.getElementById("answerUpload"));
-					fd.append("eId", eid);
-					fd.append("eType", etype);
-					fd.append("cId", cid);
-					fd.append("sId", sid);
 					$.ajax({
-						url: "exercise/uploader",
+						url: url,
 						type: "POST",
 						data: fd,
 						dataType: 'json',
@@ -88,7 +91,27 @@
 						contentType: false,   // tell jQuery not to set contentType
 						success: function(data) {
 							if (data) {
-								alert('文件上传成功!');
+								$.ajax({
+									url: 'exercise/subjective',
+									type: 'get',
+									data: {
+										answer: data.url,
+										eId: eid,
+										eType: etype,
+										cId: cid,
+										sId: sid
+									},
+									dataType: 'json',
+									success: function(d) {
+										if (d.status) {
+											alert('文件上传成功!');
+										} else {
+											alert('文件上传失败!');
+										}
+									}
+								})
+							} else {
+								Util.msg.show('提示信息', data.msg, 'error');
 							}
 						},
 						error: function(data) {

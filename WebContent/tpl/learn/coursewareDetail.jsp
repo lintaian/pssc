@@ -13,11 +13,11 @@
 		</c:forEach>
 	</div>
 	<div class="item_title">习题</div>
-	<div class="exerciseList">
-		<c:forEach items="${obj.exercises }" var="e">
-			<div class="item" data-id="${e._id }" data-name="${e.title }">
-				<img src="${e.photo == '' ? 'photo/courseware.jpg' : e.photo}"/>
-				<div class="name">${e.title }</div>
+	<div class="exerciseBatchList">
+		<c:forEach items="${obj.exerciseBatches }" var="eb">
+			<div class="item" data-id="${eb._id }" data-name="${eb.title }">
+				<img src="${eb.photo == '' ? 'photo/courseware.jpg' : eb.photo}"/>
+				<div class="name">${eb.title }</div>
 				<div class="face icon_face laugh"></div>
 				<div class="operate  c_icon c_icon_exercise"></div>
 			</div>

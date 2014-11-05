@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="exercise" data-type="${obj.exercise.exercise_type }"
-	data-id="${obj.exercise._id }" data-exercise-batch-id="${obj.exerciseBatchId }">
+	data-id="${obj.exercise._id }" data-exercise-batch-id="${obj.exerciseBatchId }"
+	data-parent-ele="${obj.parentEle }">
 	<div class="e_question">
+		<div class="${obj.exercise.url == '' ? 'no_img' : '' }">${obj.exercise.title }</div>
 		<img src="${obj.exercise.url }">
 	</div>
 	<c:choose>
@@ -10,9 +12,26 @@
 			<div class="e_my_answer">
 				我的答案: ( <span class="e_my_answer_text">${obj.myAnswer.answer }</span> )
 			</div>
-			<div class="e_answers">
-				<c:forEach begin="0" end="${obj.exercise.exercise_info.answerNum - 1 }" varStatus="a">
-					<div class="e_answer ${obj.exercise.exercise_type == 10 ? 'single' : 'multi' }" 
+			<div class="e_answers" data-type="${obj.exercise.exercise_type == 10 ? 'single' : 'multi' }">
+				<c:forEach begin="0" end="${obj.exercise.exercise_info.answer_num - 1 }" varStatus="a">
+					<div class="e_answer" 
+						data-answer="${obj.answer[a.index] }">
+						<img class="e_answer_img" src="img/a${a.index }.jpg">
+						<div class="e_answer_text">
+							${obj.answer[a.index] }
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		</c:when>
+		<c:when test="${obj.exercise.exercise_type == 30 || obj.exercise.exercise_type == 31 }">
+			<div class="e_my_answer">
+				我的答案: ( <span class="e_my_answer_text">${obj.myAnswer.answer }</span> )
+			</div>
+			<div class="e_answers" data-type="${obj.exercise.exercise_type == 30 ? 'single' : 'multi' }" 
+				data-max-num="${obj.exercise.exercise_info.max_num }">
+				<c:forEach begin="0" end="${obj.exercise.exercise_info.answer_num - 1 }" varStatus="a">
+					<div class="e_answer" 
 						data-answer="${obj.answer[a.index] }">
 						<img class="e_answer_img" src="img/a${a.index }.jpg">
 						<div class="e_answer_text">
@@ -24,16 +43,16 @@
 		</c:when>
 		<c:when test="${obj.exercise.exercise_type == 20 || obj.exercise.exercise_type == 21 || obj.exercise.exercise_type == 22 }">
 			<div class="e_my_answer">
-				我的答案 :
+				我的答案 : 
 			</div>
-			<div class="e_my_answer">
+			<div class="e_my_answer ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}">
 				<c:choose>
 					<c:when test="${obj.exercise.exercise_type == 20 }">
-						<img class="e_subjective_my_answer e_my_img ${obj.myAnswer.answer == '' ? 'hide' : '' }" 
+						<img class="e_subjective_my_answer e_my_img" 
 							src="${obj.myAnswer.answer }">
 					</c:when>
 					<c:when test="${obj.exercise.exercise_type == 21 }">
-						<audio class="e_subjective_my_answer e_my_audio ${obj.myAnswer.answer == '' ? 'hide' : '' }" 
+						<audio class="e_subjective_my_answer e_my_audio" 
 							controls="controls">
 						  	<source src="${obj.myAnswer.answer }" type="audio/ogg">
 						  	<source src="${obj.myAnswer.answer }" type="audio/mpeg">
@@ -42,7 +61,7 @@
 						</audio>
 					</c:when>
 					<c:when test="${obj.exercise.exercise_type == 22 }">
-						<video class="e_subjective_my_answer e_my_video ${obj.myAnswer.answer == '' ? 'hide' : '' }" 
+						<video class="e_subjective_my_answer e_my_video" 
 							controls="controls" preload="metadata">
 							<source src="${obj.myAnswer.answer }" type="video/ogg" />
 							<source src="${obj.myAnswer.answer }" type="video/mp4" />
@@ -65,6 +84,17 @@
 				</div>
 			</div>
 		</c:when>
+		<c:when test="${obj.exercise.exercise_type == 23 }">
+			<div class="e_my_answer">
+				我的答案 : 
+			</div>
+			<img class="e_subjective_my_answer e_my_write ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}" 
+							src="${obj.myAnswer.answer }">
+			<div class="e_write" data-bg-img="${obj.exercise.exercise_info.bg_img }">
+				<span class="btn open_canvas">手写回答</span>
+				<div class="e_canvas"></div>
+			</div>
+		</c:when>
 	</c:choose>
 	<div class="e_page">
 		<c:if test="${obj.page.curPage > 1 }">
@@ -81,13 +111,3 @@
 		</c:if>
 	</div>
 </div>
-<script>
-	$(function() {
-		$('.e_page').delegate('.e_change', 'click', function() {
-			var page = $(this).data('page');
-			var exerciseBatchId = $('#exercise').data('exerciseBatchId');
-			Util.load('.video_exercise', 'exercise', 
-					'exerciseBatchId=' + exerciseBatchId + '&page=' + page);
-		});
-	});
-</script>

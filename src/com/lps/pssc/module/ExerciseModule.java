@@ -1,27 +1,20 @@
 package com.lps.pssc.module;
 
-import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.bson.types.ObjectId;
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
-import org.nutz.mvc.annotation.AdaptBy;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.By;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
-import org.nutz.mvc.annotation.Param;
-import org.nutz.mvc.upload.UploadAdaptor;
-
 import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
@@ -45,7 +38,7 @@ public class ExerciseModule {
 	@At("")
 	@GET
 	@Ok("jsp:/tpl/exercise.jsp")
-	public Object getExercise(HttpServletRequest req, String exerciseBatchId, int page) throws Exception {
+	public Object getExercise(HttpServletRequest req, String exerciseBatchId, int page, String parentEle) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		page = page == 0 ? 1 : page;
 		List<ObjectId> ids = baseDao.distinct(DbMap.ExerciseDict, "exercise_id", 
@@ -60,6 +53,7 @@ public class ExerciseModule {
 					.and("exercise_id").is(ids.get(page-1)).and("student_id").
 					is(SessionHelper.getUserId(req)).get()));
 			rs.put("exerciseBatchId", exerciseBatchId);
+			rs.put("parentEle", parentEle);
 		}
 		return rs;
 	}
@@ -67,11 +61,11 @@ public class ExerciseModule {
 	@GET
 	@Ok("json")
 	public Object updateObjective(HttpServletRequest req, String exerciseId, String answer, 
-			String originAnswer, boolean single) throws Exception {
+			String originAnswer, boolean single, int maxNum) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		if (!(answer.equals(originAnswer) && single)) {
 			if (!single) {
-				answer = MyHelper.addOrRemoveString(originAnswer, answer);
+				answer = MyHelper.addOrRemoveString(originAnswer, answer, maxNum);
 			}
 			baseDao.updateOrInsert(DbMap.Answer, 
 					QueryBuilder.start("courseware_id").is(SessionHelper.get(req, "coursewareId"))
@@ -87,29 +81,42 @@ public class ExerciseModule {
 		return rs;
 	}
 	
-	@At("/uploader")
+	@At("/subjective")
 	@Ok("json")
 	@Filters
-	@AdaptBy(type=UploadAdaptor.class, args = { "${app.root}/files" })
-	public Object uploader(@Param("file") File file, String eId, String sId, String cId, int eType, HttpServletRequest req) {
+	public Object uploader(String answer, String eId, String sId, String cId, int eType, HttpServletRequest req) {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			String f = file.toString();
-			f = f.replace('\\', '/');
-			f = f.substring(f.lastIndexOf("files"), f.length());
 			ObjectId studentId = sId == null ? SessionHelper.getUserId(req) : new ObjectId(sId);
 			ObjectId coursewareId = cId == null ? (ObjectId)SessionHelper.get(req, "coursewareId") : new ObjectId(cId);
 			baseDao.updateOrInsert(DbMap.Answer, 
 					QueryBuilder.start("courseware_id").is(coursewareId)
 					.and("exercise_id").is(new ObjectId(eId)).and("student_id").
 					is(studentId).get(), 
-					new BasicDBObject("answer", f).append("answer_date", new Date()));
+					new BasicDBObject("answer", answer).append("answer_date", new Date()));
 			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", coursewareId)
 					.append("exercise_id", new ObjectId(eId))
 					.append("student_id", studentId)
-					.append("answer", f).append("answer_date", new Date()));
-			rs.put("file", f);
+					.append("answer", answer).append("answer_date", new Date()));
+			rs.put("url", answer);
+		} catch (Exception e) {
+			rs.put("status", false);
+		}
+		return rs;
+	}
+	@At("/canvas")
+	@Ok("jsp:/tpl/canvas.jsp")
+	public Object getCanvas(HttpServletRequest req, String eid) {
+		return eid;
+	}
+	@At("/canvas/imageTrace")
+	@Ok("json")
+	public Object insertImageTrace(HttpServletRequest req, String imageUrl, String trace) {
+		Map<String, Object> rs = new HashMap<String, Object>();
+		rs.put("status", true);
+		try {
+			baseDao.insert(DbMap.PictureTrace, new BasicDBObject("img_url", imageUrl).append("trace", trace));
 		} catch (Exception e) {
 			rs.put("status", false);
 		}

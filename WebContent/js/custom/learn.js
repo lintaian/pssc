@@ -28,10 +28,26 @@ define(['jquery'], function($) {
 	});
 	$('body').on('click', '#coursewareDetail .videoList .operate', function() {
 		var id = $(this).parent('.item').data('id');
-		Util.load('.outerPage', 'video', 'id=' + id);
+		Util.load('.outerPage', 'video', 'id=' + id, function() {
+			document.getElementById("video1").width = $('.outerPage').width();
+			document.getElementById("video1").height = $('.outerPage').height();
+		});
 		Util.location.add({
 			url: 'video?id=' + id,
 			name: $(this).parent('.item').data('name')
 		});
+	});
+	$('body').on('click', '#coursewareDetail .exerciseBatchList .operate', function() {
+		var id = $(this).parent('.item').data('id');
+		Util.load('.outerPage', 'exercise', 'exerciseBatchId=' + id + '&parentEle=.outerPage');
+		Util.location.add({
+			url: 'exercise?exerciseBatchId=' + id,
+			name: $(this).parent('.item').data('name')
+		});
+		$('.outerPage').addClass('prevAndAfterDoExercise');
+	});
+	$('body').on('click', '.prevAndAfterDoExercise .e_finish', function() {
+		Util.location.virtualClick(-1);
+		$('.outerPage').removeClass('prevAndAfterDoExercise');
 	});
 });

@@ -10,7 +10,10 @@ require.config({
 		teach: 'custom/teach',
 		record: 'custom/record',
 		info: 'custom/info',
-		learn: 'custom/learn'
+		learn: 'custom/learn',
+		video: 'custom/video',
+		exercise: 'custom/exercise',
+		canvas: 'custom/canvas'
 	},
 	shim: {
 		patternLock: {deps: ['jquery']},
@@ -18,7 +21,8 @@ require.config({
 	}
 });
 
-require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', 'learn'], function ($) {
+require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', 'learn',
+         'video', 'exercise', 'canvas'], function ($) {
 	var startY;
 	/**
 	 * 改变窗口时，页面自适应
@@ -31,8 +35,10 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	 * 全屏切换
 	 */
 	$('#fullIcon').click(function() {
-		$('.content').toggleClass('full');
-		resize(false);
+		if (!$(this).hasClass('unclickable')) {
+			$('.content').toggleClass('full');
+			resize(false);
+		}
 	});
 	/**
 	 * 禁止滑动事件

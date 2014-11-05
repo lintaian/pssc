@@ -63,6 +63,7 @@ var draw_graph = function (graphType, obj) {
 
     //鼠标按下获取 开始xy开始画图
     var mousedown = function (e) {
+    	alert('11');
         context.strokeStyle = color;
         context_bak.strokeStyle = color;
         context_bak.lineWidth = size;
@@ -215,17 +216,16 @@ var draw_graph = function (graphType, obj) {
     }
 
     $(canvas_bak).unbind();
-    $(canvas_bak).bind('mousedown', mousedown);
+  /*  $(canvas_bak).bind('mousedown', mousedown);
     $(canvas_bak).bind('mousemove', mousemove);
     $(canvas_bak).bind('mouseup', mouseup);
-    $(canvas_bak).bind('mouseout', mouseout);
-    
+    $(canvas_bak).bind('mouseout', mouseout);*/
     $(canvas_bak).bind('touchstart', mousedown);
     $(canvas_bak).bind('touchmove', mousemove);
     $(canvas_bak).bind('touchend', mouseup);
-    $(canvas_bak).on('touchstart', function(e) {
-    	alert(111);
-    });
+//    $(canvas_bak).on('touchstart', function(e) {
+//    	alert(111);
+//    });
  }
 
 

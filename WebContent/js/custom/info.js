@@ -32,7 +32,7 @@ define(['jquery'], function($) {
 		});
 		
 		
-		$('body').on('change', '#uploadPhoto input[type="file"]', function() {
+		$('body').on('change', '.uploadImg input[type="file"]', function() {
 			var val = $(this).val();
 			var suffix = val.substr(val.lastIndexOf('.') + 1, val.length);
 			suffix = suffix.toLowerCase();
@@ -40,7 +40,7 @@ define(['jquery'], function($) {
 				var fd = new FormData(document.getElementById("uploadForm"));
 				fd.append("name", "This is some extra data");
 				$.ajax({
-					url: "user/uploader",
+					url: "upload/img",
 					type: "POST",
 					data: fd,
 					dataType: 'json',
@@ -48,8 +48,24 @@ define(['jquery'], function($) {
 					contentType: false,   // tell jQuery not to set contentType
 					success: function(data) {
 						if (data) {
-							Util.msg.show('提示信息', '头像更新成功!');
-							$('#myPhoto').attr('src', data.photo);
+							$.ajax({
+								url: 'user/updatePhoto',
+								type: 'post',
+								data: JSON.stringify({
+									photo: data.url
+								}),
+								dataType: 'json',
+								success: function(d) {
+									if (d.status) {
+										Util.msg.show('提示信息', '头像更新成功!');
+										$('#myPhoto').attr('src', data.url);
+									} else {
+										Util.msg.show('提示信息', '头像更新失败!', 'error');
+									}
+								}
+							})
+						} else {
+							Util.msg.show('提示信息', data.msg);
 						}
 					},
 					error: function(data) {

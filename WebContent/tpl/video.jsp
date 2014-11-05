@@ -9,4 +9,39 @@
 	</video>
 	<div class="video_exercise hide"></div>
 </div>
-<script src="js/custom/video.js"></script>
+<script>
+var exerciseBatches;
+$('#video1').on('timeupdate', function(data) {
+	for ( var e in exerciseBatches) {
+		if (!exerciseBatches[e].done && exerciseBatches[e].timestamp == parseInt(data.target.currentTime)) {
+			document.getElementById("video1").pause();
+			exerciseBatches[e].done = true;
+			Util.load('.video_exercise', 'exercise', 'exerciseBatchId=' 
+					+ exerciseBatches[e].exercise_batch_id.$oid 
+					+ '&parentEle=.video_exercise', 
+					function() {
+				$('.video_exercise').show();
+			});
+			$('#video1').css({'top': -3000});
+			break;
+		}
+	}
+});
+$('#video1').on('loadedmetadata', function() {
+	$.ajax({
+		url: 'video/dict',
+		type: 'get',
+		data: 'id=' + $('#video1').data('videoId'),
+		dataType: 'json',
+		success: function(data) {
+			exerciseBatches = data;
+			document.getElementById("video1").play();
+		}
+	});
+});
+$('#video1').on('ended', function() {
+	for ( var e in exerciseBatches) {
+		exerciseBatches[e].done = false;
+	}
+});
+</script>

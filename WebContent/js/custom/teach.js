@@ -1,27 +1,28 @@
 define(['jquery'], function($) {
-	var stateTime = '', interval1, interval2;
+	var stateTime = '', timeout1, timeout2;
 	/**
 	 * 轮询查看是否上课
 	 */
-	function commonInterval() {
-		interval1 = setInterval(function() {
+	function commonTimeout() {
+		timeout1 = setTimeout(function() {
 			$.ajax({
 				url: 'teach/state',
 				type: 'get',
 				dataType: 'json',
 				success: function(data) {
-					if (data.teaching == 1) { //is teaching?
-						var $target = $('[data-change-page="tpl/classRoom.html"]');
+					if (data && data.c.status > 0) { //is teaching?
+						var $target = $('[data-change-page="teach"]');
 						var url = $target.data('changePage');
-						$('#location').text($target.text());
-						$('.outerPage').load(url, function() {
-							$('#teaching').show();
-							$('#unTeaching').hide();
-						});
-						$('#fullIcon').click();
+						Util.location.set([{
+							url: url,
+							name: $target.text()
+						}]);
+						$('#fullIcon').parents('.content').addClass('full');
 						$('#contentModal').addClass('active');
-						clearInterval(interval1);
-						teachingInerval();
+						Util.load('.outerPage', url);
+						teachingTimeout();
+					} else {
+						commonTimeout();
 					}
 				},
 				error: function(data) {
@@ -30,39 +31,42 @@ define(['jquery'], function($) {
 			})
 		}, 5000);
 	}
-	function teachingInerval() {
-		interval2 = setInterval(function() {
+	function teachingTimeout() {
+		timeout2 = setTimeout(function() {
 			$.ajax({
 				url: 'teach/state',
 				type: 'get',
 				dataType: 'json',
 				success: function(data) {
-					if (data.teaching == 1) {
-						if (data.stateTime != stateTime) {
-							switch (data.state) {
-							case 'img':
-								$('#teaching').html('<img class="img" src="' + data.remark + '">');
-								break;
-							case 'write': 
-								break;
-							case 'question': 
-								break;
-							case 'vote': 
-								break;
-							case 'firstAnswer':
-								break;
-							default:
-								break;
+					if (data && data.c.status > 0) {
+						if (data.c.status == 2) {
+							if (data.co.length > 0) {
+								if (data.current && data.current.content_type == 3) {
+									var obj = data.co[0];
+									$.ajax({
+										
+									});
+								} else {
+									
+								}
+							} else {
+								coverClass('waitTeach');
+								teachingTimeout();
 							}
-							stateTime = data.stateTime;
+						} else if (data.c.status == 1) {
+							coverClass('beforeTeach');
+							teachingTimeout();
+						} else  if (data.c.status == 3) {
+							coverClass('afterTeach');
+							teachingTimeout();
+						} else {
+							window.location.reload();
 						}
 					} else {
-						$('#teaching').hide();
-						$('#unTeaching').show();
-						$('#fullIcon').click();
+						$('#fullIcon').parents('.content').removeClass('full');
 						$('#contentModal').removeClass('active');
-						clearInterval(interval2);
-						commonInterval();
+						coverClass('unTeach');
+						commonTimeout();
 					}
 				},
 				error: function(data) {
@@ -71,5 +75,9 @@ define(['jquery'], function($) {
 			});
 		}, 1000);
 	}
-//	commonInterval();
+	
+	function coverClass(cla) {
+		$('#teach').removeClass().addClass(cla);
+	}
+//	commonTimeout();
 });

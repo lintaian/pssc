@@ -91,7 +91,7 @@ public class LearnModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("videos", baseDao.query(DbMap.VideoBatch, 
 				QueryBuilder.start("_id").in(videoIds).and("status").is(1).get()));
-		rs.put("exercises", baseDao.query(DbMap.ExerciseBatch, 
+		rs.put("exerciseBatches", baseDao.query(DbMap.ExerciseBatch, 
 				QueryBuilder.start("_id").in(exerciseIds).and("status").is(1).get()).toArray());
 		SessionHelper.set(req, "coursewareId", new ObjectId(id));
 		return rs;
