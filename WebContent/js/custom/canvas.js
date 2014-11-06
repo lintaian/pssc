@@ -3,7 +3,9 @@ define(['jquery'], function($) {
 		top = 55,
 		data = [],
 		dataTemp = [],
-		interval;
+		interval,
+		tempX,
+		tempY;
 	$('body').on('touchmove', '#canvas', function(e) {
 		e.preventDefault();
 	})
@@ -42,7 +44,9 @@ define(['jquery'], function($) {
 		var context = document.getElementById('myCanvas').getContext('2d');
 		var x = e.originalEvent.targetTouches[0].pageX - left;
 		var y = e.originalEvent.targetTouches[0].pageY - top;
-		context.lineTo(x, y);
+		context.quadraticCurveTo(tempX, tempY, x, y);
+		tempX = x;
+		tempY = y;
 		data.push({x: x, y: y});
 		dataTemp.push({x: x, y: y});
 		context.stroke();

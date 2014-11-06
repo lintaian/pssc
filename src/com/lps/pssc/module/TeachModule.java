@@ -1,6 +1,7 @@
 package com.lps.pssc.module;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.SessionHelper;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 
@@ -41,22 +43,50 @@ public class TeachModule {
 	@At("/state")
 	@GET
 	@Ok("json")
-	public Object getState(HttpServletRequest req) throws Exception {
+	public Object getState(HttpServletRequest req, boolean init) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		DBObject c = baseDao.get(DbMap.Class, QueryBuilder.start("class_id").is(SessionHelper.getClassId(req)).get());
+		rs.put("status", false);
 		if (c != null) {
-			rs.put("c", c);
-			if (!"".equals(c.get("status").toString()) && Integer.parseInt(c.get("status").toString()) != 2) {
-				rs.put("co", baseDao.query(DbMap.ClassOperate, 
+			rs.put("status", true);
+			rs.put("c_status", c.get("status"));
+			rs.put("c_photo", c.get("photo"));
+			rs.put("c_title", c.get("title"));
+			if (!"".equals(c.get("status").toString()) && Integer.parseInt(c.get("status").toString()) == 2) {
+				List<DBObject> cos = baseDao.query(DbMap.ClassOperate, 
 						QueryBuilder.start("student_id").is(SessionHelper.getUserId(req))
 						.and("class_id").is(SessionHelper.getClassId(req)).
 						and("courseware_id").is(c.get("courseware_id"))
-						.and("status").is(0).get()).toArray());
-				rs.put("current", baseDao.get(DbMap.ClassOperate, 
+						.and("content_status").is(0).get()).toArray();
+				DBObject current = baseDao.get(DbMap.ClassOperate, 
 						QueryBuilder.start("student_id").is(SessionHelper.getUserId(req))
 						.and("class_id").is(SessionHelper.getClassId(req)).
 						and("courseware_id").is(c.get("courseware_id"))
-						.and("status").is(2).get()));
+						.and("content_status").is(1).get());
+				if (cos.size() > 0) {
+					DBObject op = cos.get(0);
+					if (current != null) {
+						if (Integer.parseInt(current.get("content_type").toString()) == 3) {
+							rs.put("op_type", op.get("content_type"));
+							rs.put("op_id", op.get("content_id").toString());
+							baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(op.get("_id")).get(), 
+									new BasicDBObject("content_status", 1));
+							baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(current.get("_id")).get(), 
+									new BasicDBObject("content_status", 2));
+						} else if (init) {
+							rs.put("op_type", current.get("content_type"));
+							rs.put("op_id", current.get("content_id").toString());
+						}
+					} else {
+						rs.put("op_type", op.get("content_type"));
+						rs.put("op_id", op.get("content_id").toString());
+						baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(op.get("_id")).get(), 
+								new BasicDBObject("content_status", 1));
+					}
+				} else if (init && current != null) {
+					rs.put("op_type", current.get("content_type"));
+					rs.put("op_id", current.get("content_id").toString());
+				}
 			}
 		}
 		return rs;

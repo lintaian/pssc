@@ -16,7 +16,7 @@ $('#video1').on('timeupdate', function(data) {
 		if (!exerciseBatches[e].done && exerciseBatches[e].timestamp == parseInt(data.target.currentTime)) {
 			document.getElementById("video1").pause();
 			exerciseBatches[e].done = true;
-			Util.load('.video_exercise', 'exercise', 'exerciseBatchId=' 
+			Util.load('.video_exercise', 'exercise', 'id=' 
 					+ exerciseBatches[e].exercise_batch_id.$oid 
 					+ '&parentEle=.video_exercise', 
 					function() {

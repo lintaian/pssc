@@ -1,26 +1,27 @@
 define(['jquery'], function($) {
-	var stateTime = '', timeout1, timeout2;
 	/**
 	 * 轮询查看是否上课
 	 */
 	function commonTimeout() {
-		timeout1 = setTimeout(function() {
+		setTimeout(function() {
 			$.ajax({
 				url: 'teach/state',
 				type: 'get',
 				dataType: 'json',
 				success: function(data) {
-					if (data && data.c.status > 0) { //is teaching?
+					if (data.status && data.c_status > 0) { //is teaching?
 						var $target = $('[data-change-page="teach"]');
 						var url = $target.data('changePage');
 						Util.location.set([{
 							url: url,
 							name: $target.text()
 						}]);
-						$('#fullIcon').parents('.content').addClass('full');
+						if (!$('#fullIcon').parents('.content').hasClass('full')) {
+							$('#fullIcon').click();
+						}
 						$('#contentModal').addClass('active');
 						Util.load('.outerPage', url);
-						teachingTimeout();
+						teachingTimeout(true);
 					} else {
 						commonTimeout();
 					}
@@ -31,39 +32,49 @@ define(['jquery'], function($) {
 			})
 		}, 5000);
 	}
-	function teachingTimeout() {
-		timeout2 = setTimeout(function() {
+	function teachingTimeout(init) {
+		setTimeout(function() {
 			$.ajax({
 				url: 'teach/state',
 				type: 'get',
+				data: {
+					init: init
+				},
 				dataType: 'json',
 				success: function(data) {
-					if (data && data.c.status > 0) {
-						if (data.c.status == 2) {
-							if (data.co.length > 0) {
-								if (data.current && data.current.content_type == 3) {
-									var obj = data.co[0];
-									$.ajax({
-										
-									});
-								} else {
-									
+					if (data.status && data.c_status > 0) {
+						if (data.c_status == 2) {
+							if (data.op_type && data.op_id) {
+								var url = '', data = 'id=' + data.op_id;
+								switch (data.op_type) {
+								case 1:
+									url = 'exercise';
+									data += '&parentEle=.teaching';
+									break;
+								case 2:
+									url = 'video';
+									break;
+								case 3:
+									url = 'picture/single';
+									break;
+								default:
+									break;
 								}
+								Util.load('.teaching', url, data);
+								coverClass('teaching');
 							} else {
 								coverClass('waitTeach');
-								teachingTimeout();
 							}
-						} else if (data.c.status == 1) {
+						} else if (data.c_status == 1) {
 							coverClass('beforeTeach');
-							teachingTimeout();
-						} else  if (data.c.status == 3) {
+						} else  if (data.c_status == 3) {
 							coverClass('afterTeach');
-							teachingTimeout();
 						} else {
 							window.location.reload();
 						}
+						teachingTimeout();
 					} else {
-						$('#fullIcon').parents('.content').removeClass('full');
+						$('#fullIcon').click();
 						$('#contentModal').removeClass('active');
 						coverClass('unTeach');
 						commonTimeout();
@@ -73,11 +84,11 @@ define(['jquery'], function($) {
 					Util.error(data);
 				}
 			});
-		}, 1000);
+		}, 500);
 	}
 	
 	function coverClass(cla) {
 		$('#teach').removeClass().addClass(cla);
 	}
-//	commonTimeout();
+	commonTimeout();
 });

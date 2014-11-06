@@ -38,11 +38,11 @@ public class ExerciseModule {
 	@At("")
 	@GET
 	@Ok("jsp:/tpl/exercise.jsp")
-	public Object getExercise(HttpServletRequest req, String exerciseBatchId, int page, String parentEle) throws Exception {
+	public Object getExercise(HttpServletRequest req, String id, int page, String parentEle) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		page = page == 0 ? 1 : page;
 		List<ObjectId> ids = baseDao.distinct(DbMap.ExerciseDict, "exercise_id", 
-				QueryBuilder.start("exercise_batch_id").is(new ObjectId(exerciseBatchId)).get());
+				QueryBuilder.start("exercise_batch_id").is(new ObjectId(id)).get());
 		if (ids.size() > 0) {
 			DBObject obj = baseDao.get(DbMap.Exercise, QueryBuilder.start("_id").is(ids.get(page-1)).get());
 			rs.put("exercise", obj);
@@ -52,7 +52,7 @@ public class ExerciseModule {
 					QueryBuilder.start("courseware_id").is(SessionHelper.get(req, "coursewareId"))
 					.and("exercise_id").is(ids.get(page-1)).and("student_id").
 					is(SessionHelper.getUserId(req)).get()));
-			rs.put("exerciseBatchId", exerciseBatchId);
+			rs.put("exerciseBatchId", id);
 			rs.put("parentEle", parentEle);
 		}
 		return rs;
@@ -116,7 +116,8 @@ public class ExerciseModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			baseDao.insert(DbMap.PictureTrace, new BasicDBObject("img_url", imageUrl).append("trace", trace));
+			baseDao.insert(DbMap.PictureTrace, new BasicDBObject("img_url", imageUrl).append("trace", trace).
+					append("time", new Date()));
 		} catch (Exception e) {
 			rs.put("status", false);
 		}

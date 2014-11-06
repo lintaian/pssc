@@ -39,9 +39,9 @@ define(['jquery'], function($) {
 	});
 	$('body').on('click', '#coursewareDetail .exerciseBatchList .operate', function() {
 		var id = $(this).parent('.item').data('id');
-		Util.load('.outerPage', 'exercise', 'exerciseBatchId=' + id + '&parentEle=.outerPage');
+		Util.load('.outerPage', 'exercise', 'id=' + id + '&parentEle=.outerPage');
 		Util.location.add({
-			url: 'exercise?exerciseBatchId=' + id,
+			url: 'exercise?id=' + id,
 			name: $(this).parent('.item').data('name')
 		});
 		$('.outerPage').addClass('prevAndAfterDoExercise');

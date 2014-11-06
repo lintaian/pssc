@@ -26,6 +26,7 @@
   <link rel="stylesheet" type="text/css" href="css/video.css">
   <link rel="stylesheet" type="text/css" href="css/exercise.css">
   <link rel="stylesheet" type="text/css" href="css/canvas.css">
+  <link rel="stylesheet" type="text/css" href="css/picture.css">
 </head>
 <body>
 	<div class="main">

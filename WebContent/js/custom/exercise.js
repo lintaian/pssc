@@ -96,7 +96,7 @@ define(['jquery'], function($) {
 		var exerciseBatchId = $('#exercise').data('exerciseBatchId');
 		var parentEle = $('#exercise').data('parentEle');
 		Util.load(parentEle, 'exercise', 
-				'exerciseBatchId=' + exerciseBatchId + '&page=' + page + '&parentEle=' + parentEle);
+				'id=' + exerciseBatchId + '&page=' + page + '&parentEle=' + parentEle);
 	});
 	$('body').on('click', '#exercise .e_write .open_canvas', function() {
 		if (!$('#fullIcon').parents('.content').hasClass('full')) {
