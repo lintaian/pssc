@@ -1,7 +1,11 @@
 package com.lps.pssc.module;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.bson.types.ObjectId;
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
@@ -14,9 +18,11 @@ import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
+
 import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
+import com.lps.pssc.util.SessionHelper;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 
@@ -33,7 +39,11 @@ public class VideoModule {
 	@GET
 	@Ok("jsp:/tpl/video.jsp")
 	public Object getVideo(HttpServletRequest req, String id) throws Exception {
-		return baseDao.get(DbMap.VideoBatch, QueryBuilder.start("_id").is(new ObjectId(id)).get());
+		Map<String, Object> rs = new HashMap<String, Object>();
+		rs.put("video", baseDao.get(DbMap.VideoBatch, QueryBuilder.start("_id").is(new ObjectId(id)).and("status").is(1).get()));
+		rs.put("cw_id", SessionHelper.get(req, "coursewareId").toString());
+		rs.put("cw_type", SessionHelper.get(req, "coursewareType"));
+		return rs;
 	}
 	@At("/dict")
 	@GET

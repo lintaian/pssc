@@ -26,7 +26,7 @@ define(['jquery'], function($) {
 			name: $(this).data('name')
 		});
 	});
-	$('body').on('click', '#coursewareDetail .videoList .operate', function() {
+	$('body').on('click', '#coursewareDetail .videoBatchList .operate', function() {
 		var id = $(this).parent('.item').data('id');
 		Util.load('.outerPage', 'video', 'id=' + id, function() {
 			document.getElementById("video1").width = $('.outerPage').width();
@@ -34,6 +34,26 @@ define(['jquery'], function($) {
 		});
 		Util.location.add({
 			url: 'video?id=' + id,
+			name: $(this).parent('.item').data('name')
+		});
+	});
+	$('body').on('click', '#coursewareDetail .pictureBatchList .operate', function() {
+		var id = $(this).parent('.item').data('id');
+		Util.load('.outerPage', 'picture', 'id=' + id, function() {
+			$.ajax({
+				url: 'picture/dict',
+				type: 'get',
+				data: {
+					id: id
+				},
+				dataType: 'json',
+				success: function(data) {
+					sessionStorage.pictureBatchDict = data; 
+				}
+			});
+		});
+		Util.location.add({
+			url: 'picture?id=' + id,
 			name: $(this).parent('.item').data('name')
 		});
 	});

@@ -13,7 +13,8 @@ require.config({
 		learn: 'custom/learn',
 		video: 'custom/video',
 		exercise: 'custom/exercise',
-		canvas: 'custom/canvas'
+		canvas: 'custom/canvas',
+		picture: 'custom/picture'
 	},
 	shim: {
 		patternLock: {deps: ['jquery']},
@@ -22,7 +23,7 @@ require.config({
 });
 
 require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', 'learn',
-         'video', 'exercise', 'canvas'], function ($) {
+         'video', 'exercise', 'canvas', 'picture'], function ($) {
 	var startY;
 	/**
 	 * 改变窗口时，页面自适应

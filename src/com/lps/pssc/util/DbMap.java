@@ -16,6 +16,7 @@ public enum DbMap {
 	Picture("res_picture"),
 	PictureBatch("res_picture_batch"),
 	PictureDict("res_picture_dict"),
+	PictureExerciseDict("res_picture_exercise_dict"),
 	VideoBatch("res_video_batch"),
 	VideoDict("res_video_dict"),
 	Answer("rec_answer"),

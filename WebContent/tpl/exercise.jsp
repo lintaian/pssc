@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="exercise" data-type="${obj.exercise.exercise_type }"
 	data-id="${obj.exercise._id }" data-exercise-batch-id="${obj.exerciseBatchId }"
-	data-parent-ele="${obj.parentEle }">
+	data-parent-ele="${obj.parentEle }" data-cw-id="${obj.cw_id }" data-cw-type="${obj.cw_type }">
 	<div class="e_question">
 		<div class="${obj.exercise.url == '' ? 'no_img' : '' }">${obj.exercise.title }</div>
 		<img src="${obj.exercise.url }">

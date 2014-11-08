@@ -54,6 +54,8 @@ public class ExerciseModule {
 					is(SessionHelper.getUserId(req)).get()));
 			rs.put("exerciseBatchId", id);
 			rs.put("parentEle", parentEle);
+			rs.put("cw_id", SessionHelper.get(req, "coursewareId").toString());
+			rs.put("cw_type", SessionHelper.get(req, "coursewareType"));
 		}
 		return rs;
 	}

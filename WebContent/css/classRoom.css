@@ -7,18 +7,21 @@
 	text-align: center;
 	color: green;
 }
-.unTeach div.unTeach {
+.p_unTeach div.unTeach {
 	display: block!important;
 }
-.beforeTeach div.beforeTeach {
+.p_beforeTeach div.beforeTeach {
 	display: block!important;
 }
-.waitTeach div.waitTeach {
+.p_waitTeach div.waitTeach {
 	display: block!important;
 }
-.afterTeach div.afterTeach {
+.p_afterTeach div.afterTeach {
 	display: block!important;
 }
-.teaching div.teaching {
+.p_teaching div.teaching {
 	display: block!important;
+	margin: 0!important;
+	color: #000!important;
+	text-align: left!important;
 }

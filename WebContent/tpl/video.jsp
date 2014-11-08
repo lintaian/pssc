@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="video">
-	<video id="video1" controls="controls" preload="metadata" data-video-id="${obj._id }">
-		<source src="${obj.url }" type="video/ogg" />
-		<source src="${obj.url }" type="video/mp4" />
-		<source src="${obj.url }" type="video/webm" />
+<div id="video" data-cw-id="${obj.cw_id }" data-cw-type="${obj.cw_type }">
+	<video id="video1" controls="controls" preload="metadata" data-video-id="${obj.video._id }">
+		<source src="${obj.video.url }" type="video/ogg" />
+		<source src="${obj.video.url }" type="video/mp4" />
+		<source src="${obj.video.url }" type="video/webm" />
 		Your browser does not support the video tag.
 	</video>
 	<div class="video_exercise hide"></div>

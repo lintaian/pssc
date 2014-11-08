@@ -8,6 +8,9 @@ define(['jquery'], function($) {
 				url: 'teach/state',
 				type: 'get',
 				dataType: 'json',
+				data: {
+					init: true
+				},
 				success: function(data) {
 					if (data.status && data.c_status > 0) { //is teaching?
 						var $target = $('[data-change-page="teach"]');
@@ -20,8 +23,29 @@ define(['jquery'], function($) {
 							$('#fullIcon').click();
 						}
 						$('#contentModal').addClass('active');
-						Util.load('.outerPage', url);
-						teachingTimeout(true);
+						var currentClass;
+						switch (data.c_status) {
+						case 1:
+							currentClass = 'p_beforeTeach';
+							break;
+						case 2:
+							if (data.wait) {
+								currentClass = 'p_waitTeach';
+							} else {
+								currentClass = 'p_beforeTeach';
+							}
+							break;
+						case 3:
+							currentClass = 'p_afterTeach';
+							break;
+
+						default:
+							break;
+						}
+						Util.load('.outerPage', url, 'currentClass=' + currentClass + '&coursewareId=' + data.courseware_id,
+								function() {
+							parseData(data);
+						});
 					} else {
 						commonTimeout();
 					}
@@ -43,40 +67,11 @@ define(['jquery'], function($) {
 				dataType: 'json',
 				success: function(data) {
 					if (data.status && data.c_status > 0) {
-						if (data.c_status == 2) {
-							if (data.op_type && data.op_id) {
-								var url = '', data = 'id=' + data.op_id;
-								switch (data.op_type) {
-								case 1:
-									url = 'exercise';
-									data += '&parentEle=.teaching';
-									break;
-								case 2:
-									url = 'video';
-									break;
-								case 3:
-									url = 'picture/single';
-									break;
-								default:
-									break;
-								}
-								Util.load('.teaching', url, data);
-								coverClass('teaching');
-							} else {
-								coverClass('waitTeach');
-							}
-						} else if (data.c_status == 1) {
-							coverClass('beforeTeach');
-						} else  if (data.c_status == 3) {
-							coverClass('afterTeach');
-						} else {
-							window.location.reload();
-						}
-						teachingTimeout();
+						parseData(data);
 					} else {
 						$('#fullIcon').click();
 						$('#contentModal').removeClass('active');
-						coverClass('unTeach');
+						coverClass('p_unTeach');
 						commonTimeout();
 					}
 				},
@@ -90,5 +85,40 @@ define(['jquery'], function($) {
 	function coverClass(cla) {
 		$('#teach').removeClass().addClass(cla);
 	}
-	commonTimeout();
+	function parseData(data) {
+		if (data.c_status == 2) {
+			if (data.wait) {
+				coverClass('p_waitTeach');
+			}
+			if (data.op_type && data.op_id) {
+				var url = '', data2 = 'id=' + data.op_id;
+				switch (data.op_type) {
+				case 0:
+					url = 'video';
+					break;
+				case 1:
+					url = 'exercise';
+					data2 += '&parentEle=.teaching';
+					break;
+				case 2:
+					url = 'picture/single';
+					break;
+				default:
+					break;
+				}
+				Util.load('.teaching', url, data2);
+				coverClass('p_teaching');
+			}
+			teachingTimeout();
+		} else if (data.c_status == 1) {
+			coverClass('p_beforeTeach');
+			teachingTimeout(true);
+		} else  if (data.c_status == 3) {
+			coverClass('p_afterTeach');
+			teachingTimeout(true);
+		} else {
+			window.location.reload();
+		}
+	}
+//	commonTimeout();
 });

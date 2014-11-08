@@ -88,12 +88,18 @@ public class LearnModule {
 				new BasicDBObject("courseware_id", new ObjectId(id)).append("item_type", 0));
 		List<DBObject> exerciseIds = baseDao.distinct(DbMap.CoursewareDict, "item_id", 
 				new BasicDBObject("courseware_id", new ObjectId(id)).append("item_type", 1));
+		List<DBObject> pictureIds = baseDao.distinct(DbMap.CoursewareDict, "item_id", 
+				new BasicDBObject("courseware_id", new ObjectId(id)).append("item_type", 2));
 		Map<String, Object> rs = new HashMap<String, Object>();
-		rs.put("videos", baseDao.query(DbMap.VideoBatch, 
-				QueryBuilder.start("_id").in(videoIds).and("status").is(1).get()));
+		rs.put("videoBatches", baseDao.query(DbMap.VideoBatch, 
+				QueryBuilder.start("_id").in(videoIds).and("status").is(1).get()).toArray());
 		rs.put("exerciseBatches", baseDao.query(DbMap.ExerciseBatch, 
 				QueryBuilder.start("_id").in(exerciseIds).and("status").is(1).get()).toArray());
-		SessionHelper.set(req, "coursewareId", new ObjectId(id));
+		rs.put("pictureBatches", baseDao.query(DbMap.PictureBatch, 
+				QueryBuilder.start("_id").in(pictureIds).and("status").is(1).get()).toArray());
+		DBObject cw = baseDao.get(DbMap.Courseware, QueryBuilder.start("_id").is(new ObjectId(id)).get());
+		SessionHelper.set(req, "coursewareId", cw.get("_id"));
+		SessionHelper.set(req, "coursewareType", cw.get("courseware_type"));
 		return rs;
 	}
 }

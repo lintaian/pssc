@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="teach" class="unTeach">
+<div id="teach" class="${obj.currentClass }">
 	<div class="unTeach">
 		<h2>还没有到上课时间,先去预习功课吧!</h2>
 	</div>

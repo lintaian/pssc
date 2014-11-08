@@ -109,12 +109,14 @@ define(['jquery'], function($) {
 			var canvas, context, img;
 			canvas = document.getElementById('myCanvas');
 			context = canvas.getContext('2d');
+			context.clearRect(0,0,800,600);
 			var bgImg = $('.e_write').data('bgImg');
 			if (bgImg) {
 				img = new Image();
 				img.src = bgImg;
 				img.onload = function() {
 					context.drawImage(img, 0, 0, 800, 600);
+					context.save();
 				}
 			}
 			context.fillStyle = "rgb(0,0,225)";

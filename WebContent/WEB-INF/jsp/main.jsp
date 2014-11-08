@@ -27,6 +27,7 @@
   <link rel="stylesheet" type="text/css" href="css/exercise.css">
   <link rel="stylesheet" type="text/css" href="css/canvas.css">
   <link rel="stylesheet" type="text/css" href="css/picture.css">
+  <!-- <script src="https://getfirebug.com/firebug-lite.js"></script> -->
 </head>
 <body>
 	<div class="main">
