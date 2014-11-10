@@ -42,7 +42,7 @@ public class ExerciseModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		page = page == 0 ? 1 : page;
 		List<ObjectId> ids = baseDao.distinct(DbMap.ExerciseDict, "exercise_id", 
-				QueryBuilder.start("exercise_batch_id").is(new ObjectId(id)).get());
+				QueryBuilder.start("exercise_package_id").is(new ObjectId(id)).get());
 		if (ids.size() > 0) {
 			DBObject obj = baseDao.get(DbMap.Exercise, QueryBuilder.start("_id").is(ids.get(page-1)).get());
 			rs.put("exercise", obj);
@@ -52,7 +52,7 @@ public class ExerciseModule {
 					QueryBuilder.start("courseware_id").is(SessionHelper.get(req, "coursewareId"))
 					.and("exercise_id").is(ids.get(page-1)).and("student_id").
 					is(SessionHelper.getUserId(req)).get()));
-			rs.put("exerciseBatchId", id);
+			rs.put("exercisePackageId", id);
 			rs.put("parentEle", parentEle);
 			rs.put("cw_id", SessionHelper.get(req, "coursewareId").toString());
 			rs.put("cw_type", SessionHelper.get(req, "coursewareType"));

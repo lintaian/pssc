@@ -26,18 +26,29 @@ define(['jquery'], function($) {
 			name: $(this).data('name')
 		});
 	});
-	$('body').on('click', '#coursewareDetail .videoBatchList .operate', function() {
+	$('body').on('click', '#coursewareDetail .videoPackageList .operate', function() {
 		var id = $(this).parent('.item').data('id');
 		Util.load('.outerPage', 'video', 'id=' + id, function() {
-			document.getElementById("video1").width = $('.outerPage').width();
-			document.getElementById("video1").height = $('.outerPage').height();
+			$('#video1').width($('.outerPage').width());
+			$('#video1').height($('.outerPage').height());
 		});
 		Util.location.add({
 			url: 'video?id=' + id,
-			name: $(this).parent('.item').data('name')
+			name: $(this).parent('.item').data('name'),
+			fn: function locationFn() {
+				$('#video1').width($('.outerPage').width());
+				$('#video1').height($('.outerPage').height());
+			}
 		});
 	});
-	$('body').on('click', '#coursewareDetail .pictureBatchList .operate', function() {
+	/*$('body').on('click', '#location .locationVideo', function() {
+		var url = $(this).data('url');
+		Util.load('.outerPage', url, function() {
+			$('#video1').width($('.outerPage').width());
+			$('#video1').height($('.outerPage').height());
+		});
+	});*/
+	$('body').on('click', '#coursewareDetail .picturePackageList .operate', function() {
 		var id = $(this).parent('.item').data('id');
 		Util.load('.outerPage', 'picture', 'id=' + id, function() {
 			$.ajax({
@@ -48,16 +59,30 @@ define(['jquery'], function($) {
 				},
 				dataType: 'json',
 				success: function(data) {
-					sessionStorage.pictureBatchDict = data; 
+					Util.img.setData(data);
 				}
 			});
 		});
 		Util.location.add({
 			url: 'picture?id=' + id,
-			name: $(this).parent('.item').data('name')
+			name: $(this).parent('.item').data('name'),
+			id: id,
+			fn: function locationFn(id) {
+				$.ajax({
+					url: 'picture/dict',
+					type: 'get',
+					data: {
+						id: id
+					},
+					dataType: 'json',
+					success: function(d) {
+						Util.img.setData(d);
+					}
+				});
+			}
 		});
 	});
-	$('body').on('click', '#coursewareDetail .exerciseBatchList .operate', function() {
+	$('body').on('click', '#coursewareDetail .exercisePackageList .operate', function() {
 		var id = $(this).parent('.item').data('id');
 		Util.load('.outerPage', 'exercise', 'id=' + id + '&parentEle=.outerPage');
 		Util.location.add({
@@ -67,7 +92,7 @@ define(['jquery'], function($) {
 		$('.outerPage').addClass('prevAndAfterDoExercise');
 	});
 	$('body').on('click', '.prevAndAfterDoExercise .e_finish', function() {
-		Util.location.virtualClick(-1);
+		Util.location.jump(-2);
 		$('.outerPage').removeClass('prevAndAfterDoExercise');
 	});
 });

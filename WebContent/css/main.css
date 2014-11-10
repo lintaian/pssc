@@ -68,6 +68,10 @@ ul li {
 	color: rgb(8, 115, 252);
 	cursor: pointer;
 }
+#location a:last-child{
+	cursor: auto;
+	color: green!important;
+}
 #fullIcon {
 	position: absolute;
 	top: 0px;

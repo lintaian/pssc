@@ -22,7 +22,6 @@ import org.nutz.mvc.annotation.Ok;
 import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
-import com.lps.pssc.util.Page;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
@@ -39,9 +38,9 @@ public class PictureModule {
 	@At("")
 	@GET
 	@Ok("jsp:/tpl/picture.jsp")
-	public Object getPictureBatch(HttpServletRequest req, String id) throws Exception {
+	public Object getPicturePackage(HttpServletRequest req, String id) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
-		rs.put("picture_batch", baseDao.get(DbMap.PictureBatch, QueryBuilder.start("_id").is(new ObjectId(id)).and("status").is(1).get()));
+		rs.put("picture_Package", baseDao.get(DbMap.PicturePackage, QueryBuilder.start("_id").is(new ObjectId(id)).and("status").is(1).get()));
 		rs.put("cw_id", SessionHelper.get(req, "coursewareId").toString());
 		rs.put("cw_type", SessionHelper.get(req, "coursewareType"));
 		return rs;
@@ -52,20 +51,19 @@ public class PictureModule {
 	@Ok("json:nice")
 	public Object getPicture(HttpServletRequest req, String id) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
-		List<ObjectId> picIds = baseDao.distinct(DbMap.PictureDict, "picture_id", QueryBuilder.start("picture_batch_id").is(new ObjectId(id)).get());
+		List<ObjectId> picIds = baseDao.distinct(DbMap.PictureDict, "picture_id", QueryBuilder.start("picture_package_id").is(new ObjectId(id)).get());
 		List<DBObject> pics = baseDao.query(DbMap.Picture, QueryBuilder.start("_id").in(picIds).get()).toArray();
-		List<DBObject> picExs = baseDao.query(DbMap.PictureExerciseDict, QueryBuilder.start("picture_batch_id").is(new ObjectId(id)).get()).toArray();
+		List<DBObject> picExs = baseDao.query(DbMap.PictureExerciseDict, QueryBuilder.start("picture_package_id").is(new ObjectId(id)).get()).toArray();
 		rs.put("pics", Json.fromJson(Lang.inr(pics.toString())));
 		rs.put("picExs", Json.fromJson(Lang.inr(picExs.toString())));
 		return rs;
 	}
 	@At("/single")
 	@GET
-	@Ok("jsp:/tpl/picture.jsp")
+	@Ok("jsp:/tpl/pictureSingle.jsp")
 	public Object getPictureSingle(HttpServletRequest req, String id) {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("picture", baseDao.get(DbMap.Picture, QueryBuilder.start("_id").is(new ObjectId(id)).get()));
-		rs.put("page", new Page(1, 1, 1));
 		return rs;
 	}
 }

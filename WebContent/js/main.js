@@ -83,10 +83,8 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 			name: $(this).text()
 		}]);
 	})
-	$('body').on('click', '#location a', function() {
-		var url = $(this).data('url');
-		Util.load('.outerPage', url);
-		Util.location.jump($(this).text());
+	$('body').on('click', '#location a:not(:last)', function() {
+		Util.location.jump($(this).index());
 	});
 	/**
 	 * 加载默认显示页面

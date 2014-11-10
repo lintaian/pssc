@@ -120,5 +120,5 @@ define(['jquery'], function($) {
 			window.location.reload();
 		}
 	}
-//	commonTimeout();
+	commonTimeout();
 });

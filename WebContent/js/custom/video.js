@@ -11,13 +11,14 @@ define(['jquery'], function($) {
 	});
 	
 	function videoResize() {
-		document.getElementById("video1").width = $('.outerPage').width();
-		document.getElementById("video1").height = $('.outerPage').height();
+		$('#video1').width($('.outerPage').width());
+		$('#video1').height($('.outerPage').height());
 	}
 	
 	$('body').on('click', '.video_exercise .e_finish', function() {
 		$('.video_exercise').hide();
 		$('#video1').css({'top': 0});
+		Util.location.remove(-1);
 		document.getElementById("video1").play();
 	});
 });

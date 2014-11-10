@@ -93,10 +93,10 @@ define(['jquery'], function($) {
 	});
 	$('body').on('click', '.e_page .e_change', function() {
 		var page = $(this).data('page');
-		var exerciseBatchId = $('#exercise').data('exerciseBatchId');
+		var exercisePackageId = $('#exercise').data('exercisePackageId');
 		var parentEle = $('#exercise').data('parentEle');
 		Util.load(parentEle, 'exercise', 
-				'id=' + exerciseBatchId + '&page=' + page + '&parentEle=' + parentEle);
+				'id=' + exercisePackageId + '&page=' + page + '&parentEle=' + parentEle);
 	});
 	$('body').on('click', '#exercise .e_write .open_canvas', function() {
 		if (!$('#fullIcon').parents('.content').hasClass('full')) {

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="exercise" data-type="${obj.exercise.exercise_type }"
-	data-id="${obj.exercise._id }" data-exercise-batch-id="${obj.exerciseBatchId }"
+<div id="exercise" data-type="${obj.exercise.exercise_type }" data-title="${obj.exercise.title }"
+	data-id="${obj.exercise._id }" data-exercise-package-id="${obj.exercisePackageId }"
 	data-parent-ele="${obj.parentEle }" data-cw-id="${obj.cw_id }" data-cw-type="${obj.cw_type }">
 	<div class="e_question">
 		<div class="${obj.exercise.url == '' ? 'no_img' : '' }">${obj.exercise.title }</div>

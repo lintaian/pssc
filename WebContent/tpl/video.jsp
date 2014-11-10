@@ -10,19 +10,23 @@
 	<div class="video_exercise hide"></div>
 </div>
 <script>
-var exerciseBatches;
+var exercisePackages;
 $('#video1').on('timeupdate', function(data) {
-	for ( var e in exerciseBatches) {
-		if (!exerciseBatches[e].done && exerciseBatches[e].timestamp == parseInt(data.target.currentTime)) {
+	for ( var e in exercisePackages) {
+		if (!exercisePackages[e].done && exercisePackages[e].timestamp == parseInt(data.target.currentTime)) {
 			document.getElementById("video1").pause();
-			exerciseBatches[e].done = true;
+			exercisePackages[e].done = true;
 			Util.load('.video_exercise', 'exercise', 'id=' 
-					+ exerciseBatches[e].exercise_batch_id.$oid 
+					+ exercisePackages[e].exercise_package_id.$oid 
 					+ '&parentEle=.video_exercise', 
 					function() {
+				$('#video1').css({'top': -3000});
 				$('.video_exercise').show();
+				Util.location.add({
+					url: '',
+					name: $('#exercise').data('title')
+				});
 			});
-			$('#video1').css({'top': -3000});
 			break;
 		}
 	}
@@ -34,14 +38,16 @@ $('#video1').on('loadedmetadata', function() {
 		data: 'id=' + $('#video1').data('videoId'),
 		dataType: 'json',
 		success: function(data) {
-			exerciseBatches = data;
+			exercisePackages = data;
 			document.getElementById("video1").play();
 		}
 	});
 });
 $('#video1').on('ended', function() {
-	for ( var e in exerciseBatches) {
-		exerciseBatches[e].done = false;
+	if ($('#video').data('cwType') == 1) {
+		
+	} else {
+		Util.location.jump(-2);
 	}
 });
 </script>

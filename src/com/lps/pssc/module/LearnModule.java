@@ -91,11 +91,11 @@ public class LearnModule {
 		List<DBObject> pictureIds = baseDao.distinct(DbMap.CoursewareDict, "item_id", 
 				new BasicDBObject("courseware_id", new ObjectId(id)).append("item_type", 2));
 		Map<String, Object> rs = new HashMap<String, Object>();
-		rs.put("videoBatches", baseDao.query(DbMap.VideoBatch, 
+		rs.put("videoPackages", baseDao.query(DbMap.VideoPackage, 
 				QueryBuilder.start("_id").in(videoIds).and("status").is(1).get()).toArray());
-		rs.put("exerciseBatches", baseDao.query(DbMap.ExerciseBatch, 
+		rs.put("exercisePackages", baseDao.query(DbMap.ExercisePackage, 
 				QueryBuilder.start("_id").in(exerciseIds).and("status").is(1).get()).toArray());
-		rs.put("pictureBatches", baseDao.query(DbMap.PictureBatch, 
+		rs.put("picturePackages", baseDao.query(DbMap.PicturePackage, 
 				QueryBuilder.start("_id").in(pictureIds).and("status").is(1).get()).toArray());
 		DBObject cw = baseDao.get(DbMap.Courseware, QueryBuilder.start("_id").is(new ObjectId(id)).get());
 		SessionHelper.set(req, "coursewareId", cw.get("_id"));

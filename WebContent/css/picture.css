@@ -25,6 +25,14 @@
 .p_page span {
 	margin-right: 20px;
 }
+#picture {
+	position: relative;
+}
+.picture {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 .picture_exercise {
 	position: absolute;
 	width: 100%;

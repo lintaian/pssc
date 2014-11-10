@@ -40,7 +40,7 @@ public class VideoModule {
 	@Ok("jsp:/tpl/video.jsp")
 	public Object getVideo(HttpServletRequest req, String id) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
-		rs.put("video", baseDao.get(DbMap.VideoBatch, QueryBuilder.start("_id").is(new ObjectId(id)).and("status").is(1).get()));
+		rs.put("video", baseDao.get(DbMap.VideoPackage, QueryBuilder.start("_id").is(new ObjectId(id)).and("status").is(1).get()));
 		rs.put("cw_id", SessionHelper.get(req, "coursewareId").toString());
 		rs.put("cw_type", SessionHelper.get(req, "coursewareType"));
 		return rs;
