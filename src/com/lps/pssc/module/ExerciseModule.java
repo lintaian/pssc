@@ -49,13 +49,11 @@ public class ExerciseModule {
 			rs.put("page", new Page(page, 1, ids.size()));
 			rs.put("answer", MyHelper.getAnswer(8));
 			rs.put("myAnswer", baseDao.get(DbMap.Answer, 
-					QueryBuilder.start("courseware_id").is(SessionHelper.get(req, "coursewareId"))
+					QueryBuilder.start("courseware_id").is(SessionHelper.getCWid(req))
 					.and("exercise_id").is(ids.get(page-1)).and("student_id").
 					is(SessionHelper.getUserId(req)).get()));
 			rs.put("exercisePackageId", id);
 			rs.put("parentEle", parentEle);
-			rs.put("cw_id", SessionHelper.get(req, "coursewareId").toString());
-			rs.put("cw_type", SessionHelper.get(req, "coursewareType"));
 		}
 		return rs;
 	}
@@ -70,11 +68,11 @@ public class ExerciseModule {
 				answer = MyHelper.addOrRemoveString(originAnswer, answer, maxNum);
 			}
 			baseDao.updateOrInsert(DbMap.Answer, 
-					QueryBuilder.start("courseware_id").is(SessionHelper.get(req, "coursewareId"))
+					QueryBuilder.start("courseware_id").is(SessionHelper.getCWid(req))
 					.and("exercise_id").is(new ObjectId(exerciseId)).and("student_id").
 					is(SessionHelper.getUserId(req)).get(), 
 					new BasicDBObject("answer", answer).append("answer_date", new Date()));
-			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", SessionHelper.get(req, "coursewareId"))
+			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", SessionHelper.getCWid(req))
 					.append("exercise_id", new ObjectId(exerciseId))
 					.append("student_id", SessionHelper.getUserId(req))
 					.append("answer", answer).append("answer_date", new Date()));
@@ -91,7 +89,7 @@ public class ExerciseModule {
 		rs.put("status", true);
 		try {
 			ObjectId studentId = sId == null ? SessionHelper.getUserId(req) : new ObjectId(sId);
-			ObjectId coursewareId = cId == null ? (ObjectId)SessionHelper.get(req, "coursewareId") : new ObjectId(cId);
+			ObjectId coursewareId = cId == null ? SessionHelper.getCWid(req) : new ObjectId(cId);
 			baseDao.updateOrInsert(DbMap.Answer, 
 					QueryBuilder.start("courseware_id").is(coursewareId)
 					.and("exercise_id").is(new ObjectId(eId)).and("student_id").
@@ -119,7 +117,7 @@ public class ExerciseModule {
 		rs.put("status", true);
 		try {
 			baseDao.insert(DbMap.PictureTrace, new BasicDBObject("img_url", imageUrl).append("trace", trace).
-					append("time", new Date()));
+					append("create_date", new Date()));
 		} catch (Exception e) {
 			rs.put("status", false);
 		}

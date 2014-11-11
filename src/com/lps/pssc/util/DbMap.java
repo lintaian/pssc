@@ -22,7 +22,8 @@ public enum DbMap {
 	Answer("rec_answer"),
 	AnswerLog("rec_answer_log"),
 	PictureTrace("rec_picture_trace"),
-	PreemptiveResponse ("rec_preemptive_response "),
+	Preemptive("rec_preemptive"),
+	PreemptiveAnswer("rec_preemptive_answer"),
 	Class("rt_class"),
 	ClassOperate("rt_class_operate");
 	private String context;

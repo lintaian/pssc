@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="video" data-cw-id="${obj.cw_id }" data-cw-type="${obj.cw_type }">
+<div id="video" data-id="${obj.video._id }">
 	<video id="video1" controls="controls" preload="metadata" data-video-id="${obj.video._id }">
 		<source src="${obj.video.url }" type="video/ogg" />
 		<source src="${obj.video.url }" type="video/mp4" />
@@ -44,8 +44,17 @@ $('#video1').on('loadedmetadata', function() {
 	});
 });
 $('#video1').on('ended', function() {
-	if ($('#video').data('cwType') == 1) {
-		
+	if (sessionStorage.isLive == 'true') {
+		$.ajax({
+			url: 'teach/contentStatus',
+			type: 'post',
+			data: JSON.stringify({
+				content_id: $('#video').data('id')
+			}),
+			dataType: 'json',
+			success: function(data) {
+			}
+		});
 	} else {
 		Util.location.jump(-2);
 	}

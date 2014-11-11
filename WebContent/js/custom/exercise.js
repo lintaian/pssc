@@ -123,4 +123,31 @@ define(['jquery'], function($) {
 			context.strokeStyle = "rgb(0,0,0)";
 		});
 	});
+	$('body').on('click', '.e_finish', function(e) {
+		if ($('#exercise').parent().hasClass('picture_exercise')) {
+			$('.picture_exercise').hide();
+			$('.picture').css('top', 0);
+			Util.location.remove(-1);
+		} else if ($('#exercise').parent().hasClass('video_exercise')) {
+			$('.video_exercise').hide();
+			$('#video1').css({'top': 0});
+			Util.location.remove(-1);
+			document.getElementById("video1").play();
+		} else {
+			if (sessionStorage.isLive == 'true') {
+				$.ajax({
+					url: 'teach/contentStatus',
+					type: 'post',
+					data: JSON.stringify({
+						content_id: $('#exercise').data('exercisePackageId')
+					}),
+					dataType: 'json',
+					success: function(data) {
+					}
+				});
+			} else {
+				Util.location.jump(-2);
+			}
+		}
+	});
 });

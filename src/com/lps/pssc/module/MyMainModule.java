@@ -54,7 +54,7 @@ public class MyMainModule {
 				DBObject record = new BasicDBObject();
 				record.put("operate", "登陆系统!");
 				record.put("user_id", user.get("_id"));
-				record.put("time", new Date());
+				record.put("create_date", new Date());
 				baseDao.insert(DbMap.StudentRecord, record);
 				user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", user.get("_id")), 
 						new BasicDBObject("login_status", 1));

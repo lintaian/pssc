@@ -34,7 +34,7 @@ public class QrCodeModule {
 		content.append("/qrcode/validate/");
 		content.append(SessionHelper.getUserIdStr(req));
 		content.append("/");
-		content.append(SessionHelper.get(req, "coursewareId").toString());
+		content.append(SessionHelper.getCWidStr(req));
 		content.append("/");
 		content.append(exerciseId);
 		content.append("/");

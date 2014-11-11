@@ -98,8 +98,7 @@ public class LearnModule {
 		rs.put("picturePackages", baseDao.query(DbMap.PicturePackage, 
 				QueryBuilder.start("_id").in(pictureIds).and("status").is(1).get()).toArray());
 		DBObject cw = baseDao.get(DbMap.Courseware, QueryBuilder.start("_id").is(new ObjectId(id)).get());
-		SessionHelper.set(req, "coursewareId", cw.get("_id"));
-		SessionHelper.set(req, "coursewareType", cw.get("courseware_type"));
+		SessionHelper.setCW(req, cw);
 		return rs;
 	}
 }

@@ -3,21 +3,36 @@
 }
 #teach>div {
 	display: none;
-	margin: 180px auto;
+}
+.p_un_teach div.un_teach {
+	display: block!important;
+	margin: 10px auto;
 	text-align: center;
-	color: green;
+	color: #000;
 }
-.p_unTeach div.unTeach {
+.p_un_teach_default div.un_teach_default {
 	display: block!important;
+	background-image: url("../img/lectern.png");
+	width: 560px;
+	height: 300px;
+	margin: 100px auto;
+	text-align: center;
+	color: #FFF;
+	position: relative;
 }
-.p_beforeTeach div.beforeTeach {
-	display: block!important;
+.un_teach_default div {
+	width: 300px;
+	font-size: 22px;
+	position: absolute;
+	left: 130px;
+	top: 70px;
 }
-.p_waitTeach div.waitTeach {
-	display: block!important;
+.un_teach img {
+	max-width: 98%;
 }
-.p_afterTeach div.afterTeach {
-	display: block!important;
+.un_teach div {
+	margin-bottom: 10px;
+	font-size: 22px;
 }
 .p_teaching div.teaching {
 	display: block!important;

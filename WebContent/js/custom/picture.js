@@ -1,10 +1,5 @@
 define(['jquery'], function($) {
 	
-	$('body').on('click', '.picture_exercise .e_finish', function() {
-		$('.picture_exercise').hide();
-		$('.picture').css('top', 0);
-		Util.location.remove(-1);
-	});
 	$('body').on('click', '.p_page .p_prev', function() {
 		Util.img.prev();
 	});
@@ -12,6 +7,19 @@ define(['jquery'], function($) {
 		Util.img.next();
 	});
 	$('body').on('click', '.p_page .p_finish', function() {
-		Util.location.jump(-2);
+		if (sessionStorage.isLive == 'true') {
+			$.ajax({
+				url: 'teach/contentStatus',
+				type: 'post',
+				data: JSON.stringify({
+					content_id: $('#picture').data('id')
+				}),
+				dataType: 'json',
+				success: function(data) {
+				}
+			});
+		} else {
+			Util.location.jump(-2);
+		}
 	});
 });

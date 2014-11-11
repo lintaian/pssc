@@ -14,7 +14,8 @@ require.config({
 		video: 'custom/video',
 		exercise: 'custom/exercise',
 		canvas: 'custom/canvas',
-		picture: 'custom/picture'
+		picture: 'custom/picture',
+		preemptive: 'custom/preemptive'
 	},
 	shim: {
 		patternLock: {deps: ['jquery']},
@@ -23,7 +24,7 @@ require.config({
 });
 
 require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', 'learn',
-         'video', 'exercise', 'canvas', 'picture'], function ($) {
+         'video', 'exercise', 'canvas', 'picture', 'preemptive'], function ($) {
 	var startY;
 	/**
 	 * 改变窗口时，页面自适应

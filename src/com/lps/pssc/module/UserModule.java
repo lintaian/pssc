@@ -37,7 +37,7 @@ public class UserModule {
 	public Object getInfo(HttpServletRequest req) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("user", SessionHelper.getUser(req));
-		rs.put("classes", baseDao.get(DbMap.ClassDict, new BasicDBObject("_id", SessionHelper.getUser(req).get("class_id"))));
+		rs.put("classes", baseDao.get(DbMap.ClassDict, new BasicDBObject("_id", SessionHelper.getClassId(req))));
 		return rs;
 	}
 	@At("/updatePwd")
@@ -47,7 +47,7 @@ public class UserModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			DBObject user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", SessionHelper.getUser(req).get("_id")), 
+			DBObject user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", SessionHelper.getUserId(req)), 
 					new BasicDBObject("auth_code", Util.hexMD5((obj.get("pwd") + SessionHelper.getUserIdStr(req)).getBytes())));
 			SessionHelper.setUser(req, user);
 		} catch (Exception e) {

@@ -41,13 +41,6 @@ define(['jquery'], function($) {
 			}
 		});
 	});
-	/*$('body').on('click', '#location .locationVideo', function() {
-		var url = $(this).data('url');
-		Util.load('.outerPage', url, function() {
-			$('#video1').width($('.outerPage').width());
-			$('#video1').height($('.outerPage').height());
-		});
-	});*/
 	$('body').on('click', '#coursewareDetail .picturePackageList .operate', function() {
 		var id = $(this).parent('.item').data('id');
 		Util.load('.outerPage', 'picture', 'id=' + id, function() {
@@ -89,10 +82,5 @@ define(['jquery'], function($) {
 			url: 'exercise?id=' + id,
 			name: $(this).parent('.item').data('name')
 		});
-		$('.outerPage').addClass('prevAndAfterDoExercise');
-	});
-	$('body').on('click', '.prevAndAfterDoExercise .e_finish', function() {
-		Util.location.jump(-2);
-		$('.outerPage').removeClass('prevAndAfterDoExercise');
 	});
 });

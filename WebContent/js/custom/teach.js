@@ -1,4 +1,10 @@
 define(['jquery'], function($) {
+	var stateCode = {
+		unTeach: '现在还未到上课时间,请同学们先去预习功课吧!',
+		beforeTeach: '请同学们安静的等待老师上课!',
+		waitTeach: '请同学们等待老师操作!',
+		afterTeach: '上课结束,请同学们下课后按时完成老师布置的作业哦!' 
+	}
 	/**
 	 * 轮询查看是否上课
 	 */
@@ -23,29 +29,38 @@ define(['jquery'], function($) {
 							$('#fullIcon').click();
 						}
 						$('#contentModal').addClass('active');
-						var currentClass;
+						var currentClass, 
+						title = data.c_title;
+						if (data.c_photo && data.c_photo != '') {
+							currentClass = 'p_un_teach';
+						} else {
+							currentClass = 'p_un_teach_default';
+						}
 						switch (data.c_status) {
 						case 1:
-							currentClass = 'p_beforeTeach';
+							title = title || stateCode.beforeTeach;
 							break;
 						case 2:
 							if (data.wait) {
-								currentClass = 'p_waitTeach';
+								title = title || stateCode.waitTeach;
 							} else {
-								currentClass = 'p_beforeTeach';
+								currentClass = 'p_teaching';
 							}
 							break;
 						case 3:
-							currentClass = 'p_afterTeach';
+							title = title || stateCode.afterTeach;
 							break;
-
 						default:
 							break;
 						}
-						Util.load('.outerPage', url, 'currentClass=' + currentClass + '&coursewareId=' + data.courseware_id,
+						Util.load('.outerPage', url, 'currentClass=' + currentClass + 
+								'&coursewareId=' + data.courseware_id +
+								'&photo=' + data.c_photo +
+								'&title=' + title,
 								function() {
 							parseData(data);
 						});
+						sessionStorage.isLive = true;
 					} else {
 						commonTimeout();
 					}
@@ -71,7 +86,12 @@ define(['jquery'], function($) {
 					} else {
 						$('#fullIcon').click();
 						$('#contentModal').removeClass('active');
-						coverClass('p_unTeach');
+						coverClass(false, data.c_photo, data.c_title || stateCode.unTeach);
+						$('.left').find('li').each(function() {
+							$(this).removeClass('active');
+						});
+						$('.left li:first').addClass('active');
+						sessionStorage.isLive = false;
 						commonTimeout();
 					}
 				},
@@ -79,42 +99,64 @@ define(['jquery'], function($) {
 					Util.error(data);
 				}
 			});
-		}, 500);
+		}, 1000);
 	}
 	
-	function coverClass(cla) {
-		$('#teach').removeClass().addClass(cla);
+	function coverClass(teaching, photo, title) {
+		if (teaching) {
+			$('#teach').removeClass().addClass('p_teaching');
+		} else {
+			if (photo && photo != '') {
+				$('#teach').removeClass().addClass('p_un_teach');
+				$('#teach').find('.t_img').attr('src', photo);
+			} else {
+				$('#teach').removeClass().addClass('p_un_teach_default');
+			}
+			$('#teach').find('.t_title').text(title);
+		}
 	}
 	function parseData(data) {
 		if (data.c_status == 2) {
 			if (data.wait) {
-				coverClass('p_waitTeach');
+				coverClass(false, data.c_photo, data.c_title || stateCode.waitTeach);
 			}
-			if (data.op_type && data.op_id) {
+			if ((data.op_type || data.op_type == 0) && data.op_id) {
 				var url = '', data2 = 'id=' + data.op_id;
-				switch (data.op_type) {
-				case 0:
-					url = 'video';
-					break;
-				case 1:
-					url = 'exercise';
+				if (data.op_type == 0) {
+					Util.load('.teaching', 'video', data2, function() {
+						$('#video1').width($('.outerPage').width());
+						$('#video1').height($('.outerPage').height());
+					});
+				} else if (data.op_type == 1) {
 					data2 += '&parentEle=.teaching';
-					break;
-				case 2:
-					url = 'picture/single';
-					break;
-				default:
-					break;
+					Util.load('.teaching', 'exercise', data2);
+				} else if (data.op_type == 2) {
+					Util.load('.teaching', 'picture', data2, function() {
+						$.ajax({
+							url: 'picture/dict',
+							type: 'get',
+							data: {
+								id: data.op_id
+							},
+							dataType: 'json',
+							success: function(data) {
+								Util.img.setData(data);
+							}
+						});
+					});
+				} else if (data.op_type == 3) {
+					Util.load('.teaching', 'preemptive', data2);
+				} else if (data.op_type == 4) {
+					Util.load('.teaching', 'picture/single', data2);
 				}
-				Util.load('.teaching', url, data2);
-				coverClass('p_teaching');
+				coverClass(true);
 			}
 			teachingTimeout();
 		} else if (data.c_status == 1) {
-			coverClass('p_beforeTeach');
+			coverClass(false, data.c_photo, data.c_title || stateCode.beforeTeach);
 			teachingTimeout(true);
 		} else  if (data.c_status == 3) {
-			coverClass('p_afterTeach');
+			coverClass(false, data.c_photo, data.c_title || stateCode.afterTeach);
 			teachingTimeout(true);
 		} else {
 			window.location.reload();
