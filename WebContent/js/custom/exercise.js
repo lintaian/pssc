@@ -16,6 +16,16 @@ define(['jquery'], function($) {
 				dataType: 'json',
 				success: function(data) {
 					$('.e_my_answer_text').text(data.answer);
+					if (sessionStorage.isLive == 'true') {
+						$.ajax({
+							url: 'cache/vote',
+							type: 'post',
+							data: JSON.stringify({
+								vid: $('#exercise').data('id'),
+								data: data.answer
+							})
+						})
+					}
 				}
 			});
 		}

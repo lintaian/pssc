@@ -24,7 +24,7 @@ define(['jquery'], function($) {
 		dataTrace = [];
 		dataTrace.push({x: x, y: y});
 		imgDataTemp = context.getImageData(0,0,width,height);
-		interval = interval || setInterval(function() {
+		interval = sessionStorage.isLive == 'true' && (interval || setInterval(function() {
 			var trace = '';
 			while (dataTemp.length > 0) {
 				var d = dataTemp.shift();
@@ -32,16 +32,15 @@ define(['jquery'], function($) {
 			}
 			if (trace != '') {
 				$.ajax({
-					url: 'cache',
+					url: 'cache/point',
 					type: 'post',
 					data: JSON.stringify({
-						data: trace
-					}),
-					dataType: 'json',
-					success: function(data) {}
+						data: trace,
+						eid: $('#exercise').data('id')
+					})
 				})
 			}
-		}, 50);
+		}, 50));
 	});
 	$('body').on('touchmove', '#myCanvas', function(e){
 		var context = document.getElementById('myCanvas').getContext('2d');

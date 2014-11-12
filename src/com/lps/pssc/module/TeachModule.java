@@ -79,7 +79,8 @@ public class TeachModule {
 				if (cos.size() > 0) {
 					DBObject op = cos.get(0);
 					if (current != null) {
-						if (Integer.parseInt(current.get("content_type").toString()) == 4) {
+						int content_type = Integer.parseInt(current.get("content_type").toString());
+						if (content_type == 4) {
 							rs.put("op_type", op.get("content_type"));
 							rs.put("op_id", op.get("content_id").toString());
 							baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(op.get("_id")).get(), 

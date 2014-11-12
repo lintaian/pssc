@@ -16,7 +16,7 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 
 import com.lps.pssc.dao.impl.BaseDao;
-import com.lps.pssc.module.cache.DrawCache;
+import com.lps.pssc.module.cache.Cache;
 import com.lps.pssc.util.SessionHelper;
 
 @IocBean
@@ -27,20 +27,54 @@ public class CacheModule {
 	@Inject
 	BaseDao baseDao;
 	
-	@At("")
+	@At("/point")
 	@POST
 	@Ok("json")
 	@AdaptBy(type=JsonAdaptor.class)
-	public Object pushData(Map<String, String> obj, HttpServletRequest req) {
-		DrawCache.getInstance().push(SessionHelper.getUserIdStr(req), SessionHelper.get(req, "coursewareId").toString(), obj.get("data"));
+	public Object pushPoint(Map<String, String> obj, HttpServletRequest req) {
+		Cache.getInstance().pushPoint(SessionHelper.getUserIdStr(req), 
+				obj.get("eid"), obj.get("data"));
 		return null;
 	}
 	
-	@At("")
+	@At("/point")
 	@GET
 	@Ok("raw")
-	public Object pullData(String sid, String cid, long tick ) {
-		String a = DrawCache.getInstance().poll(sid, cid, tick); 
-		return a;
+	public Object pullData(String sid, String eid, long tick) {
+		return Cache.getInstance().pullPoint(sid, eid, tick); 
+	}
+	
+	@At("/vote")
+	@POST
+	@Ok("json")
+	@AdaptBy(type=JsonAdaptor.class)
+	public Object pushVote(Map<String, String> obj, HttpServletRequest req) {
+		Cache.getInstance().pushVote(SessionHelper.getUserIdStr(req), 
+				obj.get("vid"), obj.get("data"));
+		return null;
+	}
+	
+	@At("/vote")
+	@GET
+	@Ok("raw")
+	public Object pullVote(String vid) {
+		return Cache.getInstance().pullVote(vid); 
+	}
+	
+	@At("/preemptive")
+	@POST
+	@Ok("json")
+	@AdaptBy(type=JsonAdaptor.class)
+	public Object pushPreemptive(Map<String, String> obj, HttpServletRequest req) {
+		Cache.getInstance().pushPreemptive(SessionHelper.getUserIdStr(req), 
+				obj.get("pid"), Long.parseLong(obj.get("timestamp")));
+		return null;
+	}
+	
+	@At("/preemptive")
+	@GET
+	@Ok("raw")
+	public Object pullPreemptive(String pid) {
+		return Cache.getInstance().pullPreemptive(pid);
 	}
 }

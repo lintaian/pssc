@@ -25,6 +25,7 @@ import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 
 @IocBean
@@ -54,8 +55,15 @@ public class PreemptiveModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			baseDao.insert(DbMap.PreemptiveAnswer, new BasicDBObject("preemptive_id", body.get("id"))
-					.append("student_id", SessionHelper.getUserId(req)).append("create_date", new Date()));
+			DBObject obj = baseDao.get(DbMap.PreemptiveAnswer, QueryBuilder.start("preemptive_id").
+					is(new ObjectId(body.get("id"))).and("student_id").
+					is(SessionHelper.getUserId(req)).get());
+			if (obj == null) {
+				Date date = new Date();
+				baseDao.insert(DbMap.PreemptiveAnswer, new BasicDBObject("preemptive_id", new ObjectId(body.get("id")))
+				.append("student_id", SessionHelper.getUserId(req)).append("create_date", date));
+				rs.put("timestamp", date.getTime());
+			}
 		} catch (Exception e) {
 			rs.put("status", false);
 		}

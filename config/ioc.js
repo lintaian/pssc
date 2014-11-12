@@ -2,7 +2,7 @@ var ioc = {
   	config : {
         type : 'org.nutz.ioc.impl.PropertiesProxy',
         fields : {
-            paths : ['thrift.properties', 'mongo.properties', 'config.properties']
+            paths : ['thrift.properties', 'mongo.properties', 'config.properties', 'cache.properties']
         }
     },
 	thriftConfig: {
@@ -26,5 +26,11 @@ var ioc = {
 	qrcodeHost: {
 		type: 'java.lang.String',
 		args: [{java: "$config.get('qrcode.host')"}]
+	},
+	cacheConfig: {
+		type: 'com.lps.pssc.config.CacheConfig',
+		args: [{java: "$config.get('cache.timeout')"},
+		       {java: "$config.get('cache.pollTime')"},
+		       {java: "$config.get('cache.unActiveTime')"}]
 	}
 }
