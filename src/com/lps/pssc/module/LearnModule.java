@@ -65,13 +65,12 @@ public class LearnModule {
 		if (subjectId != null && !"".equals(subjectId)) {
 			query.put("subject_id", new ObjectId(subjectId));
 		}
-		if (date != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date start = sdf.parse(date);
-			Date end = sdf.parse(date);
-			end.setMonth(end.getMonth() + 1);
-			query.put("create_date", new BasicDBObject("$lt", end).append("$gte", start));
-		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		date = date == null ? sdf.format(new Date()) : date;
+		Date start = sdf.parse(date);
+		Date end = sdf.parse(date);
+		end.setMonth(end.getMonth() + 1);
+		query.put("create_date", new BasicDBObject("$lt", end).append("$gte", start));
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("cws", baseDao.query(DbMap.Courseware, query).toArray());
 		rs.put("subjects", baseDao.query(DbMap.SubjectDict, new BasicDBObject("status", 1)).toArray());

@@ -1,14 +1,11 @@
 package com.lps.pssc.util;
 
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
@@ -18,34 +15,46 @@ import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
 public class ImageHelper {
-	public static BufferedImage zoom(BufferedImage source, int targetW, int targetH) throws IOException {
-		int type = source.getType();
-		BufferedImage target = null;
-		double sx = (double) targetW / source.getWidth();
-		double sy = (double) targetH / source.getHeight();
-		//等比例缩放
-		/*if (sx > sy) {
-			sx = sy;
-			targetW = (int)(sx * source.getWidth());
+	public static BufferedImage zoom(BufferedImage source, int max) throws IOException {
+		int width = source.getWidth();
+		int height = source.getHeight();
+		if (Math.max(width, height) > max) {
+			if (width > height) {
+				height = max * height / width;
+				width = max;
+			} else {
+				width = max * width / height;
+				height = max;
+			}
 		} else {
-			sy = sx;
-			targetH = (int)(sy * source.getHeight());
-		}*/
-		if (type == BufferedImage.TYPE_CUSTOM) {
-			ColorModel cm = source.getColorModel();
-			WritableRaster raster = cm.createCompatibleWritableRaster(targetW, targetH);
-			boolean alphaPremultiplied = cm.isAlphaPremultiplied();
-			target = new BufferedImage(cm, raster, alphaPremultiplied, null);
-		} else {
-			target = new BufferedImage(targetW, targetH, type);
+			return source;
 		}
-		Graphics2D g = target.createGraphics();
-//		g.drawImage(ImageIO.read(new File("")), 0, 0, null);
-		g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		g.drawRenderedImage(source, AffineTransform.getScaleInstance(sx, sy));
-		g.dispose();
-		return target;
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB );  
+		Graphics g = image.getGraphics();
+        g.drawImage(source, 0, 0, width, height, null); // 绘制缩小后的图  
+        g.dispose();
+		return image;
+	}
+	public static void zoom(String file, int max) throws Exception {
+		zoom(file, file, max);
+	}
+	public static void zoom(String sourceFile, String targetFile, int max) throws Exception {
+		BufferedImage image = zoom(ImageIO.read(new File(sourceFile)), max);
+		File destFile = new File(targetFile);  
+		FileOutputStream out = new FileOutputStream(destFile); // 输出到文件流  
+		// 可以正常实现bmp、png、gif转jpg  
+		JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+		JPEGEncodeParam param = encoder  
+				.getDefaultJPEGEncodeParam(image);  
+		param.setQuality(0.7f, true);  
+		encoder.setJPEGEncodeParam(param);  
+		encoder.encode(image); // JPEG编码  
+		out.close();  
 	}
 
 	public static BufferedImage cut(String src, int x, int y, int w, int h) throws IOException {
@@ -75,5 +84,18 @@ public class ImageHelper {
 			height = width;
 		}
 		return cut(src, x, y, width, height);
+	}
+	public static void main(String[] args) throws IOException {
+		BufferedImage image = zoom(ImageIO.read(new File("e:/1111.jpg")), 1024);
+		File destFile = new File("e:/2222.jpg");  
+        FileOutputStream out = new FileOutputStream(destFile); // 输出到文件流  
+        // 可以正常实现bmp、png、gif转jpg  
+        JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+        JPEGEncodeParam param = encoder  
+                .getDefaultJPEGEncodeParam(image);  
+        param.setQuality(0.7f, true);  
+        encoder.setJPEGEncodeParam(param);  
+        encoder.encode(image); // JPEG编码  
+        out.close();  
 	}
 }

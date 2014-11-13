@@ -26,29 +26,45 @@ public class CacheData {
 			item.timestamp = timestamp;
 			queue.add(item);
 		}
-		activeTime = timestamp;
 	}
 
-	public String pull(long tick) {
+	public String pull() {
 		StringBuffer result = new StringBuffer("");
 		synchronized (queue) {
 			Iterator<CacheDateItem> iter = queue.iterator();
 			while (iter.hasNext()) {
 				CacheDateItem item = iter.next();
-				if (item.timestamp > tick) {
-					result.append(item.timestamp);
-					result.append("&");
-					result.append(item.data);
-					result.append("-");
-					break;
-				}
+				result.append(item.timestamp);
+				result.append("&");
+				result.append(item.data);
+				result.append("|");
 			}
 		}
 		activeTime = System.currentTimeMillis();
-		return result.substring(0, result.length() - 1);
+		return result.length() > 0 ? result.substring(0, result.length() - 1) : "";
+	}
+	public String pull(long tick) {
+		StringBuffer result = new StringBuffer("");
+		long timestamp = tick;
+		synchronized (queue) {
+			Iterator<CacheDateItem> iter = queue.iterator();
+			while (iter.hasNext()) {
+				CacheDateItem item = iter.next();
+				if (item.timestamp > tick) {
+					timestamp = item.timestamp;
+					result.append(item.data);
+				}
+			}
+		}
+		String rs = String.valueOf(timestamp);
+		if (result.length() > 0) {
+			rs += "&" + result.substring(0, result.length() - 1);
+		}
+		activeTime = System.currentTimeMillis();
+		return rs;
 	}
 	
-	public void remove(String str) {
+	public void removeCacheDateItem(String str) {
 		List<CacheDateItem> list = new ArrayList<CacheDateItem>();
 		Iterator<CacheDateItem> iter = queue.iterator();
 		while (iter.hasNext()) {

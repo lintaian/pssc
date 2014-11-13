@@ -7,7 +7,7 @@ define(['jquery'], function($) {
 		Util.img.next();
 	});
 	$('body').on('click', '.p_page .p_finish', function() {
-		if (sessionStorage.isLive == 'true') {
+		if (Util.isLive == 'true') {
 			$.ajax({
 				url: 'teach/contentStatus',
 				type: 'post',

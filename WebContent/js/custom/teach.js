@@ -60,7 +60,7 @@ define(['jquery'], function($) {
 								function() {
 							parseData(data);
 						});
-						sessionStorage.isLive = true;
+						Util.isLive = true;
 					} else {
 						commonTimeout();
 					}
@@ -91,7 +91,7 @@ define(['jquery'], function($) {
 							$(this).removeClass('active');
 						});
 						$('.left li:first').addClass('active');
-						sessionStorage.isLive = false;
+						Util.isLive = false;
 						commonTimeout();
 					}
 				},

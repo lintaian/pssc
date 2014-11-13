@@ -24,23 +24,25 @@ define(['jquery'], function($) {
 		dataTrace = [];
 		dataTrace.push({x: x, y: y});
 		imgDataTemp = context.getImageData(0,0,width,height);
-		interval = sessionStorage.isLive == 'true' && (interval || setInterval(function() {
-			var trace = '';
-			while (dataTemp.length > 0) {
-				var d = dataTemp.shift();
-				trace += d.x + ',' + d.y + ';';
-			}
-			if (trace != '') {
-				$.ajax({
-					url: 'cache/point',
-					type: 'post',
-					data: JSON.stringify({
-						data: trace,
-						eid: $('#exercise').data('id')
+		if (Util.isLive) {
+			interval = interval || setInterval(function() {
+				var trace = '';
+				while (dataTemp.length > 0) {
+					var d = dataTemp.shift();
+					trace += d.x + ',' + d.y + ';';
+				}
+				if (trace != '') {
+					$.ajax({
+						url: 'cache/point',
+						type: 'post',
+						data: JSON.stringify({
+							data: trace,
+							eid: $('#exercise').data('id')
+						})
 					})
-				})
-			}
-		}, 50));
+				}
+			}, 50);
+		}
 	});
 	$('body').on('touchmove', '#myCanvas', function(e){
 		var context = document.getElementById('myCanvas').getContext('2d');

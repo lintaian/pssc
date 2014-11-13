@@ -37,7 +37,7 @@ public class CacheModule {
 		return null;
 	}
 	
-	@At("/point")
+	@At("/point/*")
 	@GET
 	@Ok("raw")
 	public Object pullData(String sid, String eid, long tick) {
@@ -54,7 +54,7 @@ public class CacheModule {
 		return null;
 	}
 	
-	@At("/vote")
+	@At("/vote/*")
 	@GET
 	@Ok("raw")
 	public Object pullVote(String vid) {
@@ -71,7 +71,7 @@ public class CacheModule {
 		return null;
 	}
 	
-	@At("/preemptive")
+	@At("/preemptive/*")
 	@GET
 	@Ok("raw")
 	public Object pullPreemptive(String pid) {

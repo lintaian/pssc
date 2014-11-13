@@ -20,6 +20,7 @@ import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.upload.UploadAdaptor;
 
 import com.lps.pssc.dao.impl.BaseDao;
+import com.lps.pssc.util.ImageHelper;
 import com.lps.pssc.util.MyHelper;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
@@ -60,7 +61,8 @@ public class UploadModule {
 	@At("/img")
 	@Ok("json")
 	@AdaptBy(type=UploadAdaptor.class, args = { "${app.root}/temp" })
-	public Object uploadImg(@Param("file") File file, HttpServletRequest req) {
+	public Object uploadImg(@Param("file") File file, int maxSize, HttpServletRequest req) {
+		maxSize = maxSize == 0 ? Integer.MAX_VALUE : maxSize;
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
@@ -69,8 +71,7 @@ public class UploadModule {
 			fix = fix.toLowerCase();
 			if ("png".equals(fix) || "jpg".equals(fix) || "jpeg".equals(fix) || "gif".equals(fix)) {
 				String url = "uploadFiles/images/" + new ObjectId() + "." + fix;
-				File myfile = new File(req.getServletContext().getRealPath("/") + url);
-				MyHelper.fileCopy(file, myfile);
+				ImageHelper.zoom(f, req.getServletContext().getRealPath("/") + url, maxSize);
 				rs.put("url", url);
 			} else {
 				rs.put("status", false);

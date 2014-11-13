@@ -21,6 +21,7 @@ $('#video1').on('timeupdate', function(data) {
 					+ '&parentEle=.video_exercise', 
 					function() {
 				$('#video1').css({'top': -3000});
+				$('#video1').width($('.outerPage').width() - 17);
 				$('.video_exercise').show();
 				Util.location.add({
 					url: '',
@@ -44,7 +45,7 @@ $('#video1').on('loadedmetadata', function() {
 	});
 });
 $('#video1').on('ended', function() {
-	if (sessionStorage.isLive == 'true') {
+	if (Util.isLive) {
 		$.ajax({
 			url: 'teach/contentStatus',
 			type: 'post',

@@ -12,6 +12,7 @@ define(['jquery'], function($) {
 			success: function(data) {
 				if (data.status) {
 					$this.addClass('on');
+					$('.preemptive_finish').show();
 					$.ajax({
 						url: 'cache/preemptive',
 						type: 'post',

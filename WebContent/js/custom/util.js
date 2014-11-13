@@ -3,6 +3,7 @@ define([ 'jquery'], function(jquery) {
 		var Util = function() {
 
 		};
+		Util.isLive = false;
 		
 		Util.msg = {
 			timeout: null,

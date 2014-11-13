@@ -4,6 +4,6 @@
 	<div>${obj.p.title }</div>
 	<div class="preemptive ${obj.pa != null ? 'on' : '' }"></div>
 	<div>
-		<span class="btn preemptive_finish">完成</span>
+		<span class="btn preemptive_finish ${obj.pa == null ? 'hide' : '' }">完成</span>
 	</div>
 </div>

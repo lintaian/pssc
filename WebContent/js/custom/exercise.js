@@ -16,7 +16,8 @@ define(['jquery'], function($) {
 				dataType: 'json',
 				success: function(data) {
 					$('.e_my_answer_text').text(data.answer);
-					if (sessionStorage.isLive == 'true') {
+					var type = $('#exercise').data('type');
+					if (Util.isLive && (type == 30 || type == 31)) {
 						$.ajax({
 							url: 'cache/vote',
 							type: 'post',
@@ -62,6 +63,7 @@ define(['jquery'], function($) {
 		}
 		if (fixRight) {
 			var fd = new FormData(document.getElementById("answerUpload"));
+			fd.append('maxSize', 1024);
 			$.ajax({
 				url: url,
 				type: "POST",
@@ -135,16 +137,17 @@ define(['jquery'], function($) {
 	});
 	$('body').on('click', '.e_finish', function(e) {
 		if ($('#exercise').parent().hasClass('picture_exercise')) {
-			$('.picture_exercise').hide();
+			$('.picture_exercise').empty();
 			$('.picture').css('top', 0);
 			Util.location.remove(-1);
 		} else if ($('#exercise').parent().hasClass('video_exercise')) {
-			$('.video_exercise').hide();
+			$('.video_exercise').empty();
 			$('#video1').css({'top': 0});
+			$('#video1').width($('#video').width());
 			Util.location.remove(-1);
 			document.getElementById("video1").play();
 		} else {
-			if (sessionStorage.isLive == 'true') {
+			if (Util.isLive) {
 				$.ajax({
 					url: 'teach/contentStatus',
 					type: 'post',

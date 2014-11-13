@@ -38,7 +38,7 @@ define(['jquery'], function($) {
 			suffix = suffix.toLowerCase();
 			if (suffix == 'png' || suffix == 'gif' || suffix == 'jpg' || suffix == 'jpeg') {
 				var fd = new FormData(document.getElementById("uploadForm"));
-				fd.append("name", "This is some extra data");
+				fd.append('maxSize', 400);
 				$.ajax({
 					url: "upload/img",
 					type: "POST",

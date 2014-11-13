@@ -20,7 +20,7 @@
 }
 .e_my_answer {
 	float: left;
-	width: 100%;
+	width: 96%;
 	margin: 10px 0 -10px 20px;;
 }
 .e_answers .e_answer {
@@ -78,9 +78,9 @@
 	height: 100px;
 }
 .e_subjective_my_answer {
-	margin-left: 10px;
 	margin-top: 10px;
 	max-width: 96%;
+	min-width: 60%;
 }
 .e_my_video {
 	background-color: black;
@@ -88,6 +88,6 @@
 .e_write {
 	float: left;
 	text-align: center;
-	width: 98%;
+	width: 96%;
 	margin: 20px;
 }

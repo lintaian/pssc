@@ -54,9 +54,9 @@ public class Cache {
 	public void pushVote(String studentId, String targetId, String data)
 	{
 		String key = targetId.toLowerCase();
-		data = studentId + "," + data;
+		data = studentId + "&" + data;
 		CacheData cacheData = getCacheData(key);
-		cacheData.remove(studentId);
+		cacheData.removeCacheDateItem(studentId);
 		cacheData.push(data);
 	}
 	public void pushPreemptive(String studentId, String targetId, long time)
@@ -81,7 +81,7 @@ public class Cache {
 		String key = targetId.toLowerCase();
 		if(dict.containsKey(key)) {
 			CacheData cacheData = dict.get(key);
-			result = cacheData.pull(0);
+			result = cacheData.pull();
 		}
 		return result;
 	}

@@ -8,28 +8,12 @@
 		<img src="${obj.exercise.url }">
 	</div>
 	<c:choose>
-		<c:when test="${obj.exercise.exercise_type == 10 || obj.exercise.exercise_type == 11 }">
+		<c:when test="${obj.exercise.exercise_type == 10 || obj.exercise.exercise_type == 11 
+						|| obj.exercise.exercise_type == 30 || obj.exercise.exercise_type == 31}">
 			<div class="e_my_answer">
 				我的答案: ( <span class="e_my_answer_text">${obj.myAnswer.answer }</span> )
 			</div>
-			<div class="e_answers" data-type="${obj.exercise.exercise_type == 10 ? 'single' : 'multi' }">
-				<c:forEach begin="0" end="${obj.exercise.exercise_info.answer_num - 1 }" varStatus="a">
-					<div class="e_answer" 
-						data-answer="${obj.answer[a.index] }">
-						<img class="e_answer_img" src="img/a${a.index }.jpg">
-						<div class="e_answer_text">
-							${obj.answer[a.index] }
-						</div>
-					</div>
-				</c:forEach>
-			</div>
-		</c:when>
-		<c:when test="${obj.exercise.exercise_type == 30 || obj.exercise.exercise_type == 31 }">
-			<div class="e_my_answer">
-				我的答案: ( <span class="e_my_answer_text">${obj.myAnswer.answer }</span> )
-			</div>
-			<div class="e_answers" data-type="${obj.exercise.exercise_type == 30 ? 'single' : 'multi' }" 
-				data-max-num="${obj.exercise.exercise_info.max_num }">
+			<div class="e_answers" data-type="${(obj.exercise.exercise_type == 10 || obj.exercise.exercise_type == 30) ? 'single' : 'multi' }">
 				<c:forEach begin="0" end="${obj.exercise.exercise_info.answer_num - 1 }" varStatus="a">
 					<div class="e_answer" 
 						data-answer="${obj.answer[a.index] }">
