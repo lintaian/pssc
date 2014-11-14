@@ -2,6 +2,7 @@ define(['jquery'], function($) {
 	$('body').on('click', '.e_answer', function() {
 		var a = $(this).data('answer'),
 			exerciseId = $('#exercise').data('id'),
+			exercisePackageId = $('#exercise').data('exercisePackageId'),
 			exerciseType = $('#exercise').data('type'),
 			originAnswer = $('.e_my_answer_text').text(),
 			single = $(this).parent('.e_answers').data('type') == 'single';
@@ -11,8 +12,14 @@ define(['jquery'], function($) {
 			$.ajax({
 				url: 'exercise/objective',
 				type: 'get',
-				data: 'exerciseId=' + exerciseId + '&answer=' + a + '&originAnswer=' + originAnswer + 
-				'&single=' + single + '&maxNum=' + maxNum,
+				data: {
+					exerciseId: exerciseId,
+					answer: a,
+					originAnswer: originAnswer,
+					single: single,
+					maxNum: maxNum,
+					epId: exercisePackageId
+				},
 				dataType: 'json',
 				success: function(data) {
 					$('.e_my_answer_text').text(data.answer);
@@ -35,6 +42,7 @@ define(['jquery'], function($) {
 		var val = $(this).val(),
 			suffix = val.substr(val.lastIndexOf('.') + 1, val.length),
 			eid = $('#exercise').data('id'),
+			epid = $('#exercise').data('exercisePackageId'),
 			etype = $('#exercise').data('type'),
 			url = 'upload/';
 		suffix = suffix.toLowerCase();
@@ -79,7 +87,8 @@ define(['jquery'], function($) {
 							data: {
 								answer: data.url,
 								eId: eid,
-								eType: etype
+								eType: etype,
+								epId: epid
 							},
 							dataType: 'json',
 							success: function(d) {

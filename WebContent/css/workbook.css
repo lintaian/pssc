@@ -1,0 +1,79 @@
+.choose {
+	float: left;
+	width: 96%;
+}
+.choose > div {
+	float: left;
+	margin: 5px 10px;
+}
+.choose select {
+	font-size: 20px;
+	font-family: '微软雅黑';
+}
+.block-title {
+	width: 98%;
+	margin: 10px 0 10px 5px;
+	padding-left: 10px;
+	background-color: rgb(220,220,220);
+	font-size: 20px;
+}
+.block-content {
+	width: 98%;
+	margin-left: 5px;
+	text-align: center;
+}
+.block-content table {
+	width: 98%;
+}
+.block-content table tr {
+	line-height: 22px;
+}
+.block-content table tr td {
+	width: 20%;
+}
+.block-content table tr td.td-name {
+	text-align: right;
+	padding-right: 30px;
+	padding-top: 5px;
+}
+.block-content table tr td.td-content {
+	text-align: left;
+}
+.block-content .e-title {
+	font-size: 22px;
+	width: 98%;
+}
+.block-content .e-img {
+	max-width: 100%;
+}
+.answer {
+	margin-left: 5px;
+	width: 98%;
+	text-align: center;
+}
+.answer img,
+.answer audio,
+.answer video {
+	max-width: 100%;
+	min-width: 60%;
+}
+.answerlog {
+	margin-left: 5px;
+	width: 98%;
+	line-height: 36px;
+}
+.answerlog.gray {
+	background-color: rgb(220,220,220);
+}
+.answerlog img,
+.answerlog audio,
+.answerlog video {
+	width: 200px;
+}
+.answer-date {
+	font-size: 20px;
+}
+.btns {
+	margin: 20px 0;
+	text-align: center;
+}

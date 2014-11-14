@@ -1,22 +1,24 @@
 define(['jquery'], function($) {
 	//student
 	$('body').on('click', '.studentList .item.me', function() {
-		Util.load('.outerPage', 'learn/courseware');
+		Util.load('.outerPage', 'learn/courseware?init=true');
 		Util.location.add({
-			url: 'learn/courseware',
+			url: 'learn/courseware?init=true',
 			name: '课件列表'
 		});
 	});
 	//courseware
-	$('body').on('click', '#courseware .month', function() {
-		var date = $(this).data('date');
-		var subjectId = $('.subject.active').data('id');
-		Util.load('.outerPage', 'learn/courseware', 'date=' + date + '&subjectId=' + subjectId);
-	});
-	$('body').on('click', '#courseware .subject', function() {
-		var subjectId = $(this).data('id');
-		var date = $('.month.active').data('date');
-		Util.load('.outerPage', 'learn/courseware', 'date=' + date + '&subjectId=' + subjectId);
+	$('body').on('change', '#courseware .choose select', function() {
+		var subjectId = $('#subject').val() || '';
+		var year = $('#year').val() || 0;
+		var month = $('#month').val() || 0;
+		var day = $('#day').val() || 0;
+		Util.load('.outerPage', 'learn/courseware', {
+				subjectId: subjectId,
+				year: year,
+				month: month,
+				day: day
+			});
 	});
 	$('body').on('click', '.coursewareList .item', function() {
 		var id = $(this).data("id");

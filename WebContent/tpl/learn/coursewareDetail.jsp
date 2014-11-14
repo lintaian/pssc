@@ -12,7 +12,7 @@
 			</div>
 		</c:forEach>
 	</div>
-	<div class="item_title">课件</div>
+	<div class="item_title">图片</div>
 	<div class="picturePackageList">
 		<c:forEach items="${obj.picturePackages }" var="pb">
 			<div class="item" data-id="${pb._id }" data-name="${pb.title }">

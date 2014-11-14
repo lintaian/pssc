@@ -60,7 +60,7 @@ public class ExerciseModule {
 	@At("/objective")
 	@GET
 	@Ok("json")
-	public Object updateObjective(HttpServletRequest req, String exerciseId, String answer, 
+	public Object updateObjective(HttpServletRequest req, String exerciseId, String answer, String epId, 
 			String originAnswer, boolean single, int maxNum) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		if (!(answer.equals(originAnswer) && single)) {
@@ -69,12 +69,15 @@ public class ExerciseModule {
 			}
 			baseDao.updateOrInsert(DbMap.Answer, 
 					QueryBuilder.start("courseware_id").is(SessionHelper.getCWid(req))
-					.and("exercise_id").is(new ObjectId(exerciseId)).and("student_id").
-					is(SessionHelper.getUserId(req)).get(), 
-					new BasicDBObject("answer", answer).append("answer_date", new Date()));
+					.and("exercise_id").is(new ObjectId(exerciseId)).
+					and("student_id").is(SessionHelper.getUserId(req)).
+					and("exercise_package_id").is(new ObjectId(epId)).get(), 
+					new BasicDBObject("answer", answer).append("answer_date", new Date()),
+					new BasicDBObject("first_answer_date", new Date()).append("scores", -1).append("note", ""));
 			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", SessionHelper.getCWid(req))
 					.append("exercise_id", new ObjectId(exerciseId))
 					.append("student_id", SessionHelper.getUserId(req))
+					.append("exercise_package_id", new ObjectId(epId))
 					.append("answer", answer).append("answer_date", new Date()));
 		}
 		rs.put("answer", answer);
@@ -84,7 +87,7 @@ public class ExerciseModule {
 	@At("/subjective")
 	@Ok("json")
 	@Filters
-	public Object uploader(String answer, String eId, String sId, String cId, int eType, HttpServletRequest req) {
+	public Object uploader(String answer, String eId, String sId, String cId, String epId, int eType, HttpServletRequest req) {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
@@ -93,11 +96,13 @@ public class ExerciseModule {
 			baseDao.updateOrInsert(DbMap.Answer, 
 					QueryBuilder.start("courseware_id").is(coursewareId)
 					.and("exercise_id").is(new ObjectId(eId)).and("student_id").
-					is(studentId).get(), 
-					new BasicDBObject("answer", answer).append("answer_date", new Date()));
+					is(studentId).and("exercise_package_id").is(new ObjectId(epId)).get(), 
+					new BasicDBObject("answer", answer).append("answer_date", new Date()),
+					new BasicDBObject("first_answer_date", new Date()).append("scores", -1).append("note", ""));
 			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", coursewareId)
 					.append("exercise_id", new ObjectId(eId))
 					.append("student_id", studentId)
+					.append("exercise_package_id", new ObjectId(epId))
 					.append("answer", answer).append("answer_date", new Date()));
 			rs.put("url", answer);
 		} catch (Exception e) {

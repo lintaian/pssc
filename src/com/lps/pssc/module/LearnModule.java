@@ -1,6 +1,5 @@
 package com.lps.pssc.module;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,8 +21,8 @@ import org.nutz.mvc.annotation.Ok;
 
 import com.lps.pssc.dao.impl.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
+import com.lps.pssc.util.DateHelper;
 import com.lps.pssc.util.DbMap;
-import com.lps.pssc.util.MyHelper;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -53,29 +52,33 @@ public class LearnModule {
 		}
 		return rs;
 	}
-	@SuppressWarnings("deprecation")
 	@At("/courseware")
 	@GET
 	@Ok("jsp:/tpl/learn/courseware.jsp")
-	public Object getCourseware(HttpServletRequest req, String subjectId, String date) throws Exception {
-		DBObject query = new BasicDBObject();
-		query.put("class_id", SessionHelper.getClassId(req));
-		query.put("valid_time", new BasicDBObject("$lt", new Date()));
-		query.put("status", 1);
-		if (subjectId != null && !"".equals(subjectId)) {
-			query.put("subject_id", new ObjectId(subjectId));
-		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		date = date == null ? sdf.format(new Date()) : date;
-		Date start = sdf.parse(date);
-		Date end = sdf.parse(date);
-		end.setMonth(end.getMonth() + 1);
-		query.put("create_date", new BasicDBObject("$lt", end).append("$gte", start));
+	public Object getCourseware(HttpServletRequest req, String subjectId, int year, int month, int day, boolean init) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
-		rs.put("cws", baseDao.query(DbMap.Courseware, query).toArray());
+		if (init) {
+			Date d = new Date();
+			year = DateHelper.getYear(d);
+			month = DateHelper.getMonth(d);
+		}
+		QueryBuilder qb = QueryBuilder.start("class_id").is(SessionHelper.getClassId(req))
+				.and("valid_time").lessThan(new Date()).and("status").is(1);
+		Date start = DateHelper.getStartDate(year, month, day);
+		if (start != null) {
+			qb.and("create_date").greaterThanEquals(start);
+		}
+		Date end = DateHelper.getEndDate(year, month, day);
+		if (end != null) {
+			qb.and("create_date").lessThan(end);
+		}
+		if (subjectId != null && !"".equals(subjectId)) {
+			qb.and("subject_id").is(new ObjectId(subjectId));
+		}
+		rs.put("cws", baseDao.query(DbMap.Courseware, qb.get()).toArray());
 		rs.put("subjects", baseDao.query(DbMap.SubjectDict, new BasicDBObject("status", 1)).toArray());
 		rs.put("subjectId", subjectId);
-		rs.put("months", MyHelper.getMonths(date));
+		rs.put("date", DateHelper.getDate(year, month, day));
 		return rs;
 	}
 	@SuppressWarnings("unchecked")

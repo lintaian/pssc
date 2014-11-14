@@ -29,7 +29,7 @@ public class QrCodeModule {
 	
 	@At("/*")
 	@Ok("raw")
-	public Object getVideo(String exerciseId, int exerciseType, HttpServletRequest req) throws Exception {
+	public Object getVideo(String exerciseId, int exerciseType, String epId, HttpServletRequest req) throws Exception {
 		StringBuffer content = new StringBuffer(qrcodeHost);
 		content.append("/qrcode/validate/");
 		content.append(SessionHelper.getUserIdStr(req));
@@ -39,16 +39,19 @@ public class QrCodeModule {
 		content.append(exerciseId);
 		content.append("/");
 		content.append(exerciseType);
+		content.append("/");
+		content.append(epId);
 		return TwoDimensionCode.qRCodeCommon(content.toString(), "png", 8, null, 0);
 	}
 	@At("/validate/*")
 	@GET
 	@Ok("jsp:jsp.qrcode")
-	public Object getVideoDict(String sId, String cId, String eId, int eType, HttpServletRequest req) throws Exception {
+	public Object getVideoDict(String sId, String cId, String eId, int eType, String epId, HttpServletRequest req) throws Exception {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("sId", sId);
 		rs.put("cId", cId);
 		rs.put("eId", eId);
+		rs.put("epId", epId);
 		rs.put("eType", eType);
 		return rs;
 	}

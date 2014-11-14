@@ -74,6 +74,12 @@ public class BaseDao {
 	public DBCursor query(DbMap dbMap, DBObject query, DBObject keys) {
 		return getCollection(dbMap.getContext()).find(query, keys);
 	}
+	public DBCursor querySort(DbMap dbMap, DBObject query, DBObject sort) {
+		return getCollection(dbMap.getContext()).find(query).sort(sort);
+	}
+	public DBCursor querySort(DbMap dbMap, DBObject query, DBObject keys, DBObject sort) {
+		return getCollection(dbMap.getContext()).find(query, keys).sort(sort);
+	}
 	public DBCursor queryPage(DbMap dbMap, DBObject query, Page page) {
 		return getCollection(dbMap.getContext()).find(query).skip(page.skip()).limit(page.getPerPage());
 	}
@@ -165,7 +171,9 @@ public class BaseDao {
 		if (get(dbMap, query) != null) {
 			update(dbMap, query, update);
 		} else {
-			insert(dbMap, insert);
+			query.putAll(update);
+			query.putAll(insert);
+			insert(dbMap, query);
 		}
 	}
 }

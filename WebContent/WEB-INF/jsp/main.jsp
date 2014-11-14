@@ -28,6 +28,7 @@
   <link rel="stylesheet" type="text/css" href="css/canvas.css">
   <link rel="stylesheet" type="text/css" href="css/picture.css">
   <link rel="stylesheet" type="text/css" href="css/preemptive.css">
+  <link rel="stylesheet" type="text/css" href="css/workbook.css">
   <!-- <script src="https://getfirebug.com/firebug-lite.js"></script> -->
 </head>
 <body>
@@ -37,6 +38,7 @@
 			<ul>
 				<li><a href="#" data-change-page="teach">我的教室</a></li>
 				<li><a href="#" data-change-page="learn">我的学习</a></li>
+				<li><a href="#" data-change-page="workbook?init=true">我的作业</a></li>
 				<li><a href="#" data-change-page="record">我的记录</a></li>
 				<li><a href="#" data-change-page="user/info">用户资料</a></li>
 				<li><a href="#" data-change-page="user/logout">退出系统</a></li>

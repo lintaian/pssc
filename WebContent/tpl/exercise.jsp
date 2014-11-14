@@ -46,7 +46,7 @@
 					</c:when>
 					<c:when test="${obj.exercise.exercise_type == 22 }">
 						<video class="e_subjective_my_answer e_my_video" 
-							controls="controls" preload="metadata">
+							controls="controls">
 							<source src="${obj.myAnswer.answer }" type="video/ogg" />
 							<source src="${obj.myAnswer.answer }" type="video/mp4" />
 							<source src="${obj.myAnswer.answer }" type="video/webm" />
@@ -64,7 +64,7 @@
 					</form>
 				</div>
 				<div class="qrcode">
-					<img alt="" src="qrcode/${obj.exercise._id }/${obj.exercise.exercise_type }">
+					<img alt="" src="qrcode/${obj.exercise._id }/${obj.exercise.exercise_type }/${obj.exercisePackageId }">
 				</div>
 			</div>
 		</c:when>

@@ -50,29 +50,6 @@
 	cursor: pointer;
 }
 
-#courseware .choose {
-	margin: 10px;
-}
-#courseware .choose {
-	font-size: 18px;
-	font-family: 微软雅黑;
-}
-#courseware .choose span {
-	margin-left: 10px;
-	color: #79b70e;
-}
-#courseware .choose span:first-child {
-	margin-left: 0px;
-}
-#courseware .choose a {
-	color: #666;
-	margin-left: 5px;
-	cursor: pointer;
-}
-#courseware .choose a.active {
-	color: orange;
-}
-
 #coursewareDetail .item_title {
 	float: left;
 	width: 99%;

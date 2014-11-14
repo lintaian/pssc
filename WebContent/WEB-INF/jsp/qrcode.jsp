@@ -38,7 +38,7 @@
 </head>
 <body>
 	<div class="upload" data-sid="${obj.sId }" data-cid="${obj.cId }" 
-		data-eid="${obj.eId }" data-etype="${obj.eType }">
+		data-eid="${obj.eId }" data-etype="${obj.eType }" data-epid="${obj.epId }">
 		<span>上传${obj.eType == 20 ? '图片' : (obj.eType == 21 ? '录音' : (obj.eType == 22 ? '视频' : '')) }</span>
 		<form method="post" id="answerUpload"
 			enctype="multipart/form-data">
@@ -53,6 +53,7 @@
 					suffix = val.substr(val.lastIndexOf('.') + 1, val.length),
 					eid = $('.upload').data('eid'),
 					etype = $('.upload').data('etype'),
+					epid = $('.upload').data('epid'),
 					sid = $('.upload').data('sid'),
 					cid = $('.upload').data('cid'),
 					url = 'upload/';
@@ -98,6 +99,7 @@
 										answer: data.url,
 										eId: eid,
 										eType: etype,
+										epId: epid,
 										cId: cid,
 										sId: sid
 									},
