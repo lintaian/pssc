@@ -4,7 +4,7 @@
 <div id="record">
 	<c:forEach items="${obj.data}" var="r">
 		<span class="time">
-			<fmt:formatDate value="${r.time }" pattern="yyyy年MM月dd日  HH:mm:ss" />
+			<fmt:formatDate value="${r.create_date }" pattern="yyyy年MM月dd日  HH:mm:ss" />
 		</span>
 		<span class="operate">${r.operate}</span>
 		<hr/>

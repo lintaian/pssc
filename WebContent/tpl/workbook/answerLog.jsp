@@ -12,7 +12,7 @@
 					<span>选择了 ( ${a.answer } )</span>
 				</c:when>
 				<c:when test="${obj.ex.exercise_type == 20 || obj.ex.exercise_type == 23 }">
-					上传了图片 <img src="${a.answer }">
+					上传了图片 <img class="viewable" src="${a.answer }">
 				</c:when>
 				<c:when test="${obj.ex.exercise_type == 21 }">
 					上传了录音 <audio controls="controls">

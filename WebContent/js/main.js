@@ -26,7 +26,7 @@ require.config({
 
 require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', 'learn',
          'video', 'exercise', 'canvas', 'picture', 'preemptive', 'workbook'], function ($) {
-	var startY;
+	var startY, startX;
 	/**
 	 * 改变窗口时，页面自适应
 	 */
@@ -54,13 +54,25 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	 */
 	$('body').on('touchmove', '.scroll', function(e) {
 		var y = e.originalEvent.pageY,
-		clientHeight = e.currentTarget.clientHeight,
-		scrollHeight = e.currentTarget.scrollHeight,
-		scrollTop = e.currentTarget.scrollTop;
-		if (!(scrollHeight == clientHeight || 
-				(scrollTop == 0 && startY < y) || 
-				((scrollTop + clientHeight) == scrollHeight && startY > y))) {
-			e.stopPropagation();
+			x = e.originalEvent.pageX,
+			clientHeight = e.currentTarget.clientHeight,
+			scrollHeight = e.currentTarget.scrollHeight,
+			scrollTop = e.currentTarget.scrollTop,
+			clientWidth = e.currentTarget.clientWidth,
+			scrollWidth = e.currentTarget.scrollWidth,
+			scrollLeft = e.currentTarget.scrollLeft;
+		if (Math.abs(y - startY) >= Math.abs(x - startX)) {
+			if (!(scrollHeight == clientHeight || 
+					(scrollTop == 0 && startY < y) || 
+					((scrollTop + clientHeight) == scrollHeight && startY > y))) {
+				e.stopPropagation();
+			}
+		} else {
+			if (!(scrollWidth == clientWidth ||
+					(scrollLeft == 0 && startX < x) ||
+					((scrollLeft + clientWidth) == scrollWidth && startX > x))) {
+				e.stopPropagation();
+			}
 		}
 	});
 	/**
@@ -68,6 +80,7 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	 */
 	$('body').on('touchstart', '.scroll', function(e) {
 		startY = e.originalEvent.pageY;
+		startX = e.originalEvent.pageX;
 	});
 	/**
 	 * 改变加载的外部页面
@@ -109,6 +122,20 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 		Util.msg.mySetTimeout();
 	});
 	
+	$('body').on('click', '.iv-close', function() {
+		Util.imageView.close();
+	});
+	$('body').on('click', 'img.viewable', function() {
+		var url = $(this).attr('src');
+		Util.imageView.show(url);
+	});
+	$('.iv-img img').on('touchstart', function(e) {
+		Util.zoomImage.reSet();
+	});	
+	$('.iv-img img').on('touchmove', function(e) {
+		Util.zoomImage.zoom(e);
+	});	
+	
 	Util.msg.show('通知信息', '小朋友,欢迎回来!', 'info');
 	
 	
@@ -116,12 +143,9 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	 * 改变窗口大小
 	 */
 	function resize(windResize) {
-		var height = getWinHeight();
+		var height = Util.getWinHeight();
 		if ($('.content').hasClass('full')) {
 			var h = height - 40;
-			if(navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") < 0) {
-				h -= 20;
-			} 
 			$('.outerPage').height(h);
 		} else {
 			$('.outerPage').height(height - 40 - 70 - 40);
@@ -131,21 +155,4 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 			$('.right').height(height);
 		}
 	}
-	/**
-	 * 获取窗口高度
-	 */
-	function getWinHeight() {
-	    var winHeight = 0;
-	    // 获取窗口高度
-	    if (window.innerHeight)
-	        winHeight = window.innerHeight;
-	    else if ((document.body) && (document.body.clientHeight))
-	        winHeight = document.body.clientHeight;
-	    // 通过深入 Document 内部对 body 进行检测，获取窗口大小
-	    if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)
-	    {
-	        winHeight = document.documentElement.clientHeight;
-	    }
-	    return winHeight;
-	};
 });

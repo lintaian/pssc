@@ -111,7 +111,8 @@ define(['jquery'], function($) {
 									data: {
 										answer: d.url,
 										eId: $('#exercise').data('id'),
-										eType: $('#exercise').data('type')
+										eType: $('#exercise').data('type'),
+										epId: $('#exercise').data('exercisePackageId')
 									},
 									dataType: 'json',
 									success: function(d3) {

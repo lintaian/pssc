@@ -38,7 +38,10 @@ public class RecordModule {
 	public Object getRecords(HttpServletRequest req, int page) throws Exception {
 		page = page > 0 ? page : 1;
 		int perPage = 10;
-		DBCursor cursor = baseDao.queryPage(DbMap.StudentRecord, new BasicDBObject("user_id", SessionHelper.getUserId(req)), new Page(page, perPage));
+		DBCursor cursor = baseDao.queryPageSort(DbMap.StudentRecord, 
+				new BasicDBObject("user_id", SessionHelper.getUserId(req)),
+				new BasicDBObject("create_date", -1),
+				new Page(page, perPage));
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("data", cursor.toArray());
 		rs.put("page", new Page(page, perPage, cursor.count()));

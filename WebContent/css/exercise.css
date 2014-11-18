@@ -3,6 +3,7 @@
 	margin-left: 20px;
 	margin-top: 5px;
 	float: left;
+	text-align: center;
 }
 .e_question img {
 	max-width: 100%;
@@ -80,14 +81,23 @@
 .e_subjective_my_answer {
 	margin-top: 10px;
 	max-width: 96%;
-	min-width: 60%;
+}
+.e_my_img, .e_my_write {
+	max-width: 90%;
+} 
+.e_my_audio {
+	width: 80%;
 }
 .e_my_video {
 	background-color: black;
+	width: 50%;
 }
 .e_write {
 	float: left;
 	text-align: center;
 	width: 96%;
 	margin: 20px;
+}
+.e_subjective_answer {
+	text-align: center;
 }

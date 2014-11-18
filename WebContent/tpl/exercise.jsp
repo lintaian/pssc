@@ -5,7 +5,7 @@
 	data-parent-ele="${obj.parentEle }">
 	<div class="e_question">
 		<div class="${obj.exercise.url == '' ? 'no_img' : '' }">${obj.exercise.title }</div>
-		<img src="${obj.exercise.url }">
+		<img class="viewable" src="${obj.exercise.url }">
 	</div>
 	<c:choose>
 		<c:when test="${obj.exercise.exercise_type == 10 || obj.exercise.exercise_type == 11 
@@ -29,10 +29,10 @@
 			<div class="e_my_answer">
 				我的答案 : 
 			</div>
-			<div class="e_my_answer ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}">
+			<div class="e_my_answer e_subjective_answer ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}">
 				<c:choose>
 					<c:when test="${obj.exercise.exercise_type == 20 }">
-						<img class="e_subjective_my_answer e_my_img" 
+						<img class="e_subjective_my_answer e_my_img viewable" 
 							src="${obj.myAnswer.answer }">
 					</c:when>
 					<c:when test="${obj.exercise.exercise_type == 21 }">
@@ -72,8 +72,10 @@
 			<div class="e_my_answer">
 				我的答案 : 
 			</div>
-			<img class="e_subjective_my_answer e_my_write ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}" 
+			<div class="e_subjective_answer">
+				<img class="e_subjective_my_answer e_my_write viewable ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}" 
 							src="${obj.myAnswer.answer }">
+			</div>
 			<div class="e_write" data-bg-img="${obj.exercise.exercise_info.bg_img }">
 				<span class="btn open_canvas">手写回答</span>
 				<div class="e_canvas"></div>

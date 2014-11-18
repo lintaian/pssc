@@ -205,3 +205,49 @@ ul li {
 	border-radius: 6px;
 	cursor: pointer;
 }
+#imageViewBg {
+	position: fixed;
+	z-index: 99997;
+	width: 98%;
+	height: 600px;
+	top: 10px;
+	left: 10px;
+	background-color: #000;
+	opacity: 0.8;
+	border: 1px solid #FFF;
+	border-radius: 10px;
+}
+#imageView {
+	position: fixed;
+	z-index: 99998;
+	top: 10px;
+	left: 10px;
+	width: 98%;
+	height: 600px;
+}
+.iv-img {
+	position: relative;
+	width: 98%;
+	height: 98%;
+	margin: 1%;
+	overflow: auto; 
+	text-align: center;
+}
+.iv-close {
+	background-image: url("../img/iv-close.png");
+	width: 40px;
+	height: 40px;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	z-index: 1;
+}
+.iv-zoom-scale {
+	position: fixed;
+	left: 20px;
+	top: 20px;
+	z-index: 1;
+	font-size: 20px;
+	color: #F00;
+}

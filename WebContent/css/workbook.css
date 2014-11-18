@@ -51,11 +51,14 @@
 	width: 98%;
 	text-align: center;
 }
-.answer img,
-.answer audio,
+.answer img {
+	max-width: 90%;
+}
+.answer audio {
+	width: 80%;
+}
 .answer video {
-	max-width: 100%;
-	min-width: 60%;
+	width: 50%;
 }
 .answerlog {
 	margin-left: 5px;
@@ -68,7 +71,12 @@
 .answerlog img,
 .answerlog audio,
 .answerlog video {
-	width: 200px;
+	width: 100px;
+	margin-top: 5px;
+	margin-bottom: -5px;
+}
+.answerlog audio {
+	width: 300px;
 }
 .answer-date {
 	font-size: 20px;

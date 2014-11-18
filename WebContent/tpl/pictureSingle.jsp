@@ -2,6 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div id="picture">
 	<div class="p_img">
-		<img src="${obj.picture.url }">
+		<img class="viewable" src="${obj.picture.url }">
 	</div>
 </div>

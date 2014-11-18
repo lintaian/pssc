@@ -4,7 +4,7 @@
 	<div class="picture">
 		<div class="p_img">
 			<div class="p_title">${obj.picturePackage.title }</div>
-			<img src="">
+			<img class="viewable" src="">
 		</div>
 		<div class="p_page"></div>
 	</div>

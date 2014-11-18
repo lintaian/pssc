@@ -66,6 +66,14 @@
 		</div>
 		<div class="msgContent">密码更新成功!</div>
 	</div>
+	<div id="imageViewBg" class="hide"></div>
+	<div id="imageView" class="hide">
+		<div class="iv-close"></div>
+		<span class="iv-zoom-scale"></span>
+		<div class="iv-img scroll">
+			<img src="photo/q1.png">
+		</div>
+	</div>
 	<script src="js/lib/fastclick.js"></script>
 	<script>
 		window.addEventListener('load', function () {
