@@ -11,7 +11,7 @@ define(['jquery'], function($) {
 		imgDataTemp;
 	$('body').on('touchmove', '#canvas', function(e) {
 		e.preventDefault();
-	})
+	});
 	$('body').on('touchstart', '#myCanvas', function(e){
 		var context = document.getElementById('myCanvas').getContext('2d');
 		imgData = imgData || context.getImageData(0,0,width,height);
@@ -52,7 +52,7 @@ define(['jquery'], function($) {
 		dataTemp.push({x: x, y: y});
 		dataTrace.push({x: x, y: y});
 		updateTrace(context);
-	})
+	});
 	
 	$('body').on('touchend', '#myCanvas', function(e){
 		var context = document.getElementById('myCanvas').getContext('2d');

@@ -55,13 +55,13 @@ define(['jquery'], function($) {
 			}
 			break;
 		case 21:
-			if (suffix == 'acc' || suffix == 'mp3') {
+			if (suffix == 'mp3' || suffix == 'acc' || suffix == 'amr') {
 				fixRight = true;
 				url += 'audio';
 			}
 			break;
 		case 22:
-			if (suffix == 'mp4' || suffix == '3gp') {
+			if (suffix == 'mp4' || suffix == '3gp' || suffix == 'mov') {
 				fixRight = true;
 				url += 'video';
 			}
@@ -72,6 +72,7 @@ define(['jquery'], function($) {
 		if (fixRight) {
 			var fd = new FormData(document.getElementById("answerUpload"));
 			fd.append('maxSize', 1024);
+			Util.loader.show('文件上传中,请稍候...');
 			$.ajax({
 				url: url,
 				type: "POST",
@@ -92,19 +93,26 @@ define(['jquery'], function($) {
 							},
 							dataType: 'json',
 							success: function(d) {
+								Util.loader.close();
 								if (d.status) {
 									Util.msg.show('提示信息', '文件上传成功!');
 									$('.e_subjective_my_answer').attr('src', data.url).parent().show();
 								} else {
 									Util.msg.show('提示信息', '文件上传失败!');
 								}
+							},
+							error: function(data) {
+								Util.loader.close();
+								Util.error(data);
 							}
 						})
 					} else {
+						Util.loader.close();
 						Util.msg.show('提示信息', data.msg, 'error');
 					}
 				},
 				error: function(data) {
+					Util.loader.close();
 					Util.error(data);
 				}
 			});

@@ -4,7 +4,7 @@ define(['jquery'], function($) {
 		beforeTeach: '请同学们安静的等待老师上课!',
 		waitTeach: '请同学们等待老师操作!',
 		afterTeach: '上课结束,请同学们下课后按时完成老师布置的作业哦!' 
-	}
+	};
 	/**
 	 * 轮询查看是否上课
 	 */
@@ -70,7 +70,7 @@ define(['jquery'], function($) {
 				}
 			})
 		}, 5000);
-	}
+	};
 	function teachingTimeout(init) {
 		setTimeout(function() {
 			$.ajax({
@@ -100,7 +100,7 @@ define(['jquery'], function($) {
 				}
 			});
 		}, 1000);
-	}
+	};
 	
 	function coverClass(teaching, photo, title) {
 		if (teaching) {
@@ -114,7 +114,7 @@ define(['jquery'], function($) {
 			}
 			$('#teach').find('.t_title').text(title);
 		}
-	}
+	};
 	function parseData(data) {
 		if (data.c_status == 2) {
 			if (data.wait) {
@@ -161,6 +161,6 @@ define(['jquery'], function($) {
 		} else {
 			window.location.reload();
 		}
-	}
+	};
 	commonTimeout();
 });

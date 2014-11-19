@@ -74,6 +74,12 @@
 			<img src="photo/q1.png">
 		</div>
 	</div>
+	<div id="modal" class="hide"></div>
+	<div id="loading" class="hide">
+		<img src="img/loader.gif">
+		<div class="text"></div>
+		<div class="progress"></div>
+	</div>
 	<script src="js/lib/fastclick.js"></script>
 	<script>
 		window.addEventListener('load', function () {

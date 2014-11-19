@@ -278,6 +278,67 @@ define([ 'jquery'], function(jquery) {
 			}
 		}
 		
+		Util.loader = {
+			timeout: '',
+			started: false,
+			show: function(text) {
+				text = text || '文件上传中,请稍等...';
+				var $text = $('#loading .text'),
+					$load = $('#loading');
+				$load.show();
+				$('#modal').show();
+				$text.text(text);
+				var h = $load.height(),
+					w = $load.width(),
+					winH = Util.getWinHeight(),
+					winW = Util.getWinWidth();
+				$load.css({
+					top: (winH - h) / 2,
+					left: (winW - w) / 2
+				});
+				this.startTimeout();
+			},
+			close: function() {
+				$('#loading').hide();
+				$('#modal').hide();
+				this.stopTimeout();
+			},
+			startTimeout: function() {
+				this.timeout = setTimeout(function() {
+					$.ajax({
+						url: 'upload/info',
+						type: 'get',
+						dataType: 'json',
+						success: function(data) {
+							var progress,
+								flag;
+							if (Util.loader.started) {
+								if (data.current == 0) {
+									progress = 100;
+									flag = true;
+								} else {
+									progress = parseInt(data.current / data.sum * 100);
+								}
+							} else {
+								progress = parseInt(data.current / data.sum * 100);
+								Util.loader.started = true;
+							}
+							$('#loading .progress').text(progress + '%');
+							if(!flag) {
+								Util.loader.startTimeout();
+							} else {
+								Util.loader.stopTimeout();
+							}
+						}
+					})
+				}, 500);
+			},
+			stopTimeout: function() {
+				clearTimeout(this.timeout);
+				this.started = false;
+			}
+		}
+		
 		Util.getImgNaturalDimensions = function(img, callback) {
 		    var nWidth = 0, nHeight = 0;
 		    if (img.naturalWidth) { // 现代浏览器
@@ -309,6 +370,19 @@ define([ 'jquery'], function(jquery) {
 		    	winHeight -= 20;
 			} 
 		    return winHeight;
+		};
+		Util.getWinWidth = function() {
+		    var winWidth = 0;
+		    // 获取窗口宽度
+		    if (window.innerWidth)
+		        winWidth = window.innerWidth;
+		    else if ((document.body) && (document.body.clientWidth))
+		        winWidth = document.body.clientWidth;
+		    if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)
+		    {
+		        winWidth = document.documentElement.clientWidth;
+		    }
+		    return winWidth;
 		};
 		
 		if (!window.Util) {

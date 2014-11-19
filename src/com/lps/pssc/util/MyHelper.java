@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
+
 public class MyHelper {
 	/**
 	 * 比较两个UUID是否相等
@@ -112,5 +114,18 @@ public class MyHelper {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static String getNotExistFileName(String dir, String dir2, String fix) {
+		File file = null;
+		String name = "";
+		while (true) {
+			name = dir2 + new ObjectId() + "." + fix;
+			file = new File(dir + name);
+			if (!file.exists()) {
+				break;
+			}
+		}
+		return name;
 	}
 }

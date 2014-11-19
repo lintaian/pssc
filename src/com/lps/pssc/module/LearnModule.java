@@ -63,7 +63,8 @@ public class LearnModule {
 			month = DateHelper.getMonth(d);
 		}
 		QueryBuilder qb = QueryBuilder.start("class_id").is(SessionHelper.getClassId(req))
-				.and("valid_time").lessThan(new Date()).and("status").is(1);
+				.and("valid_time").lessThan(new Date()).and("status").is(1)
+				.and("courseware_type").notEquals(1);
 		Date start = DateHelper.getStartDate(year, month, day);
 		if (start != null) {
 			qb.and("create_date").greaterThanEquals(start);

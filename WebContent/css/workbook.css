@@ -71,12 +71,14 @@
 .answerlog img,
 .answerlog audio,
 .answerlog video {
-	width: 100px;
+	max-width: 300px;
 	margin-top: 5px;
 	margin-bottom: -5px;
+	max-height: 100px;
 }
-.answerlog audio {
-	width: 300px;
+.answerlog audio,
+.answerlog video {
+	width: 300px!important;
 }
 .answer-date {
 	font-size: 20px;

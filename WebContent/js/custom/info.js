@@ -39,6 +39,7 @@ define(['jquery'], function($) {
 			if (suffix == 'png' || suffix == 'gif' || suffix == 'jpg' || suffix == 'jpeg') {
 				var fd = new FormData(document.getElementById("uploadForm"));
 				fd.append('maxSize', 400);
+				Util.loader.show();
 				$.ajax({
 					url: "upload/img",
 					type: "POST",
@@ -62,13 +63,20 @@ define(['jquery'], function($) {
 									} else {
 										Util.msg.show('提示信息', '头像更新失败!', 'error');
 									}
+									Util.loader.close();
+								},
+								error: function(data) {
+									Util.loader.close();
+									Util.error(data);
 								}
 							})
 						} else {
+							Util.loader.close();
 							Util.msg.show('提示信息', data.msg);
 						}
 					},
 					error: function(data) {
+						Util.loader.close();
 						Util.error(data);
 					}
 				});
