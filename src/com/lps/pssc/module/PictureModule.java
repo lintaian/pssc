@@ -19,7 +19,7 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 
-import com.lps.pssc.dao.impl.BaseDao;
+import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
 import com.mongodb.DBObject;

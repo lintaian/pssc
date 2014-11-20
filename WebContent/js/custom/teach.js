@@ -1,9 +1,9 @@
 define(['jquery'], function($) {
 	var stateCode = {
-		unTeach: '现在还未到上课时间,请同学们先去预习功课吧!',
-		beforeTeach: '请同学们安静的等待老师上课!',
-		waitTeach: '请同学们等待老师操作!',
-		afterTeach: '上课结束,请同学们下课后按时完成老师布置的作业哦!' 
+		unTeach: '现在还未到上课时间,请小泡泡们先去预习功课吧!',
+		beforeTeach: '请小泡泡们安静的等待老师上课!',
+		waitTeach: '请小泡泡们等待老师操作!',
+		afterTeach: '上课结束,请小泡泡们下课后按时完成老师布置的作业哦!' 
 	};
 	/**
 	 * 轮询查看是否上课

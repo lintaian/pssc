@@ -20,7 +20,8 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
-import com.lps.pssc.dao.impl.BaseDao;
+
+import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.SessionHelper;
@@ -44,7 +45,7 @@ public class TeachModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("currentClass", (currentClass == null || "".equals(currentClass)) ? "p_un_teach_default" : currentClass) ;
 		rs.put("photo", photo) ;
-		rs.put("title", (title == null || "".equals(title)) ? "现在还未到上课时间,请同学们先去预习功课吧!" : title) ;
+		rs.put("title", (title == null || "".equals(title)) ? "现在还未到上课时间,请小泡泡们先去预习功课吧!" : title) ;
 		if (coursewareId != null && !"".equals(coursewareId)) {
 			DBObject cw = baseDao.get(DbMap.Courseware, QueryBuilder.start("_id").is(new ObjectId(coursewareId)).and("status").is(1).get());
 			SessionHelper.setCW(req, cw);

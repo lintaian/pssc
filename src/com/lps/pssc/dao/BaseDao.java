@@ -1,4 +1,4 @@
-package com.lps.pssc.dao.impl;
+package com.lps.pssc.dao;
 
 import java.util.List;
 

@@ -20,7 +20,7 @@ import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.POST;
 
-import com.lps.pssc.dao.impl.BaseDao;
+import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.filter.LoginFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.SessionHelper;

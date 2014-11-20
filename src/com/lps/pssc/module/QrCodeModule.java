@@ -13,7 +13,7 @@ import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
 
-import com.lps.pssc.dao.impl.BaseDao;
+import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.util.SessionHelper;
 import com.lps.pssc.util.TwoDimensionCode;
 

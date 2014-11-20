@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -18,7 +20,7 @@ import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.upload.UploadAdaptor;
 import org.nutz.mvc.upload.Uploads;
 
-import com.lps.pssc.dao.impl.BaseDao;
+import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.util.ImageHelper;
 import com.lps.pssc.util.MyHelper;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
@@ -43,7 +45,7 @@ public class UploadModule {
 			fix = fix.toLowerCase();
 			if ("mp4".equals(fix) || "3gp".equals(fix) || "mov".equals(fix)) {
 				String url = MyHelper.getNotExistFileName(req.getServletContext().getRealPath("/"), "uploadFiles/videos/", fix);
-				File myfile = new File(url);
+				File myfile = new File(req.getServletContext().getRealPath("/") + url);
 				MyHelper.fileCopy(file, myfile);
 				rs.put("url", url);
 			} else {
@@ -70,7 +72,7 @@ public class UploadModule {
 			fix = fix.toLowerCase();
 			if ("png".equals(fix) || "jpg".equals(fix) || "jpeg".equals(fix) || "gif".equals(fix)) {
 				String url = MyHelper.getNotExistFileName(req.getServletContext().getRealPath("/"), "uploadFiles/images/", fix);
-				ImageHelper.zoom(f, url, maxSize);
+				ImageHelper.zoom(f, req.getServletContext().getRealPath("/") + url, maxSize);
 				rs.put("url", url);
 			} else {
 				rs.put("status", false);
@@ -95,7 +97,7 @@ public class UploadModule {
 			fix = fix.toLowerCase();
 			if ("mp3".equals(fix) || "acc".equals(fix) || "amr".equals(fix)) {
 				String url = MyHelper.getNotExistFileName(req.getServletContext().getRealPath("/"), "uploadFiles/audios/", fix);
-				File myfile = new File(url);
+				File myfile = new File(req.getServletContext().getRealPath("/") + url);
 				MyHelper.fileCopy(file, myfile);
 				rs.put("url", url);
 			} else {
@@ -121,7 +123,7 @@ public class UploadModule {
 			String data = obj.get("data");
 			data = data.substring(data.indexOf("base64,") + 7);
 			String url = MyHelper.getNotExistFileName(req.getServletContext().getRealPath("/"), "uploadFiles/images/", "png");
-			File myfile = new File(url);
+			File myfile = new File(req.getServletContext().getRealPath("/") + url);
 			FileOutputStream fos = new FileOutputStream(myfile);
 			Base64.decode(data, fos);
 			rs.put("url", url);
