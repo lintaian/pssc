@@ -70,9 +70,13 @@ public class UploadModule {
 			String f = file.toString();
 			String fix = f.substring(f.lastIndexOf(".") + 1, f.length());
 			fix = fix.toLowerCase();
-			if ("png".equals(fix) || "jpg".equals(fix) || "jpeg".equals(fix) || "gif".equals(fix)) {
+			if ("jpg".equals(fix) || "jpeg".equals(fix) || "gif".equals(fix)) {
 				String url = MyHelper.getNotExistFileName(req.getServletContext().getRealPath("/"), "uploadFiles/images/", fix);
 				ImageHelper.zoom(f, req.getServletContext().getRealPath("/") + url, maxSize);
+				rs.put("url", url);
+			} else if ("png".equals(fix) ) {
+				String url = MyHelper.getNotExistFileName(req.getServletContext().getRealPath("/"), "uploadFiles/images/", fix);
+				ImageHelper.zoomPng(f, req.getServletContext().getRealPath("/") + url, maxSize);
 				rs.put("url", url);
 			} else {
 				rs.put("status", false);

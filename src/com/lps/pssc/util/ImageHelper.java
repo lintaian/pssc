@@ -2,6 +2,8 @@ package com.lps.pssc.util;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,6 +57,22 @@ public class ImageHelper {
 		encoder.setJPEGEncodeParam(param);  
 		encoder.encode(image); // JPEG编码  
 		out.close();  
+	}
+	
+	public static void zoomPng(String sourceFile, String targetFile, int max) throws Exception {
+        BufferedImage sourceImage = ImageIO.read(new File(sourceFile));  
+        BufferedImage dstImage = null;  
+        int w = sourceImage.getWidth();
+        int h = sourceImage.getHeight();
+        w = Math.max(w, h);
+        double scale = 1.0d;
+        if (w > max) {
+			scale = max / (double) w;
+		}
+        AffineTransform transform = AffineTransform.getScaleInstance(scale, scale);// 返回表示缩放变换的变换  
+        AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR);  
+        dstImage = op.filter(sourceImage, null);  
+        ImageIO.write(dstImage, "png", new File(targetFile));  
 	}
 
 	public static BufferedImage cut(String src, int x, int y, int w, int h) throws IOException {
