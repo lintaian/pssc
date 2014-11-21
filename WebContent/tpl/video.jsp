@@ -50,7 +50,7 @@ $('#video1').on('ended', function() {
 			url: 'teach/contentStatus',
 			type: 'post',
 			data: JSON.stringify({
-				content_id: $('#video').data('id')
+				id: $('.teaching').data('opRealId')
 			}),
 			dataType: 'json',
 			success: function(data) {

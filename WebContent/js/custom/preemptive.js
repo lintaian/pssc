@@ -29,12 +29,11 @@ define(['jquery'], function($) {
 		});
 	});
 	$('body').on('click', '.preemptive_finish', function() {
-		var id = $('#preemptive').data('id');
 		$.ajax({
 			url: 'teach/contentStatus',
 			type: 'post',
 			data: JSON.stringify({
-				content_id: id
+				id: $('.teaching').data('opRealId')
 			}),
 			dataType: 'json',
 			success: function(data) {

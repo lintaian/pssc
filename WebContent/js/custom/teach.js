@@ -84,7 +84,9 @@ define(['jquery'], function($) {
 					if (data.status && data.c_status > 0) {
 						parseData(data);
 					} else {
-						$('#fullIcon').click();
+						if ($('#fullIcon').parents('.content').hasClass('full')) {
+							$('#fullIcon').click();
+						}
 						$('#contentModal').removeClass('active');
 						coverClass(false, data.c_photo, data.c_title || stateCode.unTeach);
 						$('.left').find('li').each(function() {
@@ -152,6 +154,7 @@ define(['jquery'], function($) {
 				coverClass(true);
 			}
 			teachingTimeout();
+			$('.teaching').data('opRealId', data.op_real_id);
 		} else if (data.c_status == 1) {
 			coverClass(false, data.c_photo, data.c_title || stateCode.beforeTeach);
 			teachingTimeout(true);

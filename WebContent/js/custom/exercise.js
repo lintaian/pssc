@@ -169,7 +169,7 @@ define(['jquery'], function($) {
 					url: 'teach/contentStatus',
 					type: 'post',
 					data: JSON.stringify({
-						content_id: $('#exercise').data('exercisePackageId')
+						id: $('.teaching').data('opRealId')
 					}),
 					dataType: 'json',
 					success: function(data) {

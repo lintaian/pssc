@@ -84,6 +84,7 @@ public class TeachModule {
 						if (content_type == 4) {
 							rs.put("op_type", op.get("content_type"));
 							rs.put("op_id", op.get("content_id").toString());
+							rs.put("op_real_id", op.get("_id").toString());
 							baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(op.get("_id")).get(), 
 									new BasicDBObject("content_status", 1));
 							baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(current.get("_id")).get(), 
@@ -92,11 +93,13 @@ public class TeachModule {
 							if (init) {
 								rs.put("op_type", current.get("content_type"));
 								rs.put("op_id", current.get("content_id").toString());
+								rs.put("op_real_id", current.get("_id").toString());
 							}
 						}
 					} else {
 						rs.put("op_type", op.get("content_type"));
 						rs.put("op_id", op.get("content_id").toString());
+						rs.put("op_real_id", op.get("_id").toString());
 						baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(op.get("_id")).get(), 
 								new BasicDBObject("content_status", 1));
 					}
@@ -107,6 +110,7 @@ public class TeachModule {
 						if (init) {
 							rs.put("op_type", current.get("content_type"));
 							rs.put("op_id", current.get("content_id").toString());
+							rs.put("op_real_id", current.get("_id").toString());
 						}
 					}
 				}
@@ -122,10 +126,7 @@ public class TeachModule {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			baseDao.update(DbMap.ClassOperate, QueryBuilder.start("class_id").is(SessionHelper.getClassId(req)).
-					and("student_id").is(SessionHelper.getUserId(req)).
-					and("courseware_id").is(SessionHelper.getCWid(req)).
-					and("content_id").is(new ObjectId(body.get("content_id"))).get(), 
+			baseDao.update(DbMap.ClassOperate, QueryBuilder.start("_id").is(new ObjectId(body.get("id"))).get(), 
 					new BasicDBObject("content_status", 2).append("complete_date", new Date()));
 		} catch (Exception e) {
 			rs.put("status", false);

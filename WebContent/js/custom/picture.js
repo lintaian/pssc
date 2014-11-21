@@ -12,7 +12,7 @@ define(['jquery'], function($) {
 				url: 'teach/contentStatus',
 				type: 'post',
 				data: JSON.stringify({
-					content_id: $('#picture').data('id')
+					id: $('.teaching').data('opRealId')
 				}),
 				dataType: 'json',
 				success: function(data) {
