@@ -89,9 +89,7 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 		e.preventDefault();
 		var url = $(this).data('changePage');
 		Util.load('.outerPage', url);
-		$('.left').find('li').each(function() {
-			$(this).removeClass('active');
-		});
+		$('.left li').removeClass('active');
 		$(this).parent('li').addClass('active');
 		Util.location.set([{
 			url: url,
