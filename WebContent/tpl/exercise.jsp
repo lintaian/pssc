@@ -73,7 +73,7 @@
 				我的答案 : 
 			</div>
 			<div class="e_subjective_answer">
-				<img class="e_subjective_my_answer e_my_write viewable ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}" 
+				<img class="e_subjective_my_answer e_my_write ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}" 
 							src="${obj.myAnswer.answer }">
 			</div>
 			<div class="e_write" data-bg-img="${obj.exercise.exercise_info.bg_img }">

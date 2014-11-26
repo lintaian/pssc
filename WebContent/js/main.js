@@ -134,6 +134,10 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 		Util.zoomImage.zoom(e);
 	});	
 	
+	$('#alert').on('click', '.button .btn', function() {
+		Util.alert.close();
+	});
+	
 	Util.msg.show('通知信息', '小朋友,欢迎回来!', 'info');
 	
 	

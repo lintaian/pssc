@@ -125,16 +125,16 @@ define([ 'jquery'], function(jquery) {
 					suc && suc(html);
 				},
 				error: function(data) {
-					if (data.status == 403) {
-						window.location.reload(true);
-					}
+					Util.error(data);
 				}
 			});
 		}
 		
 		Util.error = function(data) {
 			if (data.status == 403) {
-				window.location.reload(true);
+				Util.alert.show(function() {
+					window.location.reload(true);
+				});
 			}
 		}
 		
@@ -339,6 +339,35 @@ define([ 'jquery'], function(jquery) {
 			}
 		}
 		
+		Util.alert = {
+			ok: function() {
+			},
+			show: function(ok, text) {
+				this.ok = ok || this.ok;
+				text = text || '该账号长时间未操作或者已从其他地方登陆,如果不是你本人操作,请注意你的密码可能已经被盗!';
+				var $text = $('#alert .text'),
+					$alert = $('#alert');
+				$alert.show();
+				$('#modal2').show();
+				$text.text(text);
+				var h = $alert.height(),
+					w = $alert.width(),
+					winH = Util.getWinHeight(),
+					winW = Util.getWinWidth();
+				$alert.css({
+					top: (winH - h) / 2,
+					left: (winW - w) / 2
+				});
+				$('video').remove();
+				$('audio').remove();
+			},
+			close: function() {
+				$('#alert').hide();
+				$('#modal2').hide();
+				this.ok();
+			}
+		}
+		
 		Util.getImgNaturalDimensions = function(img, callback) {
 		    var nWidth = 0, nHeight = 0;
 		    if (img.naturalWidth) { // 现代浏览器
@@ -366,7 +395,8 @@ define([ 'jquery'], function(jquery) {
 		    {
 		        winHeight = document.documentElement.clientHeight;
 		    }
-		    if(navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") < 0) {
+		    if(navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") < 0
+		    		&& navigator.userAgent.indexOf("CriOS") < 0) {
 		    	winHeight -= 20;
 			} 
 		    return winHeight;

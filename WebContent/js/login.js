@@ -54,7 +54,7 @@ require(['jquery', 'patternLock'], function ($) {
 			var name = $('.nameText').text();
 			var pwd = lock.getPattern() || '';
 			if (name == '' || pwd == '') {
-				showMsg('用户名或密码不能为空!')
+				myAlert.show(null, '用户名或密码不能为空!');
 			} else {
 				$.ajax({
 					url: 'login',
@@ -68,14 +68,14 @@ require(['jquery', 'patternLock'], function ($) {
 						if (data.status) {
 							window.location.href = 'main';
 						} else {
-							showMsg(data.msg);
+							myAlert.show(null, data.msg);
 						}
 					}
 				});
 			}
 		});
-		$('#msg').on('click', '.close', function() {
-			closeMsg();
+		$('#alert').on('click', '.btn', function() {
+			myAlert.close();
 		});
 		
 		var lock = new PatternLock('#patternLock', {
@@ -93,19 +93,6 @@ require(['jquery', 'patternLock'], function ($) {
 		});
 	});
 	
-	function showMsg(msg) {
-		$('#cover').show();
-		$('#msg').show();
-		$('#msg').find('.text').text(msg);
-		$('.nameList').hide();
-		$('.pwdList').hide();
-	}
-	
-	function closeMsg() {
-		$('#cover').hide();
-		$('#msg').hide();
-	}
-	
 	function resize(windResize) {
 		if (windResize) {
 			var height = getWinHeight(),
@@ -114,6 +101,32 @@ require(['jquery', 'patternLock'], function ($) {
 			$('.main').css('top', top);
 			$('.main').css('left', left);
 			$('body').height(height);
+		}
+	}
+	var myAlert = {
+		ok: function() {
+		},
+		show: function(ok, text) {
+			this.ok = ok || this.ok;
+			text = text || '用户名或密码错误';
+			var $text = $('#alert .text'),
+				$alert = $('#alert');
+			$alert.show();
+			$('#modal').show();
+			$text.text(text);
+			var h = $alert.height(),
+				w = $alert.width(),
+				winH = getWinHeight(),
+				winW = getWinWidth();
+			$alert.css({
+				top: (winH - h) / 2,
+				left: (winW - w) / 2
+			});
+		},
+		close: function() {
+			$('#alert').hide();
+			$('#modal').hide();
+			this.ok();
 		}
 	}
 	function getWinHeight() {
@@ -128,6 +141,10 @@ require(['jquery', 'patternLock'], function ($) {
 	    {
 	        winHeight = document.documentElement.clientHeight;
 	    }
+	    if(navigator.userAgent.indexOf("Safari") > -1 && navigator.userAgent.indexOf("Chrome") < 0
+	    		&& navigator.userAgent.indexOf("CriOS") < 0) {
+	    	winHeight -= 20;
+		} 
 	    return winHeight;
 	};
 	/**

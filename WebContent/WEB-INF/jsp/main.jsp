@@ -49,6 +49,7 @@
 				<div class="title">
 					<div>所在位置: </div>
 					<div id="location"></div>
+					<div class="hide currentName">(${loginUser.name })</div>
 					<i id="fullIcon" class="icon icon-full"></i>
 				</div>
 				<div class="outerPage scroll"></div>
@@ -75,10 +76,17 @@
 		</div>
 	</div>
 	<div id="modal" class="hide"></div>
+	<div id="modal2" class="hide"></div>
 	<div id="loading" class="hide">
 		<img src="img/loader.gif">
 		<div class="text"></div>
 		<div class="progress"></div>
+	</div>
+	<div id="alert" class="hide">
+		<div class="text"></div>
+		<div class="button">
+			<span class="btn">确定</span>
+		</div>
 	</div>
 	<script src="js/lib/fastclick.js"></script>
 	<script>

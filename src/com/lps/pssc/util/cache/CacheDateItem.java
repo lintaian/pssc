@@ -1,4 +1,4 @@
-package com.lps.pssc.module.cache;
+package com.lps.pssc.util.cache;
 
 public class CacheDateItem {
     public String data;

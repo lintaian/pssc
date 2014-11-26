@@ -23,6 +23,7 @@ import org.nutz.mvc.annotation.POST;
 import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.filter.LoginFilter;
 import com.lps.pssc.util.DbMap;
+import com.lps.pssc.util.LoginList;
 import com.lps.pssc.util.SessionHelper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -50,6 +51,7 @@ public class MyMainModule {
 			if (user != null &&  "1".equals(user.get("status").toString())
 					&& (user.get("auth_code") == null || "".equals(user.get("auth_code")) || 
 				user.get("auth_code").toString().equals(Util.hexMD5((password + user.get("_id").toString()).getBytes())))) {
+				LoginList.getInstance().destory(user.get("_id").toString());
 				re.put("status", true);
 				DBObject record = new BasicDBObject();
 				record.put("operate", "登陆系统!");
@@ -59,6 +61,7 @@ public class MyMainModule {
 				user = baseDao.updateAndGet(DbMap.Student, new BasicDBObject("_id", user.get("_id")), 
 						new BasicDBObject("login_status", 1));
 				SessionHelper.setUser(req, user);
+				LoginList.getInstance().add(user.get("_id").toString(), req.getSession());
 			} else {
 				re.put("msg", "用户名或密码错误!");
 			}

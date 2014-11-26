@@ -110,27 +110,36 @@ body {
 	bottom: 0;
 	position: fixed;
 }
-#msg {
-	z-index: 101;
-	position: absolute;
-	background-color: white;
-	height: 100px;
-	width: 300px;
-	text-align: center;
-	line-height: 100px;
-	border: 3px solid #ebebeb;
-	top: 70px;
-	left: 60px;
-}
-#msg .close {
+.btn {
+	padding: 10px;
+	background-color: rgb(242,204,129);
+	border-radius: 6px;
 	cursor: pointer;
 }
-#cover {
-	z-index: 100;
-	position: absolute;
+#modal {
+	position: fixed;
+	z-index: 99997;
 	width: 100%;
 	height: 100%;
-	background-color: #FFF;
-	opacity: 0;
 	top: 0;
+	left: 0;
+	background-color: #000;
+	opacity: 0.8;
+}
+#alert {
+	position: fixed;
+	z-index: 99999;
+	font-size: 18px;
+	text-align: center;
+	max-width: 410px;
+	min-width: 300px;
+	background-color: rgb(207, 207, 207);
+	border-radius: 8px;
+}
+#alert .text {
+	color: red;
+	margin: 20px 10px 10px 10px;	
+}
+#alert .button {
+	line-height: 50px;
 }

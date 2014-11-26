@@ -57,7 +57,7 @@ define(['jquery'], function($) {
 							if (!$('#fullIcon').parents('.content').hasClass('full')) {
 								$('#fullIcon').click();
 							}
-							$('#contentModal').addClass('active');
+							$('.content').addClass('active');
 							$('.left li').removeClass('active');
 							$('.left li:first').addClass('active');
 							parseData(data);
@@ -88,7 +88,7 @@ define(['jquery'], function($) {
 					} else {
 						coverClass(false, data.c_photo, data.c_title || stateCode.unTeach);
 						Util.isLive = false;
-						$('#contentModal').removeClass('active');
+						$('.content').removeClass('active');
 						$('#fullIcon').removeClass('unclickable');
 						if ($('#fullIcon').parents('.content').hasClass('full')) {
 							$('#fullIcon').click();

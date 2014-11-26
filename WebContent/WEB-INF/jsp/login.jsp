@@ -46,14 +46,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="pwdList hide">
 			<div id="patternLock"></div>
 		</div>
-		<div id="msg" class="hide">
-			<span class="text"></span>
-			<a class="close">【关闭】</a>
-		</div>
-		<div id="cover" class="hide"></div>
 	</div>
 	<div class="footer">
 		<img src="img/footerbg.png" class="footer-img"/>
+	</div>
+	<div id="modal" class="hide"></div>
+	<div id="alert" class="hide">
+		<div class="text"></div>
+		<div class="button">
+			<span class="btn">确定</span>
+		</div>
 	</div>
 	<script src="js/lib/fastclick.js"></script>
 	<script>

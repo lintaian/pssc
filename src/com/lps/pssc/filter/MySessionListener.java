@@ -9,6 +9,7 @@ import org.nutz.mvc.Mvcs;
 
 import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.util.DbMap;
+import com.lps.pssc.util.LoginList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
@@ -35,6 +36,7 @@ public class MySessionListener implements HttpSessionListener {
 				
 				baseDao.update(DbMap.Student, new BasicDBObject("_id", user.get("_id")), 
 						new BasicDBObject("login_status", 0));
+				LoginList.getInstance().remove(user.get("_id").toString());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
