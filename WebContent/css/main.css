@@ -86,6 +86,14 @@ ul li {
 	bottom: 0;
 	position: fixed;
 }
+.footer-text {
+	position: fixed;
+	text-align: center;
+	width: 100%;
+	bottom: 50px;
+	font-size: 20px;
+	color: blue;
+}
 .icon {
 	background-image: url(../img/icon.jpg);
 	width: 40px;
@@ -298,4 +306,13 @@ ul li {
 }
 #alert .button {
 	line-height: 50px;
+}
+#preemptive_success {
+	position: fixed;
+	width: 500px;
+	height: 200px;
+	z-index: 99999;
+	text-align: center;
+	font-size: 50px;
+	color: white;
 }

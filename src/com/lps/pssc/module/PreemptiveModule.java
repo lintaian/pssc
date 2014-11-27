@@ -69,4 +69,18 @@ public class PreemptiveModule {
 		}
 		return rs;
 	}
+	@GET
+	@At("/access")
+	@Ok("json")
+	public Object access(String id, HttpServletRequest req) {
+		Map<String, Object> rs = new HashMap<String, Object>();
+		DBObject p = baseDao.get(DbMap.PreemptiveAnswer, 
+				QueryBuilder.start("student_id").is(SessionHelper.getUserId(req)).
+				and("preemptive_id").is(new ObjectId(id)).
+				and("access").is(true).get());
+		if (p != null) {
+			rs.put("status", true);
+		}
+		return rs;
+	} 
 }

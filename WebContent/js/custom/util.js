@@ -367,6 +367,34 @@ define([ 'jquery'], function(jquery) {
 				this.ok();
 			}
 		}
+		Util.preemptiveSuccess = {
+			interval: '',
+			show: function(text) {
+				var $ele = $('#preemptive_success'),
+					text = text || '小泡泡,恭喜你抢到了!请准备回答!';
+				$ele.show();
+				$('#modal2').show();
+				$('#preemptive_success .text').text(text);
+				var h = $ele.height(),
+					w = $ele.width(),
+					winH = Util.getWinHeight(),
+					winW = Util.getWinWidth();
+				$ele.css({
+					top: (winH - h) / 2,
+					left: (winW - w) / 2
+				});
+				this.setDynamic();
+			},
+			close: function() {
+				$('#preemptive_success').hide();
+				$('#modal2').hide();
+			},
+			setDynamic: function() {
+				setTimeout(function() {
+					Util.preemptiveSuccess.close();
+				}, 10000);
+			}
+		}
 		
 		Util.getImgNaturalDimensions = function(img, callback) {
 		    var nWidth = 0, nHeight = 0;

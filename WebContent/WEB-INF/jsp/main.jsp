@@ -12,9 +12,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">  
   <meta name="apple-mobile-web-app-capable" content="yes">  
   <meta name="apple-mobile-web-app-status-bar-style" content="black">  
-  <!-- <meta http-equiv="pragma" content="no-cache"> 
-  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
-  <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT"> -->
   <title>泡桐小学-翻转课堂</title>
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <link rel="stylesheet" type="text/css" href="css/patternLock.css">
@@ -58,6 +55,7 @@
 		</div>
 	</div>
 	<div class="footer">
+		<div class="footer-text">技术支持: 成都乐培晟科技有限公司</div>
 		<img src="img/footerbg.png" class="footer-img"/>
 	</div>
 	<div id="msg" class="hide">
@@ -87,6 +85,9 @@
 		<div class="button">
 			<span class="btn">确定</span>
 		</div>
+	</div>
+	<div id="preemptive_success" class="hide">
+		<div class="text"></div>
 	</div>
 	<script src="js/lib/fastclick.js"></script>
 	<script>

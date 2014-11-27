@@ -6,11 +6,9 @@ import java.util.List;
 import com.lps.pssc.config.CacheConfig;
 
 public class CacheData {
-	private long activeTime;
 	private List<CacheDateItem> queue;
 
 	public CacheData() {
-		activeTime = System.currentTimeMillis();
 		queue = new ArrayList<CacheDateItem>();
 	}
 	
@@ -40,7 +38,6 @@ public class CacheData {
 				result.append("|");
 			}
 		}
-		activeTime = System.currentTimeMillis();
 		return result.length() > 0 ? result.substring(0, result.length() - 1) : "";
 	}
 	public String pull(long tick) {
@@ -60,7 +57,6 @@ public class CacheData {
 		if (result.length() > 0) {
 			rs += "&" + result.substring(0, result.length() - 1);
 		}
-		activeTime = System.currentTimeMillis();
 		return rs;
 	}
 	
@@ -82,20 +78,17 @@ public class CacheData {
 
 	public void tick(CacheConfig config) {
 		long now = System.currentTimeMillis();
-		long span = now - activeTime;
-		if (span > config.getUnActiveTime()) {
-			List<CacheDateItem> list = new ArrayList<CacheDateItem>();
-			Iterator<CacheDateItem> iter = queue.iterator();
-			while (iter.hasNext()) {
-				CacheDateItem item = iter.next();
-				if (item.timestamp + config.getTimeout() < now) {
-					list.add(item);
-				}
+		List<CacheDateItem> list = new ArrayList<CacheDateItem>();
+		Iterator<CacheDateItem> iter = queue.iterator();
+		while (iter.hasNext()) {
+			CacheDateItem item = iter.next();
+			if (item.timestamp + config.getTimeout() < now) {
+				list.add(item);
 			}
-			if (list.size() > 0) {
-				synchronized (queue) {
-					queue.removeAll(list);
-				}
+		}
+		if (list.size() > 0) {
+			synchronized (queue) {
+				queue.removeAll(list);
 			}
 		}
 	}

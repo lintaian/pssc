@@ -1,11 +1,11 @@
 package com.lps.pssc.config;
 
-public class CacheConfig {
+public class ActiveConfig {
 	private long timeout;
 	private long pollTime;
-	public CacheConfig() {
+	public ActiveConfig() {
 	}
-	public CacheConfig(long timeout, long pollTime) {
+	public ActiveConfig(long timeout, long pollTime) {
 		super();
 		this.timeout = timeout;
 		this.pollTime = pollTime;

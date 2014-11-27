@@ -110,6 +110,14 @@ body {
 	bottom: 0;
 	position: fixed;
 }
+.footer-text {
+	position: fixed;
+	text-align: center;
+	width: 100%;
+	bottom: 50px;
+	font-size: 20px;
+	color: blue;
+}
 .btn {
 	padding: 10px;
 	background-color: rgb(242,204,129);

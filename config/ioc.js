@@ -2,7 +2,8 @@ var ioc = {
   	config : {
         type : 'org.nutz.ioc.impl.PropertiesProxy',
         fields : {
-            paths : ['thrift.properties', 'mongo.properties', 'config.properties', 'cache.properties']
+            paths : ['thrift.properties', 'mongo.properties', 'config.properties', 'cache.properties'
+                     ,'active.properties']
         }
     },
 	thriftConfig: {
@@ -30,7 +31,11 @@ var ioc = {
 	cacheConfig: {
 		type: 'com.lps.pssc.config.CacheConfig',
 		args: [{java: "$config.get('cache.timeout')"},
-		       {java: "$config.get('cache.pollTime')"},
-		       {java: "$config.get('cache.unActiveTime')"}]
+		       {java: "$config.get('cache.polltime')"}]
+	},
+	activeConfig: {
+		type: 'com.lps.pssc.config.ActiveConfig',
+		args: [{java: "$config.get('active.timeout')"},
+		       {java: "$config.get('active.polltime')"}]
 	}
 }

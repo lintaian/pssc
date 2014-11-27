@@ -48,6 +48,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 	</div>
 	<div class="footer">
+		<div class="footer-text">技术支持: 成都乐培晟科技有限公司</div>
 		<img src="img/footerbg.png" class="footer-img"/>
 	</div>
 	<div id="modal" class="hide"></div>
