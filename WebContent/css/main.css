@@ -93,6 +93,7 @@ ul li {
 	bottom: 50px;
 	font-size: 20px;
 	color: blue;
+	font-family: '楷体';
 }
 .icon {
 	background-image: url(../img/icon.jpg);

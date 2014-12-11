@@ -11,21 +11,23 @@
 	$(function() {
 		function loop() {
 			setTimeout(function() {
-				$.ajax({
-					url: 'preemptive/access',
-					type: 'get',
-					data: {
-						id: $('#preemptive').data('id')	
-					},
-					dataType: 'json',
-					success: function(data) {
-						if (data.status) {
-							Util.preemptiveSuccess.show();
-						} else {
-							loop();					
+				if ($('#preemptive') && $('#preemptive') != null && $('#preemptive').length > 0) {
+					$.ajax({
+						url: 'preemptive/access',
+						type: 'get',
+						data: {
+							id: $('#preemptive').data('id')	
+						},
+						dataType: 'json',
+						success: function(data) {
+							if (data.status) {
+								Util.preemptiveSuccess.show();
+							} else {
+								loop();					
+							}
 						}
-					}
-				});
+					});
+				}
 			}, 1000);
 		}
 		loop();

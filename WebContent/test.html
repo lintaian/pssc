@@ -1,15 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+<title>test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">  
+<meta name="apple-mobile-web-app-capable" content="yes">  
+<meta name="apple-mobile-web-app-status-bar-style" content="black">  
+<script src="js/lib/jquery.js"></script>
+<style type="text/css">
+	canvas {
+		border: 1px solid red;
+	}
+</style>
 </head>
 <body>
-
-<form action="http://127.0.0.1:8080/pssc/upload/img" method="post" enctype="multipart/form-data">
-    <input type="text" name="myText" /><br />
-    <input type="file" name="file" /><br />
-    <input type="submit" />
-</form>
-
+	<canvas id="canvas" width="600" height="400"></canvas>
+	<script>
+		$(function() {
+			var canvas = document.getElementById("canvas");
+			var context = canvas.getContext('2d');
+			context.moveTo(20, 20); // 设置路径起点，坐标为(20,20)
+			context.lineTo(200, 20); // 绘制一条到(200,20)的直线
+			context.lineWidth = 1.0; // 设置线宽
+			context.strokeStyle = "#CC0000"; // 设置线的颜色
+			context.stroke(); // 进行线的着色，这时整条线才变得可见
+			var left = 10, top = 10;
+			$('body').on('touchstart', '#canvas', function(e){
+				var x = e.originalEvent.targetTouches[0].pageX - left;
+				var y = e.originalEvent.targetTouches[0].pageY - top;
+				var canvas = document.getElementById("canvas");
+				var context = canvas.getContext('2d');
+				context.lineWidth = 1.0; // 设置线宽
+				context.strokeStyle = "#CC0000"; // 设置线的颜色
+				context.moveTo(x, y);
+			});
+			$('body').on('touchmove', '#canvas', function(e){
+				e.preventDefault();
+				var x = e.originalEvent.targetTouches[0].pageX - left;
+				var y = e.originalEvent.targetTouches[0].pageY - top;
+				var canvas = document.getElementById("canvas");
+				var context = canvas.getContext('2d');
+				context.lineTo(x, y);
+				context.stroke();
+			});
+			$('body').on('touchend', '#canvas', function(e){
+			});
+			$('body').on('touchmove', function(e) {
+				e.preventDefault();
+			});
+		});
+	</script>
 </body>
 </html>

@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">  
 	<meta name="apple-mobile-web-app-capable" content="yes">  
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">  
-	<title>泡桐小学-翻转课堂</title>
+	<title>泡桐小学(天府校区)云平台</title>
 	<link rel="shortcut icon" href="img/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 	<link rel="stylesheet" type="text/css" href="css/patternLock.css">

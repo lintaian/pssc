@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
@@ -19,7 +17,6 @@ import org.nutz.mvc.annotation.Ok;
 import org.nutz.mvc.annotation.Param;
 import org.nutz.mvc.upload.UploadAdaptor;
 import org.nutz.mvc.upload.Uploads;
-
 import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.util.ImageHelper;
 import com.lps.pssc.util.MyHelper;
