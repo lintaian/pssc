@@ -3,8 +3,23 @@
 <head>
 	<meta charset="utf-8">
 	<title>登陆</title>
+	<script src="./js/lib/jquery.js"></script>
 	<script type="text/javascript">
-		window.location.href="main";
+		/* $(function() {
+			$.ajax({
+				url: 'isJump',
+				type: 'get',
+				dataType: 'json',
+				success: function(data) {
+					if (data.isJump) {
+						window.location.href = data.url;
+					} else {
+						window.location.href = 'main';
+					}
+				}
+			});
+		}); */
+		window.location.href = 'main';
 	</script>
 </head>
 <body>

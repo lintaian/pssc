@@ -24,12 +24,12 @@ import com.lps.pssc.util.TwoDimensionCode;
 public class QrCodeModule {
 	@Inject
 	BaseDao baseDao;
-	@Inject("refer:qrcodeHost")
-	String qrcodeHost;
 	
 	@At("/*")
 	@Ok("raw")
 	public Object getVideo(String exerciseId, int exerciseType, String epId, HttpServletRequest req) throws Exception {
+		String qrcodeHost = req.getScheme() + "://" + req.getServerName() + ":" 
+				+ req.getServerPort() + req.getContextPath() + "/";
 		StringBuffer content = new StringBuffer(qrcodeHost);
 		content.append("/qrcode/validate/");
 		content.append(SessionHelper.getUserIdStr(req));

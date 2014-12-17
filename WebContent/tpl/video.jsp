@@ -41,6 +41,9 @@ $('#video1').on('loadedmetadata', function() {
 		success: function(data) {
 			exercisePackages = data;
 			document.getElementById("video1").play();
+		},
+		error: function(data) {
+			Util.error(data);
 		}
 	});
 });
@@ -54,6 +57,9 @@ $('#video1').on('ended', function() {
 			}),
 			dataType: 'json',
 			success: function(data) {
+			},
+			error: function(data) {
+				Util.error(data);
 			}
 		});
 	} else {

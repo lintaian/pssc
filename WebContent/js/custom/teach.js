@@ -69,6 +69,7 @@ define(['jquery'], function($) {
 				},
 				error: function(data) {
 					Util.error(data);
+					commonTimeout();
 				}
 			})
 		}, 5000);
@@ -98,6 +99,7 @@ define(['jquery'], function($) {
 				},
 				error: function(data) {
 					Util.error(data);
+					teachingTimeout(true);
 				}
 			});
 		}, 1000);

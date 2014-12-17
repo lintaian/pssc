@@ -7,8 +7,9 @@ define([ 'jquery'], function(jquery) {
 		
 		Util.msg = {
 			timeout: null,
-			show: function(title, content, type, time) {
-				this.close(10);
+			netError: false,
+			show: function(title, content, type, time, netError) {
+				this.close(10, netError && this.netError && $('#msg').is(':visible'));
 				$('#msg').find('.msgContent').html(content);
 				$('#msg').find('.titleText').html(title);
 				$('#msg').removeClass();
@@ -29,12 +30,15 @@ define([ 'jquery'], function(jquery) {
 					bottom: 5
 				}, 1000);
 				time == 0 ? null : this.mySetTimeout(time);
+				this.netError = netError;
 			},
-			close: function(time) {
+			close: function(time, onlyClearTimeout) {
 				clearTimeout(this.timeout);
-				$('#msg').animate({
-					bottom: -250
-				}, time || 1000);
+				if (!onlyClearTimeout) {
+					$('#msg').animate({
+						bottom: -250
+					}, time || 1000);
+				}
 			},
 			mySetTimeout: function(time) {
 				this.timeout = setTimeout(function() {
@@ -131,10 +135,12 @@ define([ 'jquery'], function(jquery) {
 		}
 		
 		Util.error = function(data) {
-			if (data.status == 403) {
+			if(data.status == 403) {
 				Util.alert.show(function() {
 					window.location.reload(true);
 				});
+			} else if(data.status == 0) {
+				Util.msg.show('错误提示', '请检查你的网络!', 'error', 10000, true);
 			}
 		}
 		

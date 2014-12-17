@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<learning>
+    <url value="http://10.22.104.4:81/pssc"></url>
+    <start value="08:30:00"/>
+    <end value="17:00:00"/>
+    <days>
+	    <day value="2014-12-17"/>
+	    <day value="2014-12-18"/>
+	    <day value="2014-12-19"/>
+    </days>
+</learning>

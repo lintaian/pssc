@@ -38,7 +38,10 @@ define(['jquery'], function($) {
 						data: JSON.stringify({
 							data: trace,
 							eid: $('#exercise').data('id')
-						})
+						}),
+						error: function(data) {
+							Util.error(data);
+						}
 					})
 				}
 			}, 50);
@@ -124,16 +127,25 @@ define(['jquery'], function($) {
 										} else {
 											Util.msg.show('错误提示', '保存图片失败!', 'error');
 										}
+									},
+									error: function(data) {
+										Util.error(data);
 									}
 								})
 							} else {
 								Util.msg.show('错误提示', '保存图片失败!', 'error');
 							}
+						},
+						error: function(data) {
+							Util.error(data);
 						}
 					})
 				} else {
 					Util.msg.show('错误提示', '保存图片失败!', 'error');
 				}
+			},
+			error: function(data) {
+				Util.error(data);
 			}
 		});
 	});

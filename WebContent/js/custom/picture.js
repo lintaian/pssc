@@ -16,6 +16,9 @@ define(['jquery'], function($) {
 				}),
 				dataType: 'json',
 				success: function(data) {
+				},
+				error: function(data) {
+					Util.error(data);
 				}
 			});
 		} else {

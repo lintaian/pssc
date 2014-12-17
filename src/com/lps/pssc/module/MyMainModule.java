@@ -25,6 +25,7 @@ import com.lps.pssc.filter.LoginFilter;
 import com.lps.pssc.util.DbMap;
 import com.lps.pssc.util.LoginList;
 import com.lps.pssc.util.SessionHelper;
+import com.lps.pssc.util.learn.LearningDay;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.util.Util;
@@ -105,5 +106,10 @@ public class MyMainModule {
 	@Ok("json")
 	public Object getApplication(String name, HttpServletRequest req) {
 		return req.getSession().getServletContext().getAttribute(name);
+	}
+	@At("isJump")
+	@Ok("json")
+	public Object isJump(HttpServletRequest req) {
+		return LearningDay.getInstance().jump(new Date());
 	}
 }

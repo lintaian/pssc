@@ -34,6 +34,9 @@ define(['jquery'], function($) {
 							})
 						})
 					}
+				},
+				error: function(data) {
+					Util.error(data);
 				}
 			});
 		}
@@ -173,6 +176,9 @@ define(['jquery'], function($) {
 					}),
 					dataType: 'json',
 					success: function(data) {
+					},
+					error: function(data) {
+						Util.error(data);
 					}
 				});
 			} else {

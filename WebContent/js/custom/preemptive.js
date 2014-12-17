@@ -23,8 +23,9 @@ define(['jquery'], function($) {
 					});
 				}
 			},
-			error: function() {
+			error: function(data) {
 				$(this).removeClass('on');
+				Util.error(data);
 			}
 		});
 	});
@@ -37,6 +38,9 @@ define(['jquery'], function($) {
 			}),
 			dataType: 'json',
 			success: function(data) {
+			},
+			error: function(data) {
+				Util.error(data);
 			}
 		});
 	})

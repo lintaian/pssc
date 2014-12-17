@@ -88,13 +88,15 @@ require(['jquery', 'patternLock', 'util', 'logout', 'teach', 'record', 'info', '
 	$('body').on('click', '[data-change-page]', function(e) {
 		e.preventDefault();
 		var url = $(this).data('changePage');
-		Util.load('.outerPage', url);
-		$('.left li').removeClass('active');
-		$(this).parent('li').addClass('active');
-		Util.location.set([{
-			url: url,
-			name: $(this).text()
-		}]);
+		var $this = $(this);
+		Util.load('.outerPage', url, null, function() {
+			$('.left li').removeClass('active');
+			$this.parent('li').addClass('active');
+			Util.location.set([{
+				url: url,
+				name: $this.text()
+			}]);
+		});
 	})
 	$('body').on('click', '#location a:not(:last)', function() {
 		Util.location.jump($(this).index());
