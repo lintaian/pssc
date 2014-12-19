@@ -4,7 +4,7 @@
 	<canvas id="myCanvas" width="800px" height="600px"></canvas>
 	<div class="c_toolbar">
 		<div class="btn clear">清空</div>
-		<div class="btn ok">完成</div>
+		<div class="btn ok">保存</div>
 		<div class="btn back">返回</div>
 	</div>
 </div>

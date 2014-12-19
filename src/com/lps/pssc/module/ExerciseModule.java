@@ -11,12 +11,15 @@ import org.bson.types.ObjectId;
 import org.nutz.ioc.annotation.InjectName;
 import org.nutz.ioc.loader.annotation.Inject;
 import org.nutz.ioc.loader.annotation.IocBean;
+import org.nutz.mvc.adaptor.JsonAdaptor;
+import org.nutz.mvc.annotation.AdaptBy;
 import org.nutz.mvc.annotation.At;
 import org.nutz.mvc.annotation.By;
 import org.nutz.mvc.annotation.Fail;
 import org.nutz.mvc.annotation.Filters;
 import org.nutz.mvc.annotation.GET;
 import org.nutz.mvc.annotation.Ok;
+import org.nutz.mvc.annotation.POST;
 
 import com.lps.pssc.dao.BaseDao;
 import com.lps.pssc.filter.LoginJsonFilter;
@@ -120,11 +123,13 @@ public class ExerciseModule {
 	}
 	@At("/canvas/imageTrace")
 	@Ok("json")
-	public Object insertImageTrace(HttpServletRequest req, String imageUrl, String trace) {
+	@AdaptBy(type=JsonAdaptor.class)
+	@POST
+	public Object insertImageTrace(Map<String, String> obj, HttpServletRequest req) {
 		Map<String, Object> rs = new HashMap<String, Object>();
 		rs.put("status", true);
 		try {
-			baseDao.insert(DbMap.PictureTrace, new BasicDBObject("img_url", imageUrl).append("trace", trace).
+			baseDao.insert(DbMap.PictureTrace, new BasicDBObject("img_url", obj.get("imageUrl")).append("trace", obj.get("trace")).
 					append("create_date", new Date()));
 		} catch (Exception e) {
 			rs.put("status", false);

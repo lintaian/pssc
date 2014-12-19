@@ -80,6 +80,7 @@ define(['jquery'], function($) {
 		e.preventDefault();
 		e.stopPropagation();
 		var canvas = document.getElementById('myCanvas');
+		Util.loader.show('保存中,请稍候...');
 		$.ajax({
 			url: 'upload/draw',
 			type: 'post',
@@ -88,6 +89,7 @@ define(['jquery'], function($) {
 			}),
 			dataType: 'json',
 			success: function(d) {
+				Util.loader.close();
 				if (d.status) {
 					var trace = '';
 					for (var i = 0; i < data.length; i++) {
@@ -100,13 +102,14 @@ define(['jquery'], function($) {
 					}
 					$.ajax({
 						url: 'exercise/canvas/imageTrace',
-						type: 'get',
-						data: {
+						type: 'post',
+						data: JSON.stringify({
 							imageUrl: d.url,
 							trace: trace
-						},
+						}),
 						dataType: 'json',
 						success: function(d2) {
+							Util.loader.close();
 							if (d2.status) {
 								$.ajax({
 									url: 'exercise/subjective',
@@ -119,6 +122,7 @@ define(['jquery'], function($) {
 									},
 									dataType: 'json',
 									success: function(d3) {
+										Util.loader.close();
 										if (d3.status) {
 											$('.e_canvas').empty();
 											$('#fullIcon').removeClass('unclickable');
@@ -129,6 +133,7 @@ define(['jquery'], function($) {
 										}
 									},
 									error: function(data) {
+										Util.loader.close();
 										Util.error(data);
 									}
 								})
@@ -137,6 +142,7 @@ define(['jquery'], function($) {
 							}
 						},
 						error: function(data) {
+							Util.loader.close();
 							Util.error(data);
 						}
 					})
@@ -145,6 +151,7 @@ define(['jquery'], function($) {
 				}
 			},
 			error: function(data) {
+				Util.loader.close();
 				Util.error(data);
 			}
 		});
