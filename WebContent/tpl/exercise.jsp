@@ -82,7 +82,7 @@
 			</div>
 		</c:when>
 	</c:choose>
-	<div class="e_page">
+	<div class="e_page ${obj.exercise.exercise_type == 23 ? 'e_page_write' : '' }">
 		<c:if test="${obj.page.curPage > 1 }">
 			<span class="e_change btn" data-page="${obj.page.curPage - 1 }">上一题</span>
 		</c:if>

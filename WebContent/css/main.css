@@ -216,6 +216,7 @@ ul li {
 	background-color: rgb(242,204,129);
 	border-radius: 6px;
 	cursor: pointer;
+	line-height: 18px;
 }
 #imageViewBg {
 	position: fixed;

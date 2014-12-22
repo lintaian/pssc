@@ -40,14 +40,20 @@
 .e_page {
 	width: 100%;
 	float: left;
-	text-align: right;
+	text-align: center;
 	font-size: 18px;
 	line-height: 50px;
 }
 .e_page span {
 	margin: 0 20px;
 }
-
+.e_page_write {
+	text-align: left;
+	width: 50%!important;
+}
+.e_page_write span:first-child {
+	margin-left: 60px!important;
+}
 .e_subjective {
 	margin: 20px 0 10px 10px;
 	float: left;
@@ -94,9 +100,12 @@
 }
 .e_write {
 	float: left;
-	text-align: center;
-	width: 96%;
-	margin: 20px;
+	text-align: right;
+	width: 50%;
+	line-height: 50px;
+}
+.e_write>.btn {
+	margin-right: 60px;
 }
 .e_subjective_answer {
 	text-align: center;

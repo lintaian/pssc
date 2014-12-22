@@ -25,26 +25,30 @@ define(['jquery'], function($) {
 		dataTrace.push({x: x, y: y});
 		imgDataTemp = context.getImageData(0,0,width,height);
 		if (Util.isLive) {
-			interval = interval || setInterval(function() {
-				var trace = '';
-				while (dataTemp.length > 0) {
-					var d = dataTemp.shift();
-					trace += d.x + ',' + d.y + ';';
-				}
-				if (trace != '') {
-					$.ajax({
-						url: 'cache/point',
-						type: 'post',
-						data: JSON.stringify({
-							data: trace,
-							eid: $('#exercise').data('id')
-						}),
-						error: function(data) {
-							Util.error(data);
-						}
-					})
-				}
-			}, 50);
+			if (!interval) {
+				data.push({x: -1, y: -3});
+				dataTemp.push({x: -1, y: -3});
+				interval = setInterval(function() {
+					var trace = '';
+					while (dataTemp.length > 0) {
+						var d = dataTemp.shift();
+						trace += d.x + ',' + d.y + ';';
+					}
+					if (trace != '') {
+						$.ajax({
+							url: 'cache/point',
+							type: 'post',
+							data: JSON.stringify({
+								data: trace,
+								eid: $('#exercise').data('id')
+							}),
+							error: function(data) {
+								Util.error(data);
+							}
+						})
+					}
+				}, 50);
+			}
 		}
 	});
 	$('body').on('touchmove', '#myCanvas', function(e){
@@ -127,6 +131,7 @@ define(['jquery'], function($) {
 											$('.e_canvas').empty();
 											$('#fullIcon').removeClass('unclickable');
 											$('.e_my_write').attr('src', d.url).show();
+											Util.msg.show('提示', '保存图片成功!', 'suc');
 											clearData();
 										} else {
 											Util.msg.show('错误提示', '保存图片失败!', 'error');
@@ -161,6 +166,7 @@ define(['jquery'], function($) {
 		dataTemp = [];
 		dataTrace = [];
 		clearInterval(interval);
+		interval = null;
 		imgData = null;
 		imgDataTemp = null;
 	}
