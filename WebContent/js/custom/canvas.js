@@ -104,12 +104,18 @@ define(['jquery'], function($) {
 							trace += ';';
 						}
 					}
+					var bgImg = $('.e_write').data('bgImg');
+					var $baseImg = $('#exercise .e_write .open_canvas');
+					if ($baseImg.hasClass('continue')) {
+						bgImg = $baseImg.parent().prev().find('img.e_subjective_my_answer').attr('src');
+					}
 					$.ajax({
 						url: 'exercise/canvas/imageTrace',
 						type: 'post',
 						data: JSON.stringify({
 							imageUrl: d.url,
-							trace: trace
+							trace: trace,
+							baseUrl: bgImg
 						}),
 						dataType: 'json',
 						success: function(d2) {
@@ -133,6 +139,7 @@ define(['jquery'], function($) {
 											$('.e_my_write').attr('src', d.url).show();
 											Util.msg.show('提示', '保存图片成功!', 'suc');
 											clearData();
+											Util.location.jump(-1);
 										} else {
 											Util.msg.show('错误提示', '保存图片失败!', 'error');
 										}

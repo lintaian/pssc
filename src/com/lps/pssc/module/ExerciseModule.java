@@ -78,13 +78,16 @@ public class ExerciseModule {
 					.and("exercise_id").is(new ObjectId(exerciseId)).
 					and("student_id").is(SessionHelper.getUserId(req)).
 					and("exercise_package_id").is(new ObjectId(epId)).get(), 
-					new BasicDBObject("answer", answer).append("answer_date", new Date()),
-					new BasicDBObject("first_answer_date", new Date()).append("scores", -1).append("note", ""));
+					new BasicDBObject("answer", answer).append("answer_date", new Date())
+					.append("opt_user", 0),
+					new BasicDBObject("first_answer_date", new Date()).append("scores", -1).
+					append("note", "").append("teacher_id", ""));
 			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", SessionHelper.getCWid(req))
 					.append("exercise_id", new ObjectId(exerciseId))
 					.append("student_id", SessionHelper.getUserId(req))
 					.append("exercise_package_id", new ObjectId(epId))
-					.append("answer", answer).append("answer_date", new Date()));
+					.append("answer", answer).append("answer_date", new Date())
+					.append("opt_user", 0));
 		}
 		rs.put("answer", answer);
 		return rs;
@@ -103,13 +106,16 @@ public class ExerciseModule {
 					QueryBuilder.start("courseware_id").is(coursewareId)
 					.and("exercise_id").is(new ObjectId(eId)).and("student_id").
 					is(studentId).and("exercise_package_id").is(new ObjectId(epId)).get(), 
-					new BasicDBObject("answer", answer).append("answer_date", new Date()),
-					new BasicDBObject("first_answer_date", new Date()).append("scores", -1).append("note", ""));
+					new BasicDBObject("answer", answer).append("answer_date", new Date())
+					.append("opt_user", 0),
+					new BasicDBObject("first_answer_date", new Date()).append("scores", -1)
+					.append("note", "").append("teacher_id", ""));
 			baseDao.insert(DbMap.AnswerLog, new BasicDBObject("courseware_id", coursewareId)
 					.append("exercise_id", new ObjectId(eId))
 					.append("student_id", studentId)
 					.append("exercise_package_id", new ObjectId(epId))
-					.append("answer", answer).append("answer_date", new Date()));
+					.append("answer", answer).append("answer_date", new Date())
+					.append("opt_user", 0));
 			rs.put("url", answer);
 		} catch (Exception e) {
 			rs.put("status", false);
@@ -130,7 +136,7 @@ public class ExerciseModule {
 		rs.put("status", true);
 		try {
 			baseDao.insert(DbMap.PictureTrace, new BasicDBObject("img_url", obj.get("imageUrl")).append("trace", obj.get("trace")).
-					append("create_date", new Date()));
+					append("create_date", new Date()).append("base_url", obj.get("baseUrl")));
 		} catch (Exception e) {
 			rs.put("status", false);
 		}

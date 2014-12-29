@@ -131,6 +131,7 @@ define(['jquery'], function($) {
 				'id=' + exercisePackageId + '&page=' + page + '&parentEle=' + parentEle);
 	});
 	$('body').on('click', '#exercise .e_write .open_canvas', function() {
+		var $this = $(this);
 		if (!$('#fullIcon').parents('.content').hasClass('full')) {
 			$('#fullIcon').click();
 		}
@@ -143,6 +144,9 @@ define(['jquery'], function($) {
 			context = canvas.getContext('2d');
 			context.clearRect(0,0,800,600);
 			var bgImg = $('.e_write').data('bgImg');
+			if ($this.hasClass('continue')) {
+				bgImg = $this.parent().prev().find('img.e_subjective_my_answer').attr('src');
+			}
 			if (bgImg) {
 				img = new Image();
 				img.src = bgImg;
@@ -151,8 +155,9 @@ define(['jquery'], function($) {
 					context.save();
 				}
 			}
-			context.fillStyle = "rgb(0,0,225)";
-			context.strokeStyle = "rgb(0,0,0)";
+			context.fillStyle = "rgb(51,133,255)";
+			context.strokeStyle = "rgb(51,133,255)";
+			context.lineWidth = 2.0;
 		});
 	});
 	$('body').on('click', '.e_finish', function(e) {

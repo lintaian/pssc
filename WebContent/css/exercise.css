@@ -49,7 +49,7 @@
 }
 .e_page_write {
 	text-align: left;
-	width: 50%!important;
+	width: 40%!important;
 }
 .e_page_write span:first-child {
 	margin-left: 60px!important;
@@ -103,6 +103,9 @@
 	text-align: right;
 	width: 50%;
 	line-height: 50px;
+}
+.e_write2 {
+	width: 56%!important;
 }
 .e_write>.btn {
 	margin-right: 60px;

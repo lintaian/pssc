@@ -76,8 +76,14 @@
 				<img class="e_subjective_my_answer e_my_write ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? '' : 'hide'}" 
 							src="${obj.myAnswer.answer }">
 			</div>
-			<div class="e_write" data-bg-img="${obj.exercise.exercise_info.bg_img }">
-				<span class="btn open_canvas">手写回答</span>
+			<div class="e_write ${(obj.myAnswer != null && obj.myAnswer.answer != '') ? 'e_write2' : ''}" data-bg-img="${obj.exercise.exercise_info.bg_img }">
+				<c:if test="${obj.myAnswer == null || obj.myAnswer.answer == ''}">
+					<span class="btn open_canvas">手写回答</span>
+				</c:if>
+				<c:if test="${obj.myAnswer != null && obj.myAnswer.answer != ''}">
+					<span class="btn open_canvas">重新回答</span>
+					<span class="btn open_canvas continue">继续回答</span>
+				</c:if>
 				<div class="e_canvas"></div>
 			</div>
 		</c:when>
